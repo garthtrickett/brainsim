@@ -1,0 +1,8 @@
+target rate = 0.0100 spikes/neuron/tick
+
+full design                  rate_early=0.0044  rate_late=0.0102  peak=0.345  sat@wmax=0.00%  silent=0%
+  -inhibition                rate_early=0.0044  rate_late=0.0295  peak=0.610  sat@wmax=0.00%  silent=0%
+  -threshold homeostasis     rate_early=0.0059  rate_late=0.0041  peak=0.060  sat@wmax=0.06%  silent=90%
+  -synaptic scaling          rate_early=0.0044  rate_late=0.0098  peak=0.515  sat@wmax=0.00%  silent=0%
+  -refractory period         rate_early=0.0056  rate_late=0.0077  peak=0.380  sat@wmax=0.00%  silent=0%
+  -noise                     rate_early=0.0042  rate_late=0.0088  peak=0.480  sat@wmax=0.00%  silent=0%

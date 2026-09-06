@@ -1,0 +1,7 @@
+target rate = 0.0100 throughout; watching for LATE drift
+
+no scaling (control)                   rate@40k=0.0116  rate@60k=0.0103  rate@90k=0.0103  at_wmax=51.6%  cv=0.89
+scale@100    eta=0.02  (orig)          rate@40k=0.0111  rate@60k=0.0080  rate@90k=0.0086  at_wmax= 0.8%  cv=1.53
+scale@1000   eta=0.02                  rate@40k=0.0098  rate@60k=0.0105  rate@90k=0.0107  at_wmax= 1.2%  cv=1.39
+scale@5000   eta=0.02                  rate@40k=0.0105  rate@60k=0.0094  rate@90k=0.0092  at_wmax= 3.2%  cv=1.29
+scale@1000   eta=0.05                  rate@40k=0.0101  rate@60k=0.0097  rate@90k=0.0095  at_wmax= 1.1%  cv=1.53

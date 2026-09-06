@@ -1,0 +1,10 @@
+B1  world-model learning (local delta rule, no backprop)
+    surprise: start=0.275  learned=0.190  at flip=0.258  relearned=0.184
+
+B2  sparse-reward corridor: reward ONLY at state 9, 10 states away
+  curiosity=0.0 (seed 0)   states_seen@20k=10/10  rewards@20k= 44  first_reward_tick=185  rewards_total=127
+  curiosity=0.0 (seed 1)   states_seen@20k=10/10  rewards@20k= 37  first_reward_tick=197  rewards_total=98
+  curiosity=0.0 (seed 2)   states_seen@20k=10/10  rewards@20k= 35  first_reward_tick=905  rewards_total=102
+  curiosity=3.0 (seed 0)   states_seen@20k=10/10  rewards@20k= 42  first_reward_tick=431  rewards_total=122
+  curiosity=3.0 (seed 1)   states_seen@20k=10/10  rewards@20k= 43  first_reward_tick=977  rewards_total=120
+  curiosity=3.0 (seed 2)   states_seen@20k=10/10  rewards@20k= 42  first_reward_tick=1241  rewards_total=121

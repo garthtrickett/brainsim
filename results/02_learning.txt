@@ -1,0 +1,14 @@
+chance = 0.50
+
+   [diag] hidden overlap cos=0.814
+full design                    acc_first300=0.64  acc_last300=0.99
+full design (seed 1)           acc_first300=0.73  acc_last300=1.00
+full design (seed 2)           acc_first300=0.75  acc_last300=1.00
+full design (seed 3)           acc_first300=0.74  acc_last300=1.00
+
+   [diag] hidden overlap cos=0.929
+  -lateral inhibition          acc_first300=0.51  acc_last300=0.52
+  -deviation (raw Hebb elig)   acc_first300=0.57  acc_last300=0.82
+  -RPE (raw reward)            acc_first300=0.54  acc_last300=0.50
+  -eligibility trace           acc_first300=0.46  acc_last300=0.53
+  -noise (no exploration)      acc_first300=0.50  acc_last300=0.50

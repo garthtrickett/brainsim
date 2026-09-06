@@ -1,0 +1,18 @@
+combination lock, 14 states: random policy reaches the end with p=2^-13
+
+  curiosity=0.0 (seed 0)     maxdepth@10k=11/13 @50k=13/13 final=13/13  first_reward=  16637  total=3
+  curiosity=0.0 (seed 1)     maxdepth@10k=13/13 @50k=13/13 final=13/13  first_reward=   2321  total=1
+  curiosity=0.0 (seed 2)     maxdepth@10k=10/13 @50k=11/13 final=12/13  first_reward=  NEVER  total=0
+
+  curiosity=0.1 (seed 0)     maxdepth@10k=12/13 @50k=12/13 final=13/13  first_reward=  95489  total=1
+  curiosity=0.1 (seed 1)     maxdepth@10k= 9/13 @50k=13/13 final=13/13  first_reward=  29933  total=2
+  curiosity=0.1 (seed 2)     maxdepth@10k=10/13 @50k=13/13 final=13/13  first_reward=  40241  total=2
+
+  curiosity=0.3 (seed 0)     maxdepth@10k= 9/13 @50k=12/13 final=12/13  first_reward=  NEVER  total=0
+  curiosity=0.3 (seed 1)     maxdepth@10k=10/13 @50k=12/13 final=13/13  first_reward=  53099  total=5
+  curiosity=0.3 (seed 2)     maxdepth@10k= 9/13 @50k=13/13 final=13/13  first_reward=  27845  total=2
+
+  curiosity=1.0 (seed 0)     maxdepth@10k=13/13 @50k=13/13 final=13/13  first_reward=   7769  total=2
+  curiosity=1.0 (seed 1)     maxdepth@10k=11/13 @50k=13/13 final=13/13  first_reward=  45569  total=2
+  curiosity=1.0 (seed 2)     maxdepth@10k=12/13 @50k=12/13 final=13/13  first_reward= 121913  total=1
+

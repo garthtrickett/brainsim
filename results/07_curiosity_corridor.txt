@@ -1,0 +1,22 @@
+corridor of 30 states, reward ONLY at the far end
+
+  curiosity=0.0 (seed 0)     seen@5k=30/30 seen@20k=30/30 first_reward=   4253  total=20
+  curiosity=0.0 (seed 1)     seen@5k=30/30 seen@20k=30/30 first_reward=   4409  total=27
+  curiosity=0.0 (seed 2)     seen@5k=30/30 seen@20k=30/30 first_reward=   1577  total=24
+
+  curiosity=0.1 (seed 0)     seen@5k=30/30 seen@20k=30/30 first_reward=   1727  total=38
+  curiosity=0.1 (seed 1)     seen@5k=27/30 seen@20k=30/30 first_reward=   7625  total=42
+  curiosity=0.1 (seed 2)     seen@5k=30/30 seen@20k=30/30 first_reward=   3683  total=30
+
+  curiosity=0.3 (seed 0)     seen@5k=17/30 seen@20k=30/30 first_reward=   9695  total=28
+  curiosity=0.3 (seed 1)     seen@5k=27/30 seen@20k=30/30 first_reward=   6461  total=22
+  curiosity=0.3 (seed 2)     seen@5k=30/30 seen@20k=30/30 first_reward=   1247  total=25
+
+  curiosity=1.0 (seed 0)     seen@5k=30/30 seen@20k=30/30 first_reward=   4475  total=18
+  curiosity=1.0 (seed 1)     seen@5k=28/30 seen@20k=30/30 first_reward=   5915  total=28
+  curiosity=1.0 (seed 2)     seen@5k=28/30 seen@20k=30/30 first_reward=   6575  total=30
+
+  curiosity=3.0 (seed 0)     seen@5k=30/30 seen@20k=30/30 first_reward=   1829  total=20
+  curiosity=3.0 (seed 1)     seen@5k=28/30 seen@20k=30/30 first_reward=   9983  total=27
+  curiosity=3.0 (seed 2)     seen@5k=24/30 seen@20k=30/30 first_reward=   5339  total=22
+

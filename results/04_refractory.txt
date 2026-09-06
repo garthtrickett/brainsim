@@ -1,0 +1,11 @@
+chance = 0.50
+
+normal drive, refractory           acc_last300=0.99  top5%_share=10.0%  cells_used=  87%
+normal drive, NO refractory        acc_last300=0.99  top5%_share=17.8%  cells_used=  80%
+
+strong drive, refractory           acc_last300=0.99  top5%_share=10.0%  cells_used=  87%
+strong drive, NO refractory        acc_last300=0.99  top5%_share=17.8%  cells_used=  80%
+
+very strong drive, refractory      acc_last300=0.99  top5%_share=10.0%  cells_used=  87%
+very strong drive, NO refractory   acc_last300=0.99  top5%_share=17.8%  cells_used=  80%
+

@@ -1,0 +1,6 @@
+cv = coefficient of variation of excitatory weights (higher = more differentiated)
+
+with synaptic scaling    rate_late=0.0080 peak=0.470 at_wmax= 0.8% at_zero=36.6% cv=1.54
+  clip only              rate_late=0.0103 peak=0.585 at_wmax=48.9% at_zero=39.4% cv=0.89
+high LR, w/ scaling      rate_late=0.0108 peak=0.510 at_wmax= 0.3% at_zero=25.3% cv=1.41
+high LR, clip only       rate_late=0.0102 peak=0.595 at_wmax=46.7% at_zero=39.7% cv=0.91
