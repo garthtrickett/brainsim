@@ -1,0 +1,12 @@
+  seed 1: rewards=3  max_depth=9/9  runs=2132  mean_run_len=1.88  p95_run=4
+  seed 2: rewards=1  max_depth=9/9  runs=2011  mean_run_len=1.99  p95_run=5
+
+=== 3. hidden-code overlap between adjacent lock states ===
+  adjacent-state overlap: mean=0.409  all-pairs mean=0.447 max=0.706
+
+=== 4. eligibility decay arithmetic ===
+  10 steps x 30 ticks = 300 ticks -> trace at episode start = 0.222
+  10 steps x  3 ticks =  30 ticks -> trace at episode start = 0.860
+  10 steps x  1 ticks =  10 ticks -> trace at episode start = 0.951
+
+[exited with code 0]
