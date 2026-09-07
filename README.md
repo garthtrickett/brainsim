@@ -293,3 +293,85 @@ controlled before it meant anything, and one needed no test. The mechanistic
 reasoning that produced the ranking was decent at picking which interventions do
 *something* and unreliable at explaining *why* -- and the why is what you would
 use to design the next round.
+
+
+---
+
+# Part 3: the mainline (`brainsim.py`)
+
+The validated upgrades, assembled into one runnable implementation. `python3 demo.py`.
+
+**Assembling individually-validated components broke it.** First assembly scored
+0.58 where a subset of the same parts reaches 1.00 in `02_learning.py`. Nothing
+was wrong with any single piece; both failures were interactions:
+
+- **`TARGET_RATE` did not transfer.** 01 validated threshold homeostasis at a 1%
+  target on a recurrent net with **no k-WTA**. Under competition, k/n = 7.5% of
+  cells fire by construction, so a 1% target asks for a rate competition
+  forbids: thresholds ratcheted 1.00 -> 6.42. Now set from `k/n_hidden`.
+- **The long trace bled across trials.** tau~200 spans 6.7 trials of 30 ticks, so
+  eligibility averaged both classes together. Fixed by *consuming* the tag when
+  the neuromodulator cashes it (tag-and-capture). Worth 0.58 -> 0.97.
+
+With both fixed, the long trace is decisively right: **0.99 (tau~200) vs 0.74
+(tau~10)** -- 09's finding reproduced in the assembled system, which it was not
+before.
+
+## A magnitude bug, twice, in opposite directions
+
+A raw eligibility *sum* at tau~200 accumulates ~200x one outer product and
+saturates the weights (this invalidated experiment E). Switching to an EMA fixed
+that and introduced the inverse: an EMA reaches only `1-d^T` = 14% of steady
+state over a 30-tick trial, making updates ~7x too small. The local rule then
+topped out at 0.66 and **the sleep gradient silently covered for it** -- the
+gradient looked worth +0.34 when it is worth +0.13.
+
+Both versions ran fine and produced plausible numbers. The fix is to divide by
+accumulated EMA weight, giving a true weighted mean at any decay, so a trace's
+time constant and its magnitude are finally independent.
+
+## Final validation
+
+```
+learns                       0.65 -> 0.98
+local rule alone                     0.85     (02 gets 1.00 without the
++ sleep gradient                     0.98      homeostatic machinery)
+save / load round-trip       0.95 -> 0.98
+clone merge, 5 seeds         solo 0.95 -> merged 0.98, better in 4/5
+merge guard                  raises ValueError on non-clones
+```
+
+| # | proposal | in the mainline? |
+|---|---|---|
+| 1 | copy the weights | **yes** -- `save`/`load` |
+| 2 | clone merge | **yes**, guarded: refuses non-clones rather than failing silently |
+| 3 | prioritised replay | **no** -- but uniform replay stays in sleep |
+| 4 | long eligibility trace | **yes** -- tau~200, 0.99 vs 0.74 |
+| 5 | pretrained encoder | **NO -- it makes the system worse** |
+| 6 | gradient in the sleep slot | **yes**, +0.13 |
+
+## The result worth keeping
+
+**Claim 5 passed a clean 3-seed test with a sanity gate, in isolation, and makes
+the assembled system worse**: 0.98 -> 0.85 with the gradient on, 0.85 -> 0.72
+with it off, consistent across 6 seeds and both settings. Nothing about the
+isolated experiment was wrong. The benefit simply does not survive contact with
+the other components. `pretrain_encoder()` is kept with both sets of numbers in
+its docstring and a do-not-enable note, because the reversal is more informative
+than either result alone.
+
+Claim 2 nearly went the same way: the demo's single-seed merge check said merging
+*hurt* (0.65 vs 0.73). Measured properly over 5 seeds with solo and ceiling
+controls, it helps (0.98 vs 0.95). One seed was wrong in the other direction that
+time -- which is the same lesson, not a different one.
+
+## Not claimed
+
+The local rule reaches 0.85 in the mainline against 1.00 in `02_learning.py`. The
+likely cost is the homeostatic machinery -- threshold adaptation, synaptic
+scaling, the 0.98 downscale each sleep -- that 02 does not have and that exists
+for stability reasons validated in 01/03/06. That is a measured
+performance-for-stability trade, not an optimised one.
+
+Everything here is validated on **one two-class discrimination task**, which is
+thin ground for a design with this many interacting parts.
