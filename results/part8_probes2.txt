@@ -1,0 +1,22 @@
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788765937250.log
+=== A. horizon needed for seeds to find reward at all ===
+  seed 0: first_reward=  4338  by_4k=0  by_12k=4
+  seed 1: first_reward=   423  by_4k=3  by_12k=8
+  seed 2: first_reward=  1088  by_4k=1  by_12k=7
+  seed 3: first_reward=   255  by_4k=3  by_12k=8
+  seed 4: first_reward=  2254  by_4k=4  by_12k=10
+
+=== B. does the existing sleep gradient help or hurt on lock-10? ===
+  sleep gradient ON (shipped)  total rewards over 6000 decisions: [np.float64(3.0), np.float64(4.0), np.float64(1.0)]  mean=2.67
+  sleep gradient OFF           total rewards over 6000 decisions: [np.float64(1.0), np.float64(13.0), np.float64(2.0)]  mean=5.33
+  no sleep at all              total rewards over 6000 decisions: [np.float64(4.0), np.float64(9.0), np.float64(1.0)]  mean=4.67
+
+[exited with code 0]
+  gradient ON (shipped)        [4, 8, 7, 8, 10, 20]  mean= 9.50  median=  8.0
+  gradient OFF (replay only)   [1, 13, 3, 6, 5, 16]  mean= 7.33  median=  5.5
+  no sleep at all              [10, 13, 5, 3, 7, 9]  mean= 7.83  median=  8.0
+
+  gradient-off beats gradient-on in 5/6 seeds
+  medians: on=8.0 off=5.5
+
+[exited with code 0]

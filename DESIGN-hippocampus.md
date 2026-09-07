@@ -89,8 +89,33 @@ Decisive comparison: **compressed-forward vs compressed-reverse**.
 
 **Three writers on `W_out`** — online learning, the sleep gradient, and now
 replay. Two controllers on one variable has bitten twice (Part 3b's homeostatic
-pair; `ADAPTIVE` cancelling `V(s)`). The sleep gradient ALREADY replays from this
-buffer, so the two must be coordinated, not both firing blind.
+pair; `ADAPTIVE` cancelling `V(s)`).
+
+I suspected the sleep gradient was already doing harm here. **It is not.**
+
+At n=3 it looked damaging (ON 2.67 vs OFF 5.33) and I hypothesised that step 2
+would partly be SUBTRACTION. At 6 seeds and the correct 12000-decision horizon
+the result reverses:
+
+```
+  gradient ON (shipped)        [4, 8, 7, 8, 10, 20]   mean 9.50  median 8.0
+  gradient OFF (replay only)   [1, 13, 3, 6, 5, 16]   mean 7.33  median 5.5
+  no sleep at all              [10, 13, 5, 3, 7, 9]   mean 7.83  median 8.0
+```
+
+ON beats OFF in **5 of 6 seeds**. The n=3 signal was one seed's 13. Fourth time
+in this project a small-n result pointed the wrong way -- and this one would have
+had me delete a working mechanism.
+
+(My probe printed "gradient-off beats gradient-on in 5/6", which is inverted: the
+counter compares `on > off`. The label was wrong, the number right. Read the
+means, not the summary line you wrote at 6am.)
+
+**"Below floor" was also a horizon artifact.** At 12000 decisions the agent finds
+~9.5 rewards = 0.0008, essentially its 0.0010 floor. The 0.0000 at 4000 decisions
+was simply most seeds not having reached the goal yet. The agent is AT chance on
+the lock, not below it — there is nothing to subtract, and step 2 is pure
+addition after all.
 
 **The lock is unusually kind to replay.** It has exactly one correct path, so
 overfitting to a single replayed trajectory is *correct* here. That will not
@@ -108,6 +133,8 @@ unchanged, now spanning a 30-tick compressed episode.
 | 2 | episodes are ~10 steps | mean **1.9**, p95 **4-5** | WRONG — only rare ones are long |
 | 3 | adjacent states interfere | adjacent **0.409** vs all-pairs **0.447** | WRONG — no special interference |
 | 4 | trace 0.22 vs 0.86 | 0.222 / 0.860 | correct |
+| 5 | 4000 decisions is enough | 1 seed in 5 finds nothing | WRONG — use 12000 |
+| 6 | sleep gradient harms here | ON beats OFF 5/6 seeds | WRONG — it helps |
 
 ## Experimental design, forced by assumption 1
 
@@ -117,9 +144,10 @@ and conditions on `rewards_found >= 1`. Seeds finding zero reward are reported
 separately as an EXPLORATION failure, not a replay failure — they are evidence
 for a different module.
 
-If most seeds find zero reward at 4000 decisions, lengthen the run until they do
-rather than averaging a wall of zeros. The gate is: at least 2 of 3 seeds must
-find reward at all, or the task is measuring exploration and not memory.
+MEASURED horizon: at 4000 decisions 1 seed in 5 finds nothing; at **12000 every
+seed finds reward** (first at 4338, 423, 1088, 255, 2254; 4-10 rewards each).
+So the ablation runs at 12000 decisions, where every seed has >=4 episodes to
+replay. Below that the task measures exploration, not memory.
 
 ## Open problem this surfaced
 
