@@ -19,6 +19,11 @@ class BrainSim:
     NOISE     = 0.35     # 02: exploration. Remove it => chance.
     LR        = 0.05
     WMAX      = 1.0
+    # 17/18: readout weights are clamped NON-NEGATIVE. Fine for 2 classes, where
+    # relative magnitude alone separates them. With N classes the readout cannot
+    # represent "this cell means NOT class 3", which may be why the design stalls
+    # near chance past 2 classes. Set WMIN=-WMAX to allow inhibitory readout.
+    WMIN      = 0.0
     # 01 validated threshold homeostasis at a 1% target -- on a RECURRENT net
     # with no k-WTA. Here competition forces exactly k/n cells to fire, so a 1%
     # target is a rate competition structurally forbids: the controller ratchets
@@ -49,6 +54,24 @@ class BrainSim:
     # bit-identical results. Kept because pruning is real in the design; it just
     # has nothing to do while the clip does the work.
     PRUNE_BELOW = 1e-3
+    # 18: THE ONE NON-LOCAL ELEMENT IN THIS DESIGN. Credit the action that was
+    # SELECTED rather than every motor cell that happened to fire. Without it the
+    # design cannot exceed binary choice:
+    #        classes    local    action-gated
+    #           2       1.000       1.000
+    #           4       0.323       0.923
+    #           8       0.152       0.919
+    # Diagnosis: 3.37 of 4 motor cells fire per tick, so outer(fm, trh) credits
+    # nearly all of them, W_out never differentiates (spread 0.03 vs 0.58) and the
+    # vote margin stays at 0.6 spikes -- a coin flip. Hidden codes were separable
+    # all along (overlap 0.549), so this was credit assignment, not capacity.
+    # Two LOCAL alternatives were tried and both failed:
+    #   motor k-WTA (1-of-N per tick):  0.319 / 0.158 -- per-tick winners smear
+    #       credit across cells; the decision is a 30-tick aggregate.
+    #   commitment (lock in at a bound): 0.350 / 0.168 -- locks on noise, then
+    #       only the locked cell can fire, so it cannot escape. Bimodal seeds.
+    # Set False for a strictly local rule, and accept the 2-class ceiling.
+    ACTION_GATED = True
 
     def __init__(self, n_in=40, n_hidden=80, n_motor=2, k=6, seed=0):
         self.rng = np.random.default_rng(seed)
@@ -61,6 +84,10 @@ class BrainSim:
         self.ebar  = np.zeros((n_motor, n_hidden))
         self.elig  = np.zeros((n_motor, n_hidden))
         self.elig_w = 0.0   # accumulated EMA weight; see reward()
+        # running mean of trh across the trial. NOT self.trh/30: that is the
+        # FINAL tick's trace, one noisy sample, and using it drops 8-class
+        # accuracy from 0.92 to 0.24.
+        self.trh_sum = np.zeros(n_hidden); self.trh_n = 0
         self.value = 0.0
         self.rate  = np.zeros(n_hidden)
         self.TARGET_RATE = k / n_hidden   # NOT the 0.01 from 01; see above
@@ -120,6 +147,7 @@ class BrainSim:
         self.vh[self.fh > 0] = 0
 
         self.trh = self.trh * self.TRACE_D + self.fh
+        self.trh_sum += self.trh; self.trh_n += 1
         # EMA, not a running sum: keeps magnitude independent of the time
         # constant. A plain sum at tau~200 accumulates ~200x a single outer
         # product and saturates W_out -- the bug that invalidated experiment E.
@@ -149,6 +177,19 @@ class BrainSim:
         instead of RPE => chance, because it never stops reinforcing the known)."""
         self.value += self.VALUE_LR * (r - self.value)
         nm = r - self.value
+        if self.ACTION_GATED and action is not None:
+            z = self.trh_sum / max(self.trh_n, 1)
+            de = np.zeros_like(self.W_out)
+            de[action] = z - self.ebar[action]
+            self.ebar[action] += self.EBAR_LR * (z - self.ebar[action])
+            self.W_out += self.LR * nm * de
+            np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
+            self.elig[:] = 0.0; self.elig_w = 0.0
+            self.buffer.append((z.copy(), de.copy(), nm, action, r))
+            self.trh_sum[:] = 0.0; self.trh_n = 0
+            self.decisions += 1
+            if self.decisions % self.SLEEP_EVERY == 0: self.sleep()
+            return
         # Normalise by accumulated weight -> a true weighted MEAN outer product,
         # matching 02's e/TICKS at any decay. A raw EMA reaches only 1-d^T of
         # steady state (14% over a 30-tick trial at d=.995), making every update
@@ -156,9 +197,10 @@ class BrainSim:
         # and the sleep gradient silently covers for it.
         elig = self.elig / max(self.elig_w, 1e-9)
         de = elig - self.ebar
+        self.trh_sum[:] = 0.0; self.trh_n = 0
         self.ebar += self.EBAR_LR * (elig - self.ebar)
         self.W_out += self.LR * nm * de
-        np.clip(self.W_out, 0, self.WMAX, out=self.W_out)
+        np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
         # Consume the tag. Tag-and-capture: once the neuromodulator cashes the
         # eligibility, it is spent. Without this the tau~200 trace bleeds across
         # trials (200 ticks = 6.7 trials), averaging both classes together and
@@ -194,7 +236,7 @@ class BrainSim:
             p = np.exp(self.W_out @ z - (self.W_out @ z).max()); p /= p.sum()
             g = p.copy(); g[tgt] -= 1.0
             self.W_out -= self.SLEEP_ETA * np.outer(g, z)        # gradient pass
-        np.clip(self.W_out, 0, self.WMAX, out=self.W_out)
+        np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
         self.W_out *= self.DOWNSCALE
         if self.PRUNE_BELOW: self.W_out[self.W_out < self.PRUNE_BELOW] = 0.0
         if len(self.buffer) > 2000:

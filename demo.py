@@ -35,11 +35,11 @@ res = [run(seed=s)[:2] for s in (0, 1, 2)]
 m = np.mean(res, axis=0)
 print(f"   early={m[0]:.2f}  ->  late={m[1]:.2f}   {'PASS' if m[1] > 0.90 else 'FAIL'}")
 
-print("2. pretrained encoder is OFF - it HURTS here   (claim 5, dropped)")
+print("2. pretrained encoder OFF - subsumed, not harmful  (claim 5)")
 a = np.mean([run(seed=s, pretrain=True)[1] for s in (0, 1, 2)])
 b_ = np.mean([run(seed=s, pretrain=False)[1] for s in (0, 1, 2)])
 print(f"   late acc   pretrained={a:.2f}  random={b_:.2f}   "
-      f"{'confirmed: worse' if a < b_ else 'unexpected'}")
+      f"{'both at ceiling here; see results/part3_17' if abs(a-b_) < 0.03 else ('worse' if a < b_ else 'better')}")
 
 print("3. save / load round-trip                    (claim 1)")
 _, late, model, pats = run(seed=0)

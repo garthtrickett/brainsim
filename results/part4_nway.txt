@@ -1,0 +1,112 @@
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788754756818.log
+instrumenting the 2 -> 4 class cliff
+
+  2 classes: acc=1.000  motor_cells_firing_per_tick=1.71/2  vote_margin=7.7  hidden_code_overlap=0.622  W_out_spread=0.402
+  4 classes: acc=0.318  motor_cells_firing_per_tick=3.37/4  vote_margin=0.6  hidden_code_overlap=0.549  W_out_spread=0.031
+  8 classes: acc=0.150  motor_cells_firing_per_tick=6.62/8  vote_margin=0.6  hidden_code_overlap=0.554  W_out_spread=0.023
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788755387946.log
+is the motor layer the missing competition?
+
+  --- 2 classes (chance 0.500) ---
+    shipped                acc=1.000  spread=0.410  seeds: 1.00 1.00 1.00
+    action-gated credit    acc=1.000  spread=0.208  seeds: 1.00 1.00 1.00
+    motor k-WTA (1-of-N)   acc=0.500  spread=0.005  seeds: 0.50 0.50 0.50
+  --- 4 classes (chance 0.250) ---
+    shipped                acc=0.323  spread=0.032  seeds: 0.32 0.32 0.33
+    action-gated credit    acc=0.923  spread=0.582  seeds: 0.92 0.91 0.93
+    motor k-WTA (1-of-N)   acc=0.250  spread=0.014  seeds: 0.25 0.25 0.25
+  --- 8 classes (chance 0.125) ---
+    shipped                acc=0.152  spread=0.026  seeds: 0.16 0.14 0.16
+    action-gated credit    acc=0.919  spread=0.690  seeds: 0.90 0.93 0.92
+    motor k-WTA (1-of-N)   acc=0.123  spread=0.025  seeds: 0.12 0.12 0.12
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788755731899.log
+can LOCAL motor competition do what non-local action-gating did?
+
+  2 classes (chance 0.500):   shipped=1.000 (spread 0.41)  motor k-WTA=0.667 (spread 0.42)
+  4 classes (chance 0.250):   shipped=0.323 (spread 0.03)  motor k-WTA=0.319 (spread 0.07)
+  8 classes (chance 0.125):   shipped=0.152 (spread 0.03)  motor k-WTA=0.158 (spread 0.26)
+
+  action-gated (non-local) reference: 1.000 / 0.923 / 0.919
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788755954271.log
+does COMMITMENT let a purely local rule scale past 2 choices?
+
+  2 classes (chance 0.500): commitment=0.667 (spread 0.46)  seeds: 0.50 1.00 0.50
+  4 classes (chance 0.250): commitment=0.350 (spread 0.16)  seeds: 0.28 0.28 0.50
+  8 classes (chance 0.125): commitment=0.168 (spread 0.28)  seeds: 0.14 0.13 0.23
+
+  reference  shipped: 1.000 / 0.323 / 0.152
+  reference  action-gated (NON-local): 1.000 / 0.923 / 0.919
+
+[exited with code 0]
+---
+90:        self.trh_sum = np.zeros(n_hidden); self.trh_n = 0
+150:        self.trh_sum += self.trh; self.trh_n += 1
+181:            z = self.trh_sum / max(self.trh_n, 1)
+189:            self.trh_sum[:] = 0.0; self.trh_n = 0
+200:        self.trh_sum[:] = 0.0; self.trh_n = 0
+[running] brainsim: re-validate action-gating with correct trh mean  (pid 1264045)
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788756292842.log
+mainline with ACTION_GATED default
+
+  2 classes (chance 0.500): gated=1.000  local-only=1.000
+  4 classes (chance 0.250): gated=0.959  local-only=0.323
+  8 classes (chance 0.125): gated=0.900  local-only=0.152
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788754291936.log
+target band: comfortably above chance, comfortably below 1.00
+
+  4 classes  density 0.3  k=6  noise 0.35   acc=0.319 (chance 0.250)  too hard
+  4 classes  density 0.3  k=12 noise 0.35   acc=0.286 (chance 0.250)  too hard
+  4 classes  density 0.25  k=12 noise 0.2   acc=0.267 (chance 0.250)  too hard
+  8 classes  density 0.25  k=12 noise 0.2   acc=0.130 (chance 0.125)  too hard
+  8 classes  density 0.2  k=16 noise 0.15   acc=0.121 (chance 0.125)  too hard
+  4 classes  density 0.35  k=6  noise 0.15   acc=0.288 (chance 0.250)  too hard
+
+[exited with code 0]
+---
+does allowing an inhibitory readout unlock N-way discrimination?
+
+  2 classes  non-negative (shipped)   acc=1.000  (chance 0.500)  seeds: 1.00 1.00 1.00
+  2 classes  allows negative          acc=0.998  (chance 0.500)  seeds: 0.99 1.00 1.00
+
+  4 classes  non-negative (shipped)   acc=0.323  (chance 0.250)  seeds: 0.32 0.32 0.33
+  4 classes  allows negative          acc=0.317  (chance 0.250)  seeds: 0.27 0.33 0.35
+
+  8 classes  non-negative (shipped)   acc=0.152  (chance 0.125)  seeds: 0.16 0.14 0.16
+  8 classes  allows negative          acc=0.179  (chance 0.125)  seeds: 0.15 0.17 0.21
+
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788754882219.log
+breaking the symmetry that keeps W_out flat
+
+  --- 2 classes (chance 0.500) ---
+    shipped              acc=1.000  W_out_spread=0.410  seeds: 1.00 1.00 1.00
+    random W_out init    acc=1.000  W_out_spread=0.426  seeds: 1.00 1.00 1.00
+    no deviation term    acc=0.949  W_out_spread=0.298  seeds: 0.90 0.94 1.00
+    both                 acc=0.944  W_out_spread=0.355  seeds: 0.84 1.00 1.00
+  --- 4 classes (chance 0.250) ---
+    shipped              acc=0.323  W_out_spread=0.032  seeds: 0.32 0.32 0.33
+    random W_out init    acc=0.332  W_out_spread=0.049  seeds: 0.28 0.35 0.37
+    no deviation term    acc=0.314  W_out_spread=0.031  seeds: 0.29 0.30 0.35
+    both                 acc=0.311  W_out_spread=0.046  seeds: 0.27 0.30 0.37
+  --- 8 classes (chance 0.125) ---
+    shipped              acc=0.152  W_out_spread=0.026  seeds: 0.16 0.14 0.16
+    random W_out init    acc=0.184  W_out_spread=0.052  seeds: 0.16 0.19 0.20
+    no deviation term    acc=0.146  W_out_spread=0.024  seeds: 0.15 0.15 0.13
+    both                 acc=0.191  W_out_spread=0.057  seeds: 0.18 0.25 0.15
+
+[exited with code 0]
+---

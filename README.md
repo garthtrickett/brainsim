@@ -449,3 +449,80 @@ still looking principled, still costing you -- and it can convict an innocent
 third component, as it did claim 5.
 
 Mainline after the fix: **learns 0.58 -> 1.00**, gap to 02 closed.
+
+
+---
+
+# Part 4: the two-class ceiling was a bug, not a limit
+
+Everything through Part 3b was validated on ONE two-class task solved at 1.00.
+Pushed to more classes, the design collapses to near chance -- and six
+hypotheses were needed to find out why. Five were wrong.
+
+```
+   classes   shipped (local)   action-gated
+      2          1.000            1.000
+      4          0.323            0.959
+      8          0.152            0.900
+```
+
+## What it was not
+
+- **not the sign constraint.** W_out is clamped non-negative, so a cell can only
+  give evidence FOR a class. Allowing negative weights: 0.317 vs 0.323. No effect,
+  so Dale's law on the readout is free.
+- **not representation.** Hidden codes were separable the whole time, and MORE so
+  at 4/8 classes (overlap 0.549) than at 2 (0.622).
+- **not initialisation symmetry** (0.332 vs 0.323), **not the deviation term**
+  (0.314 vs 0.323 -- though removing it does cost 1.00 -> 0.949 at 2 classes,
+  confirming 02).
+
+## What it was
+
+Instrumentation, not reasoning, found it (`18_class_cliff_diagnostic.py`):
+
+```
+              acc     motor firing   vote margin   hidden overlap   W_out spread
+  2 classes  1.000    1.71/2 (85%)       7.7           0.622           0.402
+  4 classes  0.318    3.37/4 (84%)       0.6           0.549           0.031
+  8 classes  0.150    6.62/8 (83%)       0.6           0.554           0.023
+```
+
+`elig = outer(fm, trh)` credits EVERY motor cell that fired, not the one chosen.
+At 2 classes the count difference still favours the winner. At 4+ the counts are
+nearly equal, so the update is nearly uniform, W_out never differentiates (0.03
+vs 0.58), the vote margin sits at 0.6 spikes -- a coin flip -- and the loop is
+self-locking: no differentiation, no margin, no differentiated credit.
+
+## The fix is non-local, and two local alternatives failed
+
+`ACTION_GATED=True` credits the SELECTED action. It is the one non-local element
+in the design: a synapse cannot know what the whole network chose. Defaulted ON
+because a strictly local rule caps at binary choice, with a flag to turn it off.
+
+Two local mechanisms were tried:
+
+- **motor k-WTA** (1-of-N per tick, `19_local_alternatives.py`): 0.319 / 0.158.
+  Per-tick winners smear credit; the decision is a 30-tick aggregate.
+- **commitment** (accumulate to a bound, then lock, `20_commitment.py`):
+  0.350 / 0.168, and bimodal across seeds (0.50/1.00/0.50 at 2 classes). Locking
+  on noise is self-fulfilling: only the locked cell fires, so only it gets credit
+  and it cannot escape. Traded smeared credit for a deadlock.
+
+So the honest statement is: **within this design, aligning credit to a
+trial-level decision requires a non-local signal.** That is a real limit of the
+biological premise, not a detail.
+
+## Two retractions
+
+**"Too hard" was wrong.** Six task configurations were declared too hard during
+calibration. The task was fine; the learning rule was broken above N=2. The
+instrument was reporting a defect in itself.
+
+**The port was broken, and the control caught it.** Shipping action-gating into
+brainsim.py first gave 0.243 at 8 classes against the standalone's 0.919, because
+`z = self.trh / 30.0` (the FINAL tick's trace) was copied from the sleep-gradient
+path instead of the tested running mean. Without the standalone number to compare
+against, 0.243 vs 0.125 chance would have read as "helps a bit, does not scale" --
+a finding about the method rather than a bug in the port. Second occurrence of
+this exact error today; the first invalidated experiment E.
