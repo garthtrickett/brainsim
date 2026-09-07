@@ -1,0 +1,15 @@
+CLAIM 3: replay against catastrophic forgetting. chance=0.50
+train A -> train B (interference) -> retest A
+
+seed 0: A after A=0.96 -> A after B=0.61  [OK]
+         none         A_retained=0.61  B_learned=0.91
+         uniform      A_retained=0.56  B_learned=0.82
+         prioritised  A_retained=0.81  B_learned=0.73
+seed 1: A after A=0.94 -> A after B=0.91  [FAILED (no forgetting to fix)]
+         none         A_retained=0.91  B_learned=0.97
+         uniform      A_retained=0.82  B_learned=0.95
+         prioritised  A_retained=0.77  B_learned=0.54
+seed 2: A after A=0.84 -> A after B=0.81  [FAILED (no forgetting to fix)]
+         none         A_retained=0.81  B_learned=0.93
+         uniform      A_retained=0.92  B_learned=0.94
+         prioritised  A_retained=0.80  B_learned=0.92

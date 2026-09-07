@@ -1,0 +1,8 @@
+CLAIM 5: pretrained sensory encoder vs random. chance=0.50
+
+seed 0: overlap random=0.788 pretrained=0.862  [FAILED (overlap not reduced)]
+         acc@200/400/900  random=0.54/0.53/0.84   pretrained=0.54/0.64/0.92
+seed 1: overlap random=0.630 pretrained=0.276  [OK]
+         acc@200/400/900  random=0.79/0.95/0.99   pretrained=0.87/0.99/1.00
+seed 2: overlap random=0.682 pretrained=0.679  [OK]
+         acc@200/400/900  random=0.67/0.92/0.98   pretrained=0.80/0.95/1.00

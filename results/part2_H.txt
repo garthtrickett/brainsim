@@ -1,0 +1,5 @@
+CLAIM 6: gradient descent inside the sleep phase. chance=0.50
+
+seed 0: acc@200/400/900  local-only=0.54/0.55/0.83   +sleep-grad=0.58/0.90/1.00  [OK]
+seed 1: acc@200/400/900  local-only=0.84/0.98/0.98   +sleep-grad=0.88/1.00/1.00  [OK]
+seed 2: acc@200/400/900  local-only=0.73/0.94/0.98   +sleep-grad=0.86/1.00/1.00  [OK]

@@ -1,0 +1,9 @@
+8 agents x 250 trials each; chance=0.50
+SANITY GATE: ceiling must exceed solo, or the merge numbers mean nothing.
+
+seed 0:  solo=0.55  merged-CLONES=0.67  merged-INDEP=0.55  ceiling=0.99   gate: OK
+seed 1:  solo=0.89  merged-CLONES=0.87  merged-INDEP=0.52  ceiling=1.00   gate: OK
+seed 2:  solo=0.81  merged-CLONES=0.89  merged-INDEP=0.53  ceiling=1.00   gate: OK
+
+means: solo=0.75  merged-CLONES=0.81  merged-INDEP=0.53
+claim holds? clones>solo: True   independent~chance: True

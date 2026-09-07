@@ -1,0 +1,62 @@
+CLAIM 3: replay vs forgetting. 12 seeds -- only 1 of 3 showed forgetting
+at all, so the sample of INTERPRETABLE seeds was n=1. More seeds, then
+summarise ONLY the ones whose gate passes.
+train A -> train B (interference) -> retest A
+
+seed 0: A after A=0.96 -> A after B=0.61  [OK]
+         none         A_retained=0.61  B_learned=0.91
+         uniform      A_retained=0.56  B_learned=0.82
+         prioritised  A_retained=0.81  B_learned=0.73
+seed 1: A after A=0.94 -> A after B=0.91  [FAILED (no forgetting to fix)]
+         none         A_retained=0.91  B_learned=0.97
+         uniform      A_retained=0.82  B_learned=0.95
+         prioritised  A_retained=0.77  B_learned=0.54
+seed 2: A after A=0.84 -> A after B=0.81  [FAILED (no forgetting to fix)]
+         none         A_retained=0.81  B_learned=0.93
+         uniform      A_retained=0.92  B_learned=0.94
+         prioritised  A_retained=0.80  B_learned=0.92
+seed 3: A after A=0.93 -> A after B=0.96  [FAILED (no forgetting to fix)]
+         none         A_retained=0.96  B_learned=0.97
+         uniform      A_retained=0.81  B_learned=0.92
+         prioritised  A_retained=0.99  B_learned=0.93
+seed 4: A after A=0.98 -> A after B=0.66  [OK]
+         none         A_retained=0.66  B_learned=1.00
+         uniform      A_retained=0.55  B_learned=0.98
+         prioritised  A_retained=0.67  B_learned=0.54
+seed 5: A after A=0.95 -> A after B=0.65  [OK]
+         none         A_retained=0.65  B_learned=0.97
+         uniform      A_retained=0.52  B_learned=0.84
+         prioritised  A_retained=0.68  B_learned=1.00
+seed 6: A after A=0.97 -> A after B=0.91  [FAILED (no forgetting to fix)]
+         none         A_retained=0.91  B_learned=0.96
+         uniform      A_retained=0.64  B_learned=0.58
+         prioritised  A_retained=0.65  B_learned=0.52
+seed 7: A after A=0.94 -> A after B=0.85  [FAILED (no forgetting to fix)]
+         none         A_retained=0.85  B_learned=0.99
+         uniform      A_retained=0.53  B_learned=0.72
+         prioritised  A_retained=0.71  B_learned=0.55
+seed 8: A after A=0.98 -> A after B=0.99  [FAILED (no forgetting to fix)]
+         none         A_retained=0.99  B_learned=0.98
+         uniform      A_retained=0.87  B_learned=0.88
+         prioritised  A_retained=1.00  B_learned=1.00
+seed 9: A after A=0.96 -> A after B=0.81  [OK]
+         none         A_retained=0.81  B_learned=0.93
+         uniform      A_retained=0.89  B_learned=0.98
+         prioritised  A_retained=0.67  B_learned=0.78
+seed 10: A after A=0.90 -> A after B=0.90  [FAILED (no forgetting to fix)]
+         none         A_retained=0.90  B_learned=0.99
+         uniform      A_retained=0.59  B_learned=0.78
+         prioritised  A_retained=0.59  B_learned=0.69
+seed 11: A after A=0.62 -> A after B=0.59  [FAILED (no forgetting to fix)]
+         none         A_retained=0.59  B_learned=0.89
+         uniform      A_retained=0.68  B_learned=0.88
+         prioritised  A_retained=0.69  B_learned=0.82
+
+==============================================================
+seeds with genuine forgetting (gate passed): 4 of 12
+  none         A_retained=0.68   B_learned=0.95
+  uniform      A_retained=0.63   B_learned=0.91
+  prioritised  A_retained=0.71   B_learned=0.76
+
+  prioritised beats none:    True  (0.71 vs 0.68)
+  prioritised beats uniform: True  (0.71 vs 0.63)

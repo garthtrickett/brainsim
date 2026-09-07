@@ -1,0 +1,13 @@
+combination lock, 14 states. 25000 actions per run.
+EXPECTED BY CHANCE: 1.53 rewards. Above this = actually learning.
+
+  tau~10  (original, failed) seed 0: rewards=  3  maxdepth=13/13  first=16637
+  tau~10  (original, failed) seed 1: rewards=  1  maxdepth=13/13  first=2321
+  tau~10  (original, failed) seed 2: rewards=  0  maxdepth=12/13  first=NEVER
+                             mean=1.33 vs chance 1.53
+
+  tau~200 (the D2 fix)       seed 0: rewards=  3  maxdepth=13/13  first=16637
+  tau~200 (the D2 fix)       seed 1: rewards=  3  maxdepth=13/13  first=2321
+  tau~200 (the D2 fix)       seed 2: rewards=  0  maxdepth=12/13  first=NEVER
+                             mean=2.00 vs chance 1.53
+

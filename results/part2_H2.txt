@@ -1,0 +1,16 @@
+CLAIM 6 with the replay confound controlled. chance=0.50
+all three arms get identical numbers of weight updates
+
+seed 0:  local-only=0.54/0.55/0.83  local-replay=0.55/0.70/0.79  sleep-grad=0.58/0.90/1.00 
+seed 1:  local-only=0.84/0.98/0.98  local-replay=0.77/0.99/1.00  sleep-grad=0.88/1.00/1.00 
+seed 2:  local-only=0.73/0.94/0.98  local-replay=0.78/0.96/0.99  sleep-grad=0.86/1.00/1.00 
+seed 3:  local-only=0.80/0.97/0.99  local-replay=0.89/0.99/1.00  sleep-grad=0.92/1.00/1.00 
+seed 4:  local-only=0.75/0.92/0.99  local-replay=0.90/0.98/1.00  sleep-grad=0.90/1.00/1.00 
+
+means (acc@200 / acc@400 / acc@900):
+  local-only    0.73 / 0.87 / 0.95
+  local-replay  0.78 / 0.92 / 0.96
+  sleep-grad    0.83 / 0.98 / 1.00
+
+gradient beats matched local replay? @400: True (0.98 vs 0.92)
+if False, the win was replay, not the gradient -- #6 reduces to #3.
