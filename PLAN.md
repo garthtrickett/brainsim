@@ -26,56 +26,86 @@ Known limits, all measured:
 
 ## Order of work
 
-### 0. Harder tasks  <- IN PROGRESS
+### 0. Harder tasks  <- DONE
 Everything is validated on synthetic pattern classification. Steps 5 and 6 have
 no task that would exercise them, so building them now means no way to tell if
 they work. Needs: a sparse-reward task, a volatile-reward task, a
 representation-limited task, and a memory task — behind ONE task API and ONE
 runner, so no experiment reimplements the loop.
 
-Each task must ship with its chance level and a calibration showing the current
-design lands in a usable band (not floor, not ceiling). Ablations on an
-uncalibrated task are noise; that mistake cost 20 minutes on 2026-09-07.
+Each task ships with a MEASURED floor (random policy) and MEASURED ceiling
+(oracle), never analytic ones. Calibrated (`23_calibrate_tasks.py`, 4000
+decisions, 3 seeds):
 
-### 1. Hippocampus — episodic store + time-compressed sequence replay
-Targets the one failure we measured. Store the rare rewarded episode as a bound
-conjunction; replay it hundreds of times offline. Turns 2 rewards into 2,000
-learning events, and time-compressed replay collapses a 13-step sequence into a
-window a short eligibility trace can span. Grows the existing sleep buffer:
-dentate-style sparse separation (far sparser than k=6/80), CA3 recurrence,
+```
+  task            floor    agent  ceiling   verdict
+  nway-4         0.2527   0.8340   1.0000   USABLE (78% up)   <- ablation substrate
+  nway-8         0.1221   0.6590   1.0000   USABLE (61% up)   <- ablation substrate
+  lock-10        0.0010   0.0000   0.1110   FLOOR   <- target, step 2
+  volatile-4     0.2500   0.2763   1.0000   FLOOR   <- target, step 1
+  tmaze-2d3      0.1232   0.1267   0.2500   FLOOR   <- target, step 5
+  xor-2          0.5011   0.7290   1.0000   USABLE  <- does NOT bind (see step 6)
+```
+
+Two usable ablation substrates (headroom in both directions -- the thing every
+earlier experiment lacked) and three measured targets.
+
+### 1. Neuromodulators beyond dopamine  <- NEXT
+Moved ahead of the hippocampus. `volatile-4` sits at 0.276 against a 0.250 floor
+on a task the design solves at 0.834 when stationary -- it does not degrade under
+non-stationarity, it collapses to chance. A fixed learning rate and fixed
+exploration are a hard wall, not a tuning shortfall.
+
+Cheaper than step 2 and partly a prerequisite for it: a state-dependent value
+baseline is what makes sparse reward learnable at all, since a single global
+scalar is useless when reward arrives twice in 25,000 actions. NE-style adaptive
+noise, ACh-style adaptive learning rate.
+Validates on: `volatile-4` (floor now), and helps `lock-10`.
+
+### 2. Hippocampus — episodic store + time-compressed sequence replay
+Targets the headline failure: `lock-10` scores 0.0000 against a 0.0010 floor --
+BELOW random, because it learns the wrong thing from near-zero signal. Store the
+rare rewarded episode as a bound conjunction and replay it hundreds of times
+offline: 2 rewards become 2,000 learning events. Time-compressed replay also
+collapses a long sequence into a window a short eligibility trace can span.
+Grows the existing sleep buffer: dentate-style sparse separation, CA3 recurrence,
 prioritised replay of surprising/rewarded episodes.
-Validates on: the combination lock (state-observable, so replay alone can crack
-it — no working memory needed).
-
-### 2. Neuromodulators beyond dopamine
-State-dependent value baseline + NE-style adaptive noise. Cheap, attacks the
-SAME failure as step 1, validates on the same tasks. A single global `value`
-scalar is close to useless when reward arrives twice in 25,000 actions.
-Validates on: sparse-reward and volatile tasks.
+Validates on: `lock-10` (state-observable, so replay alone can crack it).
 
 ### 3. Basal-ganglia selection
 Disinhibition (default blocked, winner released) + opponent Go/NoGo channels,
-replacing `argmax(votes)`. Expect it to **retire `TAGGATE`** — anticipate that:
+replacing `argmax(votes)`. Expect it to **retire `TAGGATE`** -- anticipate that;
 a new mechanism making an older one redundant is this project's most repeated
 pattern (k-WTA retired the refractory period, `TARGET_RATE`, and threshold
 homeostasis).
-Validates on: the 8-class gap.
+Validates on: `nway-8`, where local is 0.592 against 0.900 non-local.
 
 ### 4. Cerebellum — consolidation, not capability
 The sleep gradient already IS error-driven supervised learning with a teaching
 signal. Naming it as a third learning system clarifies the architecture before
-the two largest changes. Near-zero risk.
+the larger changes. Near-zero risk.
 
-### 5. Predictive-coding hierarchy
-The deepest structural gap but NOT the binding constraint: we measured that
-representation was never the bottleneck (hidden codes separable at 0.549, better
-than the 2-class case that worked at 0.622). It changes the representations every
-prior result depends on, so it needs step 0's representation-limited task first.
+### 5. PFC working memory, BG-gated
+Depends on step 3 for the gate. `tmaze-2d3` is at floor (0.127 vs 0.123) because
+nothing persists across decisions. Our failed `commitment` experiment belongs
+here: commitment is a PFC state held deliberately and released by a gate, not a
+motor-layer trick.
 
-### 6. PFC working memory, BG-gated
-Depends on step 3 for the gate and step 0 for a partially-observable task.
-Our failed `commitment` experiment belongs here: commitment is a PFC state held
-deliberately and released by a gate, not a motor-layer trick.
+### 6. Predictive-coding hierarchy — DEMOTED, may not be needed
+Twice now, measurement says representation is not the bottleneck:
+- hidden codes were MORE separable at 4/8 classes (0.549) than at the 2-class
+  case that worked (0.622);
+- `xor-2`, built specifically so a fixed random encoder should fail, is solved at
+  0.729. A sparse random projection plus k-WTA is GOOD at conjunctions -- the
+  winning set depends on the input combination. That is why random feature
+  expansions make XOR separable, and it is the cerebellar granule-layer
+  architecture, which exists to build conjunctive codes.
+
+Two attempts to construct a representation-limited task both failed to bind. A
+third would need compositional generalisation to UNSEEN combinations or
+invariance to nuisance transforms -- and a train/test split the runner does not
+have. Do not build this until such a task exists and the current encoder
+demonstrably fails on it.
 
 ## Method rules (earned the hard way)
 

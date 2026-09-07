@@ -1,0 +1,12 @@
+  task                 floor   agent  ceiling   verdict
+  nway-4              0.2527  0.8340   1.0000   USABLE (78% of the way up)
+  nway-8              0.1221  0.6590   1.0000   USABLE (61% of the way up)
+  lock-10             0.0010  0.0000   0.1110   FLOOR - ablations cannot show damage
+  volatile-4@300      0.2500  0.2763   1.0000   FLOOR - ablations cannot show damage
+  conjunctive-4       0.2518  0.6887   1.0000   USABLE (58% of the way up)
+  tmaze-2d3           0.1232  0.1267   0.2500   FLOOR - ablations cannot show damage
+
+[exited with code 0]
+  xor-2        floor=0.5011 agent=0.7290 ceiling=1.0000   USABLE (46% up) - does NOT bind on representation
+
+[exited with code 0]
