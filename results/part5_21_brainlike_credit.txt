@@ -1,0 +1,25 @@
+  === 4 classes (chance 0.250) ===
+    local baseline             0.323   seeds: 0.32 0.32 0.33
+    taggate THETA=0.99         0.602   seeds: 0.49 0.68 0.63
+    taggate THETA=1.0 (WTA)    0.602   seeds: 0.51 0.68 0.62
+    persist + THETA=1.0        0.877   seeds: 0.90 0.88 0.85
+    persist only               0.349   seeds: 0.39 0.34 0.32
+    ACTION_GATED (non-local)   0.959   seeds: 0.96 0.95 0.97
+
+  === 8 classes (chance 0.125) ===
+    local baseline             0.152   seeds: 0.16 0.14 0.16
+    taggate THETA=0.99         0.573   seeds: 0.39 0.72 0.61
+    taggate THETA=1.0 (WTA)    0.672   seeds: 0.84 0.64 0.54
+    persist + THETA=1.0        0.600   seeds: 0.60 0.68 0.52
+    persist only               0.174   seeds: 0.17 0.17 0.18
+    ACTION_GATED (non-local)   0.900   seeds: 0.88 0.90 0.93
+
+  === 2 classes (chance 0.500) ===
+    local baseline             1.000   seeds: 1.00 1.00 1.00
+    taggate THETA=0.99         1.000   seeds: 1.00 1.00 1.00
+    taggate THETA=1.0 (WTA)    1.000   seeds: 1.00 1.00 1.00
+    persist + THETA=1.0        1.000   seeds: 1.00 1.00 1.00
+    persist only               1.000   seeds: 1.00 1.00 1.00
+    ACTION_GATED (non-local)   1.000   seeds: 1.00 1.00 1.00
+
+[exited with code 0]

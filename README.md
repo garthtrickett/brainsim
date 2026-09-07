@@ -526,3 +526,70 @@ path instead of the tested running mean. Without the standalone number to compar
 against, 0.243 vs 0.125 chance would have read as "helps a bit, does not scale" --
 a finding about the method rather than a bug in the port. Second occurrence of
 this exact error today; the first invalidated experiment E.
+
+
+---
+
+# Part 5: the fix can be local after all
+
+Part 4 shipped ACTION_GATED as the default -- the one non-local element -- because
+a strictly local rule capped at binary choice. That is no longer true.
+
+**TAGGATE**: a synapse tags only if its own cell clears a threshold set by a
+pooled inhibitory interneuron. Winner-take-all on CREDIT over the trial, not on
+firing per tick (which is where motor k-WTA failed). A cell needs only its own
+activity and one pooled inhibitory signal -- both local.
+
+```
+                        2 cls    4 cls    8 cls
+  no-gate baseline      1.000    0.323    0.152
+  TAGGATE (shipped)     1.000    0.838    0.592
+  ACTION_GATED (ref)    1.000    0.959    0.900
+```
+
+Recovers 81% of the gap at 4 classes, 59% at 8, and breaks nothing at 2.
+ACTION_GATED remains available as an opt-in accuracy mode.
+
+## THETA had to be 1.0, and that nearly buried the result
+
+The first sweep tried THETA of 0.80 and 0.95 and looked like a dead end. A smoke
+test explained why: motor traces sit at `[9.53 9.48 9.53 9.48]` -- **0.5% apart**,
+so any threshold below ~0.99 admits every cell and gates nothing. The mechanism
+was never engaged. Exact-max selection is the real WTA.
+
+## The gate window trades alignment against exploration
+
+The gate reads `trm`; the decision is `argmax(votes)` over the whole trial. Too
+short a trace and the gate tags whoever leads at that instant, not the eventual
+winner. Too long and an early lead locks in and cannot be overturned -- costly
+with more competitors, since the early leader is right only 1/N of the time.
+
+```
+                  8 classes   4 classes
+    TRM_D=0.90      0.672       0.602
+    TRM_D=0.97      0.592       0.838     <- default: best average, no collapse
+    TRM_D=0.99      0.244       0.959     <- MATCHES the non-local reference at 4
+    TRM_D=1.0       0.292       0.503     <- never forgets; early lead locks in
+    ACTION_GATED    0.900       0.959
+```
+
+**Tuned to its task the local mechanism matches the non-local one exactly**
+(0.959 vs 0.959 at 4 classes, seeds 0.96/0.96/0.96). The optimum inverts between
+4 and 8 classes, so the default is the robust middle rather than either peak.
+TRM_D=1.0 -- the predicted answer -- is worse than both its neighbours everywhere.
+
+PERSIST (recurrent self-excitation) is in but OFF: +0.28 at 4 classes, -0.07 at 8,
+near-nothing alone. A default whose sign depends on the task is a coin flip.
+
+## Method note
+
+An earlier version of this experiment used a SUBCLASS that reimplemented step()
+and silently dropped synaptic scaling, degrading every row including the
+reference (ACTION_GATED read 0.792/0.632 instead of its true 0.959/0.900). Caught
+only because the reference had a known value. The mechanisms now live in BrainSim
+itself and are toggled by attribute -- one implementation, nothing to drift.
+Second occurrence of this exact error; the first invalidated experiment E.
+
+**Five of the failures in this project were timescale mismatches**: membrane,
+eligibility, homeostasis cadence, gate window, decision window. That is the
+signature failure mode of this design, not a series of unrelated bugs.

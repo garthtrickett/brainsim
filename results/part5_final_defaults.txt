@@ -1,0 +1,6 @@
+
+  2 classes (chance 0.500): local default=1.000  no-gate baseline=1.000  non-local ref=1.000
+  4 classes (chance 0.250): local default=0.838  no-gate baseline=0.323  non-local ref=0.959
+  8 classes (chance 0.125): local default=0.592  no-gate baseline=0.152  non-local ref=0.900
+
+[exited with code 0]

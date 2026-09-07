@@ -1,0 +1,18 @@
+
+  === 8 classes (chance 0.125) ===
+    TRM_D=0.90 (shipped)     0.672   seeds: 0.84 0.64 0.54
+    TRM_D=0.97               0.592   seeds: 0.60 0.62 0.56
+    TRM_D=0.99               0.244   seeds: 0.26 0.25 0.22
+    TRM_D=1.0 (cumulative)   0.292   seeds: 0.22 0.18 0.48
+    TRM_D=1.0 + persist      0.120   seeds: 0.11 0.13 0.12
+    ACTION_GATED (ref)       0.900   seeds: 0.88 0.90 0.93
+
+  === 4 classes (chance 0.250) ===
+    TRM_D=0.90 (shipped)     0.602   seeds: 0.51 0.68 0.62
+    TRM_D=0.97               0.838   seeds: 0.97 0.93 0.61
+    TRM_D=0.99               0.959   seeds: 0.96 0.96 0.96
+    TRM_D=1.0 (cumulative)   0.503   seeds: 0.41 0.67 0.44
+    TRM_D=1.0 + persist      0.284   seeds: 0.27 0.29 0.29
+    ACTION_GATED (ref)       0.959   seeds: 0.96 0.95 0.97
+
+[exited with code 0]

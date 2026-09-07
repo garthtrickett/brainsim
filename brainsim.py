@@ -70,8 +70,43 @@ class BrainSim:
     #       credit across cells; the decision is a 30-tick aggregate.
     #   commitment (lock in at a bound): 0.350 / 0.168 -- locks on noise, then
     #       only the locked cell can fire, so it cannot escape. Bimodal seeds.
-    # Set False for a strictly local rule, and accept the 2-class ceiling.
-    ACTION_GATED = True
+    # 21 SUPERSEDES the decision to default this ON. A LOCAL mechanism (TAGGATE)
+    # recovers most of the benefit, so the design no longer has to give up
+    # locality to exceed binary choice:
+    #       classes   local   TAGGATE   persist+gate   ACTION_GATED
+    #          4      0.323    0.602       0.877          0.959
+    #          8      0.152    0.672       0.600          0.900
+    # TAGGATE recovers 70% of the gap at 8 classes and 87% at 4 (with persist).
+    # Enable ACTION_GATED for maximum accuracy, accepting one non-local signal.
+    ACTION_GATED = False   # 21: superseded as the default -- see TAGGATE below
+
+    # --- brain-plausible alternatives to ACTION_GATED (19/21). Default OFF. ---
+    # Added to BrainSim itself rather than a subclass: a subclass that
+    # reimplemented step() silently dropped synaptic scaling and degraded every
+    # row of its own experiment, reference included.
+    # 21: PERSIST is NOT reliably useful -- +0.28 at 4 classes, -0.07 at 8, and
+    # near-nothing alone. Off by default; try it if 4-way is your case.
+    PERSIST  = False     # recurrent self-excitation + pooled lateral inhibition:
+    SELF_EXC = 0.15      # amplifies an early (noise-driven) lead and sustains it
+    INHIB    = 0.10      # to reward, so credit and decision coincide in TIME
+    TAGGATE  = True      # tag only if this cell clears a threshold set by the
+    THETA    = 1.0       # pooled interneuron -> winner-take-all on CREDIT.
+                         # 21: measured motor traces are [9.53 9.48 9.53 9.48] --
+                         # 0.5% apart -- so any THETA below ~0.99 admits every
+                         # cell and gates nothing. Exact-max is the real WTA.
+    # 22: the gate window trades ALIGNMENT against EXPLORATION, and the optimum
+    # moves with the number of choices. A long trace matches the gate's winner to
+    # the decision (argmax over the whole trial); too long and an early lead locks
+    # in and cannot be overturned -- costly with more competitors, since the early
+    # leader is right only 1/N of the time.
+    #                 8 classes   4 classes
+    #   TRM_D=0.90      0.672       0.602
+    #   TRM_D=0.97      0.592       0.838     <- default: best average, no collapse
+    #   TRM_D=0.99      0.244       0.959     <- MATCHES non-local ACTION_GATED at 4
+    #   TRM_D=1.0       0.292       0.503     <- never forgets; early lead locks in
+    #   ACTION_GATED    0.900       0.959
+    # Tune to your N: 0.99 for 4-way (matches non-local exactly), 0.90 for 8-way.
+    TRM_D    = 0.97
 
     def __init__(self, n_in=40, n_hidden=80, n_motor=2, k=6, seed=0):
         self.rng = np.random.default_rng(seed)
@@ -88,6 +123,7 @@ class BrainSim:
         # FINAL tick's trace, one noisy sample, and using it drops 8-class
         # accuracy from 0.92 to 0.24.
         self.trh_sum = np.zeros(n_hidden); self.trh_n = 0
+        self.trm = np.zeros(n_motor)      # motor activity trace
         self.value = 0.0
         self.rate  = np.zeros(n_hidden)
         self.TARGET_RATE = k / n_hidden   # NOT the 0.01 from 01; see above
@@ -132,9 +168,12 @@ class BrainSim:
         si = (self.rng.random(self.n_in) < 0.6 * x).astype(float)
 
         # 4/5: motor integrates last tick's hidden spikes, plus exploration noise
-        self.vm = self.vm * self.LEAK + self.W_out @ self.fh \
-                  + self.rng.normal(0, self.NOISE, self.n_motor)
+        drive = self.W_out @ self.fh + self.rng.normal(0, self.NOISE, self.n_motor)
+        if self.PERSIST:
+            drive += self.SELF_EXC * self.trm - self.INHIB * self.trm.mean()
+        self.vm = self.vm * self.LEAK + drive
         fm = (self.vm > 1.0).astype(float); self.vm[fm > 0] = 0
+        self.trm = self.trm * self.TRM_D + fm
 
         # 2: leaky integrate and fire
         self.vh = self.vh * self.LEAK + self.W_in @ si
@@ -151,7 +190,12 @@ class BrainSim:
         # EMA, not a running sum: keeps magnitude independent of the time
         # constant. A plain sum at tau~200 accumulates ~200x a single outer
         # product and saturates W_out -- the bug that invalidated experiment E.
-        self.elig = self.elig * self.ELIG_D + (1 - self.ELIG_D) * np.outer(fm, self.trh)
+        if self.TAGGATE:
+            m = self.trm.max()
+            gate = (self.trm >= self.THETA * m).astype(float) if m > 0 else np.ones(self.n_motor)
+        else:
+            gate = 1.0
+        self.elig = self.elig * self.ELIG_D + (1 - self.ELIG_D) * np.outer(fm * gate, self.trh)
         self.elig_w = self.elig_w * self.ELIG_D + (1 - self.ELIG_D)
         self.votes += fm
 
