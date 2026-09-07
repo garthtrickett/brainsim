@@ -1,0 +1,12 @@
+local rule only (sleep gradient off). chance=0.50, 02_learning.py=1.00
+
+  mainline as shipped          0.90   (seeds: 0.81 0.92 0.94 0.88 0.95)
+    - threshold homeostasis    0.98   (seeds: 0.98 0.98 0.99 0.95 0.99)
+    - synaptic scaling         0.81   (seeds: 0.78 0.86 0.72 0.71 0.96)
+    - sleep downscale          0.92   (seeds: 0.92 0.92 0.96 0.86 0.96)
+    - pruning                  0.90   (seeds: 0.81 0.92 0.94 0.88 0.95)
+    - ALL FOUR (gate)          0.58   (seeds: 0.41 0.56 0.58 0.55 0.83)
+
+  gate: all four off reaches 0.58  -> attribution WRONG, gap is elsewhere
+
+[exited with code 0]

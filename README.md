@@ -347,7 +347,7 @@ merge guard                  raises ValueError on non-clones
 | 2 | clone merge | **yes**, guarded: refuses non-clones rather than failing silently |
 | 3 | prioritised replay | **no** -- but uniform replay stays in sleep |
 | 4 | long eligibility trace | **yes** -- tau~200, 0.99 vs 0.74 |
-| 5 | pretrained encoder | **NO -- it makes the system worse** |
+| 5 | pretrained encoder | **no** -- subsumed by #6 (see Part 3b; earlier "harmful" was an artifact) |
 | 6 | gradient in the sleep slot | **yes**, +0.13 |
 
 ## The result worth keeping
@@ -375,3 +375,77 @@ performance-for-stability trade, not an optimised one.
 
 Everything here is validated on **one two-class discrimination task**, which is
 thin ground for a design with this many interacting parts.
+
+
+---
+
+# Part 3b: the homeostasis was the problem
+
+Part 3 shipped with the local rule at 0.85 against 02_learning.py's 1.00, blamed
+on "the homeostatic machinery", and left unoptimised. That attribution was wrong.
+Ablating each piece (`15_homeostasis_cost.py`, local rule only, 5 seeds):
+
+```
+  mainline as shipped          0.90
+    - threshold homeostasis    0.98      <- removing it closes the gap
+    - synaptic scaling         0.81      <- removing it HURTS
+    - sleep downscale          0.92
+    - pruning                  0.90      <- bit-identical: a no-op
+    - ALL FOUR (gate)          0.58      <- collapses; they interact
+```
+
+They pull in opposite directions, so "the homeostatic machinery" was never one
+thing. Three corrections:
+
+**Threshold homeostasis is counterproductive here, and now defaults to 0.**
+It exists to stop cells going silent. Over 3000 trials it *causes* more silence
+than it prevents (`16_threshold_homeostasis.py`):
+
+```
+  ETA_TH=0.02   acc 0.99   fire_rate 0.0318   silent 23%   thresh drifts to 2.21
+  ETA_TH=0      acc 1.00   fire_rate 0.0750   silent 15%   thresh stays 1.00
+```
+
+It is per-cell: winners fire often, so their thresholds get pushed UP, while
+k-WTA goes on selecting by rank -- penalising exactly the informative cells.
+0.0750 is k/n, the rate competition enforces by construction. 01's result still
+holds for RECURRENT nets; the constant is kept for them.
+
+**Pruning is a no-op.** `np.clip(W_out, 0, ...)` already sets weights to exactly
+zero, so nothing is ever left below the threshold. Ablating it is bit-identical.
+
+**Synaptic scaling is load-bearing for LEARNING**, not only against saturation:
+removing it drops the local rule 0.90 -> 0.81. Part 2 had it filed the other way.
+
+## Claim 5 was wrongly convicted
+
+Part 3's headline -- "an intervention that passes in isolation and makes the
+assembled system worse" -- was measured with ETA_TH=0.02. With the bad default
+removed (`17_claim5_recheck`, 6 seeds):
+
+```
+  sleep-grad on   pretrained 0.95  vs random 0.97   (@400; both 1.00 late)
+  sleep-grad off  pretrained 0.84  vs random 0.75   (@400; both 0.96 late)
+```
+
+It HELPS the local rule by +0.09 and is neutral once the gradient is on. It stays
+off by default because the mainline ships the gradient, which subsumes it -- not
+because it does damage. The subsumption hypothesis I recorded as REFUTED in Part 2
+was refuted against a broken baseline and is now supported.
+
+## The pattern worth keeping instead
+
+Three mechanisms have now proved redundant or harmful *specifically because of
+k-WTA*, each validated honestly on the recurrent net first:
+
+- the refractory period (04) -- competition already bounds firing rate
+- `TARGET_RATE=0.01` (Part 3) -- competition forbids that rate outright
+- threshold homeostasis (15/16) -- competition selects by rank, so equalising
+  thresholds only penalises informative cells
+
+The rule is sharper than "re-measure constants in a new architecture". **Adding
+one mechanism can retire another entirely**, and the retired one keeps running,
+still looking principled, still costing you -- and it can convict an innocent
+third component, as it did claim 5.
+
+Mainline after the fix: **learns 0.58 -> 1.00**, gap to 02 closed.

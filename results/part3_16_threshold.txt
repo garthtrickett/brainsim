@@ -1,0 +1,6 @@
+3000 trials, local rule only. k-WTA forces k/n = 6/80 = 0.075 firing.
+
+  ETA_TH=0.02 (shipped)    acc=0.99  fire_rate=0.0318  silent_cells=  23%  mean_thresh= 2.21  W_out at ceiling=  0%
+  ETA_TH=0    (proposed)   acc=1.00  fire_rate=0.0750  silent_cells=  15%  mean_thresh= 1.00  W_out at ceiling=  0%
+
+[exited with code 0]

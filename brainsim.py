@@ -25,13 +25,30 @@ class BrainSim:
     # thresholds up forever (1.00 -> 6.42) and accuracy sits at 0.58. The target
     # is set from k/n in __init__. A constant is only valid in the architecture
     # it was measured in.
-    ETA_TH    = 0.02
-    SCALE_EVERY = 1000   # 06: NOT 100. The two homeostatic controllers need ~10x
-                         # separation or they fight (rate dips to 0.0080 by 60k).
+    # 15: OFF in this architecture. Validated in 01 on a RECURRENT net, where
+    # without it 90% of cells went silent. In the feedforward + k-WTA path it is
+    # counterproductive: it is per-cell, so winners get their thresholds pushed
+    # UP for firing often while k-WTA keeps selecting by rank -- penalising the
+    # informative cells. Measured over 3000 trials:
+    #     ETA_TH=0.02 -> fire_rate 0.0318, 23% cells silent, thresh drifts to 2.21
+    #     ETA_TH=0    -> fire_rate 0.0750 (= k/n, as k-WTA enforces), 15% silent
+    # It causes MORE silence than it prevents, and costs sample efficiency
+    # (0.90 vs 0.98 at 1200 trials; both reach ~1.00 by 3000).
+    # Re-enable for recurrent architectures, where 01's result applies.
+    ETA_TH    = 0.0
+    # 06: NOT 100 -- at 100 it fought the threshold controller (rate dipped to
+    # 0.0080 by 60k). 15: it is also load-bearing for LEARNING here, not just for
+    # saturation: removing it drops the local rule 0.90 -> 0.81.
+    SCALE_EVERY = 1000
     SLEEP_EVERY = 50     # 13: sleep cadence, in decisions
     SLEEP_REPLAY = 60    # 13: replayed episodes per sleep
     SLEEP_ETA = 0.05     # 13: gradient step size inside sleep
     DOWNSCALE = 0.98     # step 9: shrink all, preserve the order
+    # 15: a NO-OP as configured -- np.clip(W_out, 0, ...) already sets weights to
+    # exactly 0, so nothing is ever left below the threshold. Ablating it gives
+    # bit-identical results. Kept because pruning is real in the design; it just
+    # has nothing to do while the clip does the work.
+    PRUNE_BELOW = 1e-3
 
     def __init__(self, n_in=40, n_hidden=80, n_motor=2, k=6, seed=0):
         self.rng = np.random.default_rng(seed)
@@ -55,21 +72,23 @@ class BrainSim:
         self.trh = np.zeros(self.n_hidden); self.fh = np.zeros(self.n_hidden)
         self.votes = np.zeros(self.n_motor)
 
-    # ---- 5: pretrained encoder. NOT USED BY DEFAULT -- it HURTS here. -------
+    # ---- 5: pretrained encoder. Off by default -- SUBSUMED, not harmful. ----
     def pretrain_encoder(self, patterns, steps=6000, eta=0.02):
         """Competitive learning: local, unsupervised, no labels.
 
-        DO NOT ENABLE without re-measuring. In isolation (11) this improved
-        sample efficiency in all 3 seeds. In the ASSEMBLED system it is worse,
-        consistently, over 6 seeds and both gradient settings:
+        Verdict revised twice; the earlier "it HURTS" was an artifact of a bad
+        default (ETA_TH=0.02, which 15 showed is itself counterproductive here).
 
-            sleep-grad on :  pretrained 0.85  vs  random 0.98
-            sleep-grad off:  pretrained 0.72  vs  random 0.85
+            with ETA_TH=0.02:  pretrained 0.85 vs random 0.98  (grad on)
+                               pretrained 0.72 vs random 0.85  (grad off)
+            with ETA_TH=0:     pretrained 0.95 vs random 0.97  (grad on, @400)
+                               pretrained 0.84 vs random 0.75  (grad off, @400)
 
-        Kept because the isolated result is real and the reversal is the
-        interesting part -- an intervention that helps a component can harm the
-        system it is placed in. The mechanism was never established either way
-        (11 also refuted decorrelation, my proposed explanation).
+        So it HELPS the local rule (+0.09 sample efficiency), and is NEUTRAL once
+        the sleep gradient is on because the gradient reaches ceiling either way.
+        The mainline ships with the gradient on, so this is off by default as
+        redundant -- not because it does damage. Enable it if you disable
+        SLEEP_ETA. 11 also refuted decorrelation as the mechanism; still unknown.
         """
         for _ in range(steps):
             x = patterns[self.rng.integers(len(patterns))]
@@ -177,7 +196,7 @@ class BrainSim:
             self.W_out -= self.SLEEP_ETA * np.outer(g, z)        # gradient pass
         np.clip(self.W_out, 0, self.WMAX, out=self.W_out)
         self.W_out *= self.DOWNSCALE
-        self.W_out[self.W_out < 1e-3] = 0.0
+        if self.PRUNE_BELOW: self.W_out[self.W_out < self.PRUNE_BELOW] = 0.0
         if len(self.buffer) > 2000:
             self.buffer = self.buffer[-2000:]
 
