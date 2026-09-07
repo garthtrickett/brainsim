@@ -78,7 +78,7 @@ homeostatic controllers in Part 3b. Watch for it again in step 3.
 
 Neither touched `lock-10`. Sparse reward is entirely step 2's job.
 
-### 2. Hippocampus — episodic store + time-compressed sequence replay  <- NEXT
+### 2. Hippocampus — episodic store + reverse replay  <- DONE (9.5 -> 333.5)
 Targets the headline failure: `lock-10` scores 0.0000 against a 0.0010 floor --
 BELOW random, because it learns the wrong thing from near-zero signal. Store the
 rare rewarded episode as a bound conjunction and replay it hundreds of times
@@ -88,7 +88,7 @@ Grows the existing sleep buffer: dentate-style sparse separation, CA3 recurrence
 prioritised replay of surprising/rewarded episodes.
 Validates on: `lock-10` (state-observable, so replay alone can crack it).
 
-### 3. Basal-ganglia selection
+### 3. Basal-ganglia selection  <- NEXT
 Disinhibition (default blocked, winner released) + opponent Go/NoGo channels,
 replacing `argmax(votes)`. Expect it to **retire `TAGGATE`** -- anticipate that;
 a new mechanism making an older one redundant is this project's most repeated

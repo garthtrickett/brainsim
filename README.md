@@ -643,3 +643,50 @@ A 1200-decision diagnostic showed V(s) at 0.313 against a 0.417 baseline and I
 flagged it as a likely loss. At the calibrated 4000 decisions it is 0.472 vs
 0.276 -- a clear win. The short check had not converged. Trust the calibrated
 length over the quick one.
+
+
+---
+
+# Part 9: hippocampus — the sparse-reward wall breaks
+
+`lock-10` had been the project's hard failure since it first returned at chance:
+9.5 rewards in 12000 decisions against a ~12 floor and ~1333 ceiling.
+
+**9.50 -> 333.50 rewards. 35x. From 0.7% of ceiling to 25%.**
+
+```
+  no replay (baseline)          9.50
+  rev, no trace, TD           333.50   <- SHIPPED
+  fwd, no trace, TD             4.17   <- direction matters 80x
+  rev, no trace, NO TD          2.83   <- bootstrapping essential
+  rev, compressed trace, TD   115.50   <- the trace COSTS 3x
+  rev, uncompressed trace, TD 133.00
+```
+
+The mechanism is **reverse replay with TD bootstrapping**. Both are necessary;
+either alone collapses. Reverse works for the standard reason: updating backwards
+leaves each state's successor already fresh, so credit crosses a whole episode in
+one pass instead of one step per pass.
+
+## The borrowed biology held; the invented mechanism did not
+
+Reverse replay is a documented hippocampal phenomenon (Foster & Wilson 2006) and
+it carries an 80x effect. Time-compressed trace-spanning was MY contribution, was
+the design document's headline, survived a six-probe refinement loop, and is
+worse than useless -- removing the trace entirely takes 115.5 to 333.5.
+
+The refinement loop caught five wrong assumptions and missed this one because it
+probed the PREMISES and never the MECHANISM CLAIM. The arithmetic I verified most
+carefully -- trace 0.222 uncompressed vs 0.860 compressed -- was correct and
+irrelevant, since the trace should not have been there at all.
+
+## The regression suite earned itself
+
+Ungated, replay damaged three other tasks: nway-4 0.961->0.890, xor-2
+0.722->0.518, volatile-4 0.472->0.305. All are single-step episodes, where
+reverse replay has no sequence to work on and merely duplicates the online
+update -- and on a volatile task replays contingencies that have since changed.
+
+Gating on `len(episode) >= 2` removed every regression at zero cost. This is the
+fourth time a module validated on its target broke something else, and the first
+time it was caught before shipping.

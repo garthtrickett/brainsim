@@ -1,0 +1,63 @@
+lock-10, 12000 decisions, 6 seeds. floor~12 rewards, ceiling~1333.
+
+  no replay (baseline)       [4, 8, 7, 8, 10, 20]  mean=  9.50  median=  8.0
+  hippo: fwd, uncompressed   [33, 15, 123, 95, 124, 78]  mean= 78.00  median= 86.5
+  hippo: rev, uncompressed   [1, 3, 4, 1, 12, 1]  mean=  3.67  median=  2.0
+  hippo: fwd, compressed     [42, 4, 53, 81, 54, 72]  mean= 51.00  median= 53.5
+  hippo: rev, compressed     [1, 1, 2, 1, 2, 1]  mean=  1.33  median=  1.0
+  hippo: rev, comp, TD       [1, 89, 193, 151, 160, 99]  mean=115.50  median=125.0
+  hippo: fwd, comp, TD       [28, 15, 44, 40, 66, 35]  mean= 38.00  median= 37.5
+
+  vs baseline (per-seed wins):
+    hippo: fwd, uncompressed   6/6  mean  78.00 vs   9.50
+    hippo: rev, uncompressed   1/6  mean   3.67 vs   9.50
+    hippo: fwd, compressed     5/6  mean  51.00 vs   9.50
+    hippo: rev, compressed     0/6  mean   1.33 vs   9.50
+    hippo: rev, comp, TD       5/6  mean 115.50 vs   9.50
+    hippo: fwd, comp, TD       6/6  mean  38.00 vs   9.50
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788770184987.log
+lock-10, 12000 decisions, 6 seeds. completing the factorial under TD.
+
+  rev, compressed,   TD      [1, 89, 193, 151, 160, 99]  mean= 115.50  median= 125.0
+  rev, uncompressed, TD      [1, 153, 194, 200, 133, 117]  mean= 133.00  median= 143.0
+  fwd, compressed,   TD      [28, 15, 44, 40, 66, 35]  mean=  38.00  median=  37.5
+  fwd, uncompressed, TD      [68, 107, 77, 107, 124, 103]  mean=  97.67  median= 105.0
+  rev, no trace at all, TD   [138, 494, 332, 334, 367, 336]  mean= 333.50  median= 335.0
+
+  'no trace at all' sets decay^ticks ~ 0: pure per-step TD, no eligibility.
+  If that matches the best arm, the eligibility trace is doing nothing and
+  the mechanism is plain TD bootstrapping in reverse -- not trace-spanning.
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788771274775.log
+lock-10, 12000 decisions, 6 seeds. baseline=9.50, ceiling~1333.
+
+  rev, no trace, TD                [138, 494, 332, 334, 367, 336]  mean= 333.50  median= 335.0
+  fwd, no trace, TD                [1, 1, 19, 1, 1, 2]  mean=   4.17  median=   1.0
+  rev, no trace, NO TD             [1, 1, 6, 1, 7, 1]  mean=   2.83  median=   1.0
+  rev, no trace, TD, more replay   [2, 614, 3, 434, 571, 641]  mean= 377.50  median= 502.5
+
+  direction still matters? YES
+    reverse=333.5  forward=4.2
+
+[exited with code 0]
+---
+[running] brainsim: regression after gating replay on sequence length  (pid 2167460)
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788772822540.log
+regression: does the hippocampus break anything else?
+
+  nway-4       floor=0.253   hippo on=0.961  off=0.961  OK
+  nway-8       floor=0.122   hippo on=0.769  off=0.769  OK
+  xor-2        floor=0.501   hippo on=0.722  off=0.722  OK
+  volatile-4   floor=0.250   hippo on=0.472  off=0.472  OK
+  tmaze-2d3    floor=0.123   hippo on=0.123  off=0.122  OK
+
+--- lock still works? ---
+  lock-10 rewards: [138, 494, 332, 334, 367, 336]  mean=333.50 (baseline 9.50)
+
+[exited with code 0]
+---

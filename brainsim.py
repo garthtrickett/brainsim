@@ -108,6 +108,47 @@ class BrainSim:
     # Tune to your N: 0.99 for 4-way (matches non-local exactly), 0.90 for 8-way.
     TRM_D    = 0.97
 
+    # --- hippocampus: episodic store + replay (29). Default OFF pending test.
+    # Two DIFFERENT mechanisms for backward credit, deliberately separable:
+    #  (a) an eligibility trace spanning the replayed episode -- needs COMPRESSION,
+    #      because 10 steps x 30 ticks leaves the trace at 0.222 but x3 leaves 0.860;
+    #  (b) TD bootstrapping through V(s) in reverse order -- propagates credit via
+    #      the value function and does NOT need compression.
+    # The design doc leaned on (a); (b) is the standard answer. The ablation must
+    # tell them apart or "hippocampus" is just a label on an oversampled buffer.
+    HIPPO           = True    # SHIPPED (29): lock-10 rewards 9.5 -> 333.5, 35x
+    HIPPO_REVERSE   = True    # ESSENTIAL: reverse 333.5 vs forward 4.2 (80x).
+                              # Updating backwards means each state's successor is
+                              # already fresh, so credit crosses the whole episode
+                              # in ONE pass. Forward moves it one step per pass.
+    HIPPO_TRACE     = False   # REFUTED. The design's headline claim was that time
+                              # compression lets an eligibility trace span an
+                              # episode. Both the trace and the compression are
+                              # HARMFUL: no trace 333.5, compressed trace 115.5,
+                              # uncompressed trace 133.0. Kept as a flag because
+                              # the refutation is worth preserving.
+    HIPPO_TICKS     = 3       # only used when HIPPO_TRACE is on
+    HIPPO_BOOTSTRAP = True    # ESSENTIAL: with TD 333.5, without 2.8
+    HIPPO_PRIORITY  = True    # sample episodes ~ reward; buffer is ~2000 junk runs
+    HIPPO_N         = 8       # episodes per sleep. N=24 scores higher on average
+                              # (377.5) but is bimodal -- 2 of 6 seeds collapse to
+                              # ~2. Robust beats peak, as with TRM_D.
+    HIPPO_GAMMA     = 0.9
+    HIPPO_LR        = 0.05
+    HIPPO_CAP       = 400     # episode store size
+    # The lock only signals done at the GOAL -- a wrong action resets the state
+    # but does not end the episode. Without a window the "episode" is the whole
+    # run from session start to reward: thousands of steps of mostly failure.
+    # A finite episodic window is also the biologically right answer: the
+    # hippocampus holds a recent trajectory, not a lifetime.
+    HIPPO_WINDOW    = 20      # steps retained before the outcome
+    # Replay only SEQUENCES. Reverse replay exists to move credit ACROSS steps;
+    # a 1-step episode has no sequence, so replaying it just duplicates the
+    # online update -- and on a volatile task it replays contingencies that have
+    # since changed. Measured cost of not gating this: nway-4 0.961 -> 0.890,
+    # xor-2 0.722 -> 0.518, volatile-4 0.472 -> 0.305.
+    HIPPO_MIN_LEN   = 2
+
     # --- neuromodulators beyond dopamine (25). Default OFF pending validation.
     # `volatile-4` sits at 0.276 vs a 0.250 floor on a task the design solves at
     # 0.834 when stationary: a fixed LR and fixed exploration are a hard wall.
@@ -152,6 +193,7 @@ class BrainSim:
         self.rate  = np.zeros(n_hidden)
         self.TARGET_RATE = k / n_hidden   # NOT the 0.01 from 01; see above
         self.buffer, self.ticks, self.decisions = [], 0, 0
+        self.episode, self.episodes = [], []   # current episode, episodic store
         self._out_budget = np.abs(self.W_out).sum(axis=1).copy()
 
     def _reset_dynamics(self):
@@ -240,7 +282,53 @@ class BrainSim:
         return int(np.argmax(v))
 
     # ---- 6/7: feel, then learn ---------------------------------------------
-    def reward(self, r, action=None):
+    def store_and_replay(self, z, action, r, done):
+        """Episodic memory: bind (state, action, outcome), replay on completion."""
+        self.episode.append((z.copy(), int(action), float(r)))
+        if len(self.episode) > self.HIPPO_WINDOW:
+            self.episode = self.episode[-self.HIPPO_WINDOW:]
+        if not done:
+            return
+        total = sum(x[2] for x in self.episode)
+        if len(self.episode) >= self.HIPPO_MIN_LEN:
+            self.episodes.append((self.episode, total))
+        keep_len = len(self.episode)
+        self.episode = []
+        if keep_len < self.HIPPO_MIN_LEN:
+            return
+        if len(self.episodes) > self.HIPPO_CAP:
+            # evict the least valuable, not the oldest: the rewarded episodes are
+            # 1-3 in 4000 and must survive.
+            self.episodes.sort(key=lambda e: e[1])
+            self.episodes = self.episodes[1:]
+        if total <= 0:
+            return                      # replay is triggered BY reward
+        for _ in range(self.HIPPO_N):
+            self._replay_one()
+
+    def _replay_one(self):
+        if not self.episodes: return
+        if self.HIPPO_PRIORITY:
+            w = np.array([e[1] for e in self.episodes], dtype=float) + 1e-3
+            idx = int(self.rng.choice(len(self.episodes), p=w / w.sum()))
+        else:
+            idx = int(self.rng.integers(len(self.episodes)))
+        ep = self.episodes[idx][0]
+        decay = (self.ELIG_D ** self.HIPPO_TICKS) if self.HIPPO_TRACE else 0.0
+        elig = np.zeros_like(self.W_out)
+        order = list(reversed(ep)) if self.HIPPO_REVERSE else list(ep)
+        vnext = 0.0                                  # terminal value
+        for (z, a, r) in order:
+            v = float(self.w_v @ z)
+            nm = (r + self.HIPPO_GAMMA * vnext - v) if self.HIPPO_BOOTSTRAP else (r - v)
+            elig *= decay
+            elig[a] += z
+            self.W_out += self.HIPPO_LR * nm * elig
+            self.w_v += self.VALUE_W_LR * nm * z / (z @ z + 1e-6)
+            vnext = float(self.w_v @ z)              # fresh, hence reverse order
+        np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
+
+    def reward(self, r, action=None, done=True):
         """Deliver reward. NM is reward MINUS what was expected (02: raw reward
         instead of RPE => chance, because it never stops reinforcing the known)."""
         zbar = self.trh_sum / max(self.trh_n, 1)
@@ -287,6 +375,7 @@ class BrainSim:
             self.buffer.append((z.copy(), de.copy(), nm, action, r))
             self.trh_sum[:] = 0.0; self.trh_n = 0
             self.decisions += 1
+            if self.HIPPO: self.store_and_replay(zbar, action, r, done)
             if self.decisions % self.SLEEP_EVERY == 0: self.sleep()
             return
         # Normalise by accumulated weight -> a true weighted MEAN outer product,
@@ -309,6 +398,8 @@ class BrainSim:
         if action is not None:
             self.buffer.append((self.trh.copy(), elig.copy(), nm, action, r))
         self.decisions += 1
+        if self.HIPPO and action is not None:
+            self.store_and_replay(zbar, action, r, done)
         if self.decisions % self.SLEEP_EVERY == 0:
             self.sleep()
 
@@ -322,6 +413,12 @@ class BrainSim:
         Scope: W_out is one linear layer, so this is a delta rule, not deep
         backprop. Nothing here establishes that backprop helps a deep net.
         """
+        # Hippocampal replay is OFFLINE: at every rest period, not only at the
+        # moment of reward. Reward-triggered replay alone gives 8-32 events in a
+        # whole run -- nowhere near turning 2 rewards into 2000 learning events.
+        # 240 sleeps x HIPPO_N is what actually delivers that.
+        if self.HIPPO and self.episodes:
+            for _ in range(self.HIPPO_N): self._replay_one()
         if len(self.buffer) < self.SLEEP_REPLAY:
             return
         idx = self.rng.choice(len(self.buffer), size=self.SLEEP_REPLAY)

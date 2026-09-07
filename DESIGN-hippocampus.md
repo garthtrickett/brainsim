@@ -156,3 +156,60 @@ replay. Below that the task measures exploration, not memory.
 has not been seen for a long time is exactly what would fix seed 0. Worth
 retesting HERE, on the task it might actually suit — but as a separate arm, since
 step 1 also showed it cancelling `V(s)` when both are active.
+
+
+---
+
+# RESULT: the borrowed biology held, the invented mechanism did not
+
+`lock-10`: **9.50 -> 333.50 rewards** (12000 decisions, 6 seeds). From 0.7% of
+ceiling to 25%. The sparse-reward wall is broken.
+
+```
+  no replay (baseline)          9.50
+  rev, no trace, TD           333.50   <- SHIPPED
+  fwd, no trace, TD             4.17   <- direction matters 80x
+  rev, no trace, NO TD          2.83   <- bootstrapping is essential
+  rev, compressed trace, TD   115.50   <- the trace COSTS 3x
+  rev, uncompressed trace, TD 133.00   <- compression costs on top of that
+```
+
+| component | source | verdict |
+|---|---|---|
+| reverse ordering | Foster & Wilson 2006 | **essential**, 80x |
+| TD bootstrapping | standard RL | **essential**, 118x |
+| eligibility trace across steps | MY design | **harmful**, costs 3x |
+| time compression | MY design (headline claim) | **harmful** |
+| prioritisation | design | untestable here -- the store only ever holds rewarded episodes |
+| DG sparse coding | design | never built; rationale refuted before coding |
+
+Reverse ordering works for the standard reason: updating backwards means each
+state's successor is already fresh, so credit crosses the whole episode in ONE
+pass. Forward order moves it one step per pass.
+
+## Why the refinement loop missed this
+
+Six assumption-probes before building caught five wrong assumptions -- and missed
+the biggest one. They probed the PREMISES (is reward ever found, how long are
+episodes, do the codes overlap, does the arithmetic hold) and never probed the
+MECHANISM CLAIM. The arithmetic I verified most carefully (trace 0.222
+uncompressed vs 0.860 compressed) was correct and entirely beside the point,
+because the trace should not have been there at all.
+
+**Probe the claim, not just its premises.**
+
+## One regression, caught before shipping
+
+With replay ungated, three tasks got worse: nway-4 0.961->0.890, xor-2
+0.722->0.518, volatile-4 0.472->0.305. All three are SINGLE-STEP episodes, so
+each decision became a 1-step "episode" -- reverse replay has no sequence to work
+on, it merely duplicates the online update, and on a volatile task it reinstates
+contingencies that have since changed.
+
+Gating replay on `len(episode) >= 2` removes every regression at zero cost:
+all five tasks now identical with replay on or off, lock unchanged at 333.5.
+
+Fourth time a module validated on its target broke something else (k-WTA retiring
+three mechanisms; ADAPTIVE cancelling V(s); the sleep gradient under sparse
+reward). First time the regression suite caught it before it shipped -- which is
+what step 0 was built for.

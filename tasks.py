@@ -141,7 +141,7 @@ def run(agent, task, decisions, ticks=30, seed=0):
         for _ in range(ticks): agent.step(obs)
         a = agent.decide()
         obs, r, done = task.step(a)
-        agent.reward(r, action=a)
+        agent.reward(r, action=a, done=done)   # episodic store needs boundaries
         hist.append(r)
         if done: obs = task.reset(rng)
     return np.array(hist)
