@@ -1,0 +1,83 @@
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788781746201.log
+=== claim 1: does a SIGNED readout help now? (tested at 0.152 pre-TAGGATE) ===
+  nway-4: signed=0.962  non-negative=0.961
+  nway-8: signed=0.798  non-negative=0.769
+
+=== claim 4: what is TAGGATE contributing at 8 actions now? ===
+  nway-4: TAGGATE=0.961  none=0.739  ACTION_GATED=0.923
+  nway-8: TAGGATE=0.769  none=0.184  ACTION_GATED=0.869
+
+=== claims 2+3: vote margin, and does the TAGGED cell match the CHOSEN action? ===
+  nway-4: vote_margin= 7.48  tagged==chosen: 89.6%
+  nway-8: vote_margin= 2.83  tagged==chosen: 67.3%
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788782195653.log
+nway-8: does aligning the gate's accumulator with the decision's close the gap?
+
+  TRM_D       accuracy   tagged==chosen
+  0.9            0.773           86.2%
+  0.97           0.769           67.3%
+  0.99           0.650           38.5%
+  1.0            0.195           38.8%
+
+  reference: ACTION_GATED (non-local, 100% aligned by construction)
+  --             0.869
+
+nway-4 control (already aligned at 89.6%, so expect little movement):
+  0.97           0.961           89.6%
+  1.0            0.651           32.7%
+
+[exited with code 0]
+---
+[running] brainsim: re-measure everything after the decide() fix  (pid 2711430)
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788782575762.log
+after fixing decide(). previous numbers in brackets.
+
+  nway-4: TAGGATE=1.000 [0.961]  agree=97.4%   ACTION_GATED=1.000 [0.923]
+  nway-8: TAGGATE=0.903 [0.769]  agree=82.3%   ACTION_GATED=0.956 [0.869]
+
+other tasks (regression):
+  xor-2        0.728
+  volatile-4   0.269
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788782815449.log
+volatile-4, 8 seeds (was 0.472 pre-fix on 3 seeds):
+  [np.float64(0.448), np.float64(0.189), np.float64(0.171), np.float64(0.401), np.float64(0.244), np.float64(0.216), np.float64(0.32), np.float64(0.421)]  mean=0.301  median=0.282
+  V(s) off: mean=0.404   (V(s) still earning its place: False)
+
+full suite after the fix, 5 seeds:
+  nway-4       floor=0.253  now=0.999
+  nway-8       floor=0.122  now=0.938
+  xor-2        floor=0.501  now=0.721
+  volatile-4   floor=0.250  now=0.291
+  tmaze-2d3    floor=0.123  now=0.130
+
+lock-10 (hippocampus target), 5 seeds:
+  rewards=[130, 494, 316, 365, 349]  mean=330.8  (was 333.5)
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788783510483.log
+V(s) on vs off, post decide()-fix, 6 seeds
+
+  task           V(s) on   V(s) off   verdict
+  nway-4           0.999      0.995   neutral (+0.004)
+  nway-8           0.924      0.821   helps (+0.103)
+  xor-2            0.707      0.652   helps (+0.054)
+  volatile-4       0.278      0.403   HURTS (-0.125)
+
+lock-10 (5 seeds, total rewards):
+  V(s) on    [130, 494, 316, 365, 349]  mean=330.8
+  V(s) off   [1, 322, 2, 2, 1]  mean=65.6
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788784444820.log
+bash: line 1: 2813117 Killed                  python3 /tmp/adaptive_recheck.py > /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788784444820.log 2>&1
+
+[exited with code 0]
+---

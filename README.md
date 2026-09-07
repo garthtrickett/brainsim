@@ -690,3 +690,60 @@ update -- and on a volatile task replays contingencies that have since changed.
 Gating on `len(episode) >= 2` removed every regression at zero cost. This is the
 fourth time a module validated on its target broke something else, and the first
 time it was caught before shipping.
+
+
+---
+
+# Part 10: a five-line bug, and three conclusions that flipped
+
+`decide()` was written when `n_motor` was always 2 and never updated when it
+became a parameter:
+
+```python
+if v[0] == v[1]:                     # compares only the FIRST TWO
+    return int(self.rng.random() < 0.5)   # returns 0 or 1, ignoring actions 2..n-1
+```
+
+Vote counts are small integers, so ties are common. **Every n>2 result in this
+project was measured with a decision rule that sometimes discarded the vote and
+coin-flipped between actions 0 and 1.**
+
+Found by a prediction failing *impossibly*: at `TRM_D=1.0` the gate's accumulator
+and the decision's accumulator are the SAME ARRAY, so agreement had to be 100%.
+It measured 38.8%. A vague prediction ("alignment should improve") would have
+read 38.8% as a disappointing-but-plausible result.
+
+## What changed
+
+```
+              before   after
+  nway-4       0.961   0.999      tagged==chosen  89.6% -> 97.4%
+  nway-8       0.769   0.938      tagged==chosen  67.3% -> 82.3%
+  xor-2        0.722   0.721      (2 actions, unaffected -- correct)
+  lock-10      333.5   330.8      (2 actions, unaffected -- correct)
+```
+
+## Three conclusions flipped
+
+**Step 3 (basal ganglia) is SHELVED, unbuilt.** Its entire justification was a
+0.100 gap at nway-8. Post-fix the gap is **0.018** (0.938 vs 0.956). The probes
+had already weakened both rationales: signed weights recover only 22% of what
+remains, and selection was never the failure -- credit alignment was.
+Disinhibition and Go/NoGo would have been an elaborate answer to a tie-breaker.
+
+**`V(s)` is a TRADE, not the clean win step 1 claimed.** Post-fix: nway-8 +0.103,
+xor-2 +0.054, lock-10 essential (330.8 vs 65.6), **volatile-4 -0.125**. The step 1
+claim "improves every task and regresses none" is retracted.
+
+**`ADAPTIVE` now SHIPS.** Step 1 rejected it for cancelling `V(s)`; that was
+measured under the bug. Corrected, they are complementary -- `V(s)` must relearn
+every state when contingencies permute and `ADAPTIVE` is the repair:
+volatile 0.278 -> 0.419.
+
+## The pattern
+
+Each original measurement was CORRECT IN THE REGIME IT WAS TAKEN IN. None was
+sloppy. The regime changed underneath them. That is the measurement-scope rule
+applied to one's own shipped results, and it is now the third time tonight a
+verdict reversed when its substrate moved (the sleep gradient at n=3 vs n=6;
+V(s); ADAPTIVE).

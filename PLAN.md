@@ -88,7 +88,7 @@ Grows the existing sleep buffer: dentate-style sparse separation, CA3 recurrence
 prioritised replay of surprising/rewarded episodes.
 Validates on: `lock-10` (state-observable, so replay alone can crack it).
 
-### 3. Basal-ganglia selection  <- NEXT
+### 3. Basal-ganglia selection  <- SHELVED: its target gap was a bug (0.100 -> 0.018)
 Disinhibition (default blocked, winner released) + opponent Go/NoGo channels,
 replacing `argmax(votes)`. Expect it to **retire `TAGGATE`** -- anticipate that;
 a new mechanism making an older one redundant is this project's most repeated
@@ -96,7 +96,7 @@ pattern (k-WTA retired the refractory period, `TARGET_RATE`, and threshold
 homeostasis).
 Validates on: `nway-8`, where local is 0.592 against 0.900 non-local.
 
-### 4. Cerebellum — consolidation, not capability
+### 4. Cerebellum — consolidation, not capability  <- NEXT
 The sleep gradient already IS error-driven supervised learning with a teaching
 signal. Naming it as a third learning system clarifies the architecture before
 the larger changes. Near-zero risk.

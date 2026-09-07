@@ -160,13 +160,17 @@ class BrainSim:
     # Does NOT help lock-10 (still ~0.000): sparse reward is the hippocampus.
     VALUE_STATE = True
     VALUE_W_LR  = 0.05
-    # 25: NOT shipped. Adds nothing on the task it was built for (volatile:
-    # 0.287 vs 0.276 baseline) and DESTROYS the V(s) gain when combined
-    # (0.260 vs 0.472 for V(s) alone) -- two adaptive signals fighting over the
-    # same variable, the same shape as the duelling homeostatic controllers in
-    # Part 3b. It helps only the stationary case (nway-4 0.834 -> 0.935), which
-    # is not what it is for.
-    ADAPTIVE    = False  # NE/ACh: volatility from reward-rate change -> LR, noise
+    # 32: SHIPPED. Step 1 rejected this for "cancelling V(s)" -- measured under
+    # the broken decide(). In the corrected regime they are COMPLEMENTARY:
+    # V(s) must relearn every state when contingencies permute, and volatility-
+    # driven LR/noise is exactly the repair.
+    #                volatile   nway-4   nway-8   xor-2    lock-10
+    #   V(s)            0.278    0.999    0.924   0.707      330.8
+    #   V(s)+ADAPTIVE   0.419    0.999    0.882   0.756      282.4
+    # A real trade: +0.141 volatile, +0.049 xor, -0.042 nway-8, -15% lock.
+    # Shipped because volatile at 0.278 is 4% off its floor (near-failing) and
+    # 0.419 is 23%, while the lock stays at 30x baseline. Robust beats peak.
+    ADAPTIVE    = True   # NE/ACh: volatility from reward-rate change -> LR, noise
     SURP_F, SURP_S = 0.10, 0.005   # fast/slow |RPE| averages
     LR_GAIN, NOISE_GAIN, VOL_CAP = 1.5, 1.5, 2.0
 
@@ -276,10 +280,21 @@ class BrainSim:
         return fm
 
     def decide(self):
+        """Argmax over votes, ties broken uniformly among ALL joint winners.
+
+        BUG (fixed 30): this compared only v[0] and v[1] and, on a tie between
+        those two, returned 0 or 1 at random -- discarding the vote entirely and
+        ignoring actions 2..n-1 even when one of them won outright. Written when
+        n_motor was always 2, never updated when it became a parameter. Vote
+        counts are small integers so ties are common: at TRM_D=1.0, where trm and
+        votes are the SAME array, tagged-equals-chosen measured 38.8% instead of
+        100%. Every n>2 result in the project was depressed by this.
+        """
         v = self.votes.copy(); self.votes[:] = 0
-        if v[0] == v[1]:
-            return int(self.rng.random() < 0.5)
-        return int(np.argmax(v))
+        winners = np.flatnonzero(v == v.max())
+        if len(winners) == 1:
+            return int(winners[0])
+        return int(winners[self.rng.integers(len(winners))])
 
     # ---- 6/7: feel, then learn ---------------------------------------------
     def store_and_replay(self, z, action, r, done):
