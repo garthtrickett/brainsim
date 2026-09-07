@@ -1,0 +1,28 @@
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788764607583.log
+exit=0
+
+  === volatile-4   floor=0.250 ceiling=1.000 ===
+    baseline (shipped)     0.2763   seeds: 0.357 0.306 0.166
+    + V(s) state value     0.4720   seeds: 0.507 0.452 0.457
+    + adaptive LR/noise    0.2873   seeds: 0.450 0.196 0.216
+    + both                 0.2600   seeds: 0.141 0.263 0.376
+
+  === nway-4  (regression)   floor=0.253 ceiling=1.000 ===
+    baseline (shipped)     0.8340   seeds: 0.973 0.636 0.893
+    + V(s) state value     0.9610   seeds: 0.951 0.948 0.984
+    + adaptive LR/noise    0.9350   seeds: 0.922 0.890 0.993
+    + both                 0.9837   seeds: 0.967 0.990 0.994
+
+  === lock-10 (sparse)   floor=0.001 ceiling=0.111 ===
+    baseline (shipped)     0.0000   seeds: 0.000 0.000 0.000
+    + V(s) state value     0.0003   seeds: 0.000 0.001 0.000
+    + adaptive LR/noise    0.0003   seeds: 0.000 0.001 0.000
+    + both                 0.0003   seeds: 0.000 0.000 0.001
+
+[exited with code 0]
+  nway-4       floor=0.253   V(s) on=0.961   off=0.834   OK
+  nway-8       floor=0.122   V(s) on=0.769   off=0.659   OK
+  xor-2        floor=0.501   V(s) on=0.722   off=0.729   OK
+  volatile-4   floor=0.250   V(s) on=0.472   off=0.276   OK
+
+[exited with code 0]

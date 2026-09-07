@@ -50,7 +50,7 @@ decisions, 3 seeds):
 Two usable ablation substrates (headroom in both directions -- the thing every
 earlier experiment lacked) and three measured targets.
 
-### 1. Neuromodulators beyond dopamine  <- NEXT
+### 1. Neuromodulators beyond dopamine  <- DONE (half of it)
 Moved ahead of the hippocampus. `volatile-4` sits at 0.276 against a 0.250 floor
 on a task the design solves at 0.834 when stationary -- it does not degrade under
 non-stationarity, it collapses to chance. A fixed learning rate and fixed
@@ -60,9 +60,25 @@ Cheaper than step 2 and partly a prerequisite for it: a state-dependent value
 baseline is what makes sparse reward learnable at all, since a single global
 scalar is useless when reward arrives twice in 25,000 actions. NE-style adaptive
 noise, ACh-style adaptive learning rate.
-Validates on: `volatile-4` (floor now), and helps `lock-10`.
+RESULT: half shipped.
 
-### 2. Hippocampus — episodic store + time-compressed sequence replay
+```
+                     volatile-4   nway-4    lock-10
+  baseline             0.2763     0.8340     0.0000
+  + V(s)               0.4720     0.9610     0.0003   <- SHIPPED
+  + adaptive LR/noise  0.2873     0.9350     0.0003
+  + both               0.2600     0.9837     0.0003
+```
+
+`V(s)` ships: it improves every task and regresses none (nway-8 0.659->0.769,
+xor-2 unchanged). ADAPTIVE does not: it adds nothing on the task it was built
+for AND cancels the V(s) gain when combined (0.260 vs 0.472). Two controllers on
+one variable -- the second occurrence of that failure mode after the duelling
+homeostatic controllers in Part 3b. Watch for it again in step 3.
+
+Neither touched `lock-10`. Sparse reward is entirely step 2's job.
+
+### 2. Hippocampus — episodic store + time-compressed sequence replay  <- NEXT
 Targets the headline failure: `lock-10` scores 0.0000 against a 0.0010 floor --
 BELOW random, because it learns the wrong thing from near-zero signal. Store the
 rare rewarded episode as a bound conjunction and replay it hundreds of times

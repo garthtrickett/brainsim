@@ -108,6 +108,27 @@ class BrainSim:
     # Tune to your N: 0.99 for 4-way (matches non-local exactly), 0.90 for 8-way.
     TRM_D    = 0.97
 
+    # --- neuromodulators beyond dopamine (25). Default OFF pending validation.
+    # `volatile-4` sits at 0.276 vs a 0.250 floor on a task the design solves at
+    # 0.834 when stationary: a fixed LR and fixed exploration are a hard wall.
+    # 25: SHIPPED. Striatal V(s) -- a learned linear value readout from the
+    # hidden trace, replacing one global scalar baseline. Local: delta rule,
+    # post-error x pre-activity, normalised by ||z||^2 (a plain delta rule
+    # diverges: ||zbar||^2 ~ 100 predicts V~5 for r=1 in one step).
+    #   volatile-4  0.276 -> 0.472     nway-4  0.834 -> 0.961
+    # Does NOT help lock-10 (still ~0.000): sparse reward is the hippocampus.
+    VALUE_STATE = True
+    VALUE_W_LR  = 0.05
+    # 25: NOT shipped. Adds nothing on the task it was built for (volatile:
+    # 0.287 vs 0.276 baseline) and DESTROYS the V(s) gain when combined
+    # (0.260 vs 0.472 for V(s) alone) -- two adaptive signals fighting over the
+    # same variable, the same shape as the duelling homeostatic controllers in
+    # Part 3b. It helps only the stationary case (nway-4 0.834 -> 0.935), which
+    # is not what it is for.
+    ADAPTIVE    = False  # NE/ACh: volatility from reward-rate change -> LR, noise
+    SURP_F, SURP_S = 0.10, 0.005   # fast/slow |RPE| averages
+    LR_GAIN, NOISE_GAIN, VOL_CAP = 1.5, 1.5, 2.0
+
     def __init__(self, n_in=40, n_hidden=80, n_motor=2, k=6, seed=0):
         self.rng = np.random.default_rng(seed)
         self.n_in, self.n_hidden, self.n_motor, self.k = n_in, n_hidden, n_motor, k
@@ -124,6 +145,9 @@ class BrainSim:
         # accuracy from 0.92 to 0.24.
         self.trh_sum = np.zeros(n_hidden); self.trh_n = 0
         self.trm = np.zeros(n_motor)      # motor activity trace
+        self.w_v = np.zeros(n_hidden)     # striatal value weights V(s)
+        self.surp_f = self.surp_s = 0.0   # fast / slow REWARD RATE averages
+        self.noise_eff = self.NOISE       # NE-modulated exploration
         self.value = 0.0
         self.rate  = np.zeros(n_hidden)
         self.TARGET_RATE = k / n_hidden   # NOT the 0.01 from 01; see above
@@ -168,7 +192,7 @@ class BrainSim:
         si = (self.rng.random(self.n_in) < 0.6 * x).astype(float)
 
         # 4/5: motor integrates last tick's hidden spikes, plus exploration noise
-        drive = self.W_out @ self.fh + self.rng.normal(0, self.NOISE, self.n_motor)
+        drive = self.W_out @ self.fh + self.rng.normal(0, self.noise_eff, self.n_motor)
         if self.PERSIST:
             drive += self.SELF_EXC * self.trm - self.INHIB * self.trm.mean()
         self.vm = self.vm * self.LEAK + drive
@@ -219,14 +243,45 @@ class BrainSim:
     def reward(self, r, action=None):
         """Deliver reward. NM is reward MINUS what was expected (02: raw reward
         instead of RPE => chance, because it never stops reinforcing the known)."""
-        self.value += self.VALUE_LR * (r - self.value)
-        nm = r - self.value
+        zbar = self.trh_sum / max(self.trh_n, 1)
+        if self.VALUE_STATE:
+            # V(s) from cortical input, as striatum does -- not one global mean.
+            # A scalar baseline is useless when reward arrives 2x in 25,000 acts.
+            v = float(self.w_v @ zbar)
+            nm = r - v
+            # NORMALISED delta rule. A plain one diverges here: ||zbar||^2 ~ 100
+            # (6 active units, trace ~5), so LR=0.05 predicts V~5 for r=1 after a
+            # single step and accuracy collapses to 0.04 against 0.25 chance.
+            # Dividing by ||z||^2 makes the step scale-free. Third magnitude bug
+            # of this kind in the project -- see the eligibility sum and EMA.
+            self.w_v += self.VALUE_W_LR * (r - v) * zbar / (zbar @ zbar + 1e-6)
+        else:
+            self.value += self.VALUE_LR * (r - self.value)
+            nm = r - self.value
+        if self.ADAPTIVE:
+            # Volatility, not noise: learning should speed up when the world
+            # CHANGES, not merely when it is stochastic (Behrens 2007). Fast
+            # surprise above its own slow baseline is the change signal.
+            # Track REWARD RATE, not |RPE|. |RPE| is large simply because reward
+            # is binary -- that is EXPECTED uncertainty (noise), which should NOT
+            # raise the learning rate. Using it fired the signal permanently,
+            # doubling LR and noise forever and collapsing accuracy to 0.015.
+            # A contingency change shows up as a sustained gap between a fast and
+            # a slow average of r, which decays once the new rate is learned.
+            self.surp_f += self.SURP_F * (r - self.surp_f)
+            self.surp_s += self.SURP_S * (r - self.surp_s)
+            vol = float(np.clip(abs(self.surp_f - self.surp_s) / (self.surp_s + 0.05),
+                                0.0, self.VOL_CAP))
+            lr = self.LR * (1 + self.LR_GAIN * vol)
+            self.noise_eff = self.NOISE * (1 + self.NOISE_GAIN * vol)
+        else:
+            lr = self.LR
         if self.ACTION_GATED and action is not None:
             z = self.trh_sum / max(self.trh_n, 1)
             de = np.zeros_like(self.W_out)
             de[action] = z - self.ebar[action]
             self.ebar[action] += self.EBAR_LR * (z - self.ebar[action])
-            self.W_out += self.LR * nm * de
+            self.W_out += lr * nm * de
             np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
             self.elig[:] = 0.0; self.elig_w = 0.0
             self.buffer.append((z.copy(), de.copy(), nm, action, r))
@@ -243,7 +298,7 @@ class BrainSim:
         de = elig - self.ebar
         self.trh_sum[:] = 0.0; self.trh_n = 0
         self.ebar += self.EBAR_LR * (elig - self.ebar)
-        self.W_out += self.LR * nm * de
+        self.W_out += lr * nm * de
         np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
         # Consume the tag. Tag-and-capture: once the neuromodulator cashes the
         # eligibility, it is spent. Without this the tau~200 trace bleeds across

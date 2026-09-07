@@ -593,3 +593,53 @@ Second occurrence of this exact error; the first invalidated experiment E.
 **Five of the failures in this project were timescale mismatches**: membrane,
 eligibility, homeostasis cadence, gate window, decision window. That is the
 signature failure mode of this design, not a series of unrelated bugs.
+
+
+---
+
+# Part 7: neuromodulators — half of the proposal survived
+
+Promoted ahead of the hippocampus because `volatile-4` sat at 0.276 against a
+0.250 floor on a task the design solves at 0.834 when stationary: it does not
+degrade under non-stationarity, it collapses to chance.
+
+```
+                     volatile-4   nway-4    lock-10
+  baseline             0.2763     0.8340     0.0000
+  + V(s)               0.4720     0.9610     0.0003   <- SHIPPED
+  + adaptive LR/noise  0.2873     0.9350     0.0003
+  + both               0.2600     0.9837     0.0003
+```
+
+**`V(s)` ships.** A learned linear value readout from the hidden trace replaces
+one global scalar baseline -- striatal value coding, learned by a local delta
+rule. It improves every task and regresses none: nway-4 0.834 -> 0.961, nway-8
+0.659 -> 0.769, volatile-4 0.276 -> 0.472, xor-2 unchanged.
+
+**`ADAPTIVE` does not.** It adds nothing on the task it was built for (0.287 vs
+0.276) and CANCELS the V(s) gain when combined (0.260 vs 0.472 alone). Two
+adaptive signals fighting over the same variable -- the same failure as the
+duelling homeostatic controllers in Part 3b. **Two controllers on one variable
+is this project's second recurring failure mode**, after timescale mismatch.
+
+## Two bugs, both caught by a 3-line smoke test
+
+**The value readout diverged.** ||zbar||^2 ~ 100 (6 active units, trace ~5), so a
+plain delta rule at LR=0.05 predicts V~5 for r=1 after ONE step; accuracy 0.04
+against a 0.25 floor. Normalised LMS fixes it. Third magnitude bug of this exact
+shape, after the eligibility sum (200x too large) and the EMA (7x too small).
+
+**The volatility signal fired permanently.** I cited Behrens -- learning rate
+should track volatility, not noise -- then implemented a detector on |RPE|, which
+is large simply because reward is binary. That IS noise. It doubled LR and
+exploration forever: 0.015 against a 0.25 floor. It now watches for a sustained
+gap between fast and slow REWARD RATE, which spikes at a switch and decays.
+
+Neither was visible from reading the code; both look reasonable.
+
+## A horizon artifact, corrected
+
+A 1200-decision diagnostic showed V(s) at 0.313 against a 0.417 baseline and I
+flagged it as a likely loss. At the calibrated 4000 decisions it is 0.472 vs
+0.276 -- a clear win. The short check had not converged. Trust the calibrated
+length over the quick one.
