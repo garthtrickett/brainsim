@@ -107,7 +107,7 @@ nothing persists across decisions. Our failed `commitment` experiment belongs
 here: commitment is a PFC state held deliberately and released by a gate, not a
 motor-layer trick.
 
-### 6. Predictive-coding hierarchy — DEMOTED, may not be needed
+### 6. Predictive-coding hierarchy — IN PROGRESS (see also step 11)
 Twice now, measurement says representation is not the bottleneck:
 - hidden codes were MORE separable at 4/8 classes (0.549) than at the 2-class
   case that worked (0.622);
@@ -123,7 +123,7 @@ invariance to nuisance transforms -- and a train/test split the runner does not
 have. Do not build this until such a task exists and the current encoder
 demonstrably fails on it.
 
-### 5b. Split README.md  <- NEXT
+### 5b. Split README.md  <- DONE (README = what it is, HISTORY.md = how it got here)
 `README.md` is 794 lines and growing: a chronological log (Parts 1-11) where a
 reader has to reconstruct the current defaults from eleven rounds of revisions,
 several of which reverse each other. Two documents are needed:
