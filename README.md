@@ -95,3 +95,12 @@ the pool, a threshold supplied by pooled inhibition. The tag is then consumed.
 - **No body.** The Part 1 design specified homeostatic set-points; the
   implementation takes reward from a task. Embodiment was dropped at first
   contact with code and never returned.
+
+## Where this is going
+
+- **`PLAN.md`** — roadmap, steps 0–13, and the v2/v3 forks.
+- **`V2.md`** — substrate PRD: continuous time, event-driven, local pools.
+- **`V3.md`** — the fluctuation thesis. Two timescales of variance separate
+  noise from change; one estimator cannot, which is what Adam does. Orthogonal
+  to v2 and testable in v1.
+- **`HISTORY.md`** — the more valuable half of the documentation.

@@ -1,0 +1,219 @@
+"""numba port of the tick loop. Step 7b.
+
+WHY THIS FILE EXISTS AND WHAT COULD GO WRONG
+--------------------------------------------
+brainsim spends ~140 us per tick, of which ~0.0006 us is arithmetic. The rest is
+numpy call overhead across ~20 operations on 80-element arrays -- we are ~200000x
+off peak. That makes a 20-minute regression suite, which is why nothing
+re-checks a shipped component and why five of them turned harmful unnoticed.
+
+A port is this project's most dangerous operation. `port-keeps-the-reference-
+number`: twice already a reimplementation returned a plausible wrong number
+(a rebuilt training loop; `trh/30` in place of a running mean), and both were
+caught only by a reference value measured before the port. So there are TWO
+separate validations here, for two separate risks:
+
+  1. ALGORITHM. `_tick_block` is checked BIT-EXACTLY against the numpy
+     implementation, by feeding both the identical pre-drawn random arrays.
+     Any difference is a port bug, full stop.
+
+  2. RNG STREAM. The kernel consumes randomness in bulk -- one (T, n_in) draw
+     per decision instead of T draws of n_in -- because per-tick numpy RNG calls
+     would dominate the jitted loop. Same distribution, different stream, so
+     per-seed numbers legitimately differ and only the DISTRIBUTION can be
+     compared. That is checked against reference.json over many seeds.
+
+Splitting them matters: if the two were checked together, a real port bug would
+be excusable as "just the RNG stream", which is precisely the excuse that lets a
+broken port ship.
+"""
+import numpy as np
+from numba import njit
+from brainsim import BrainSim
+
+
+@njit(cache=True, fastmath=False)
+def _tick_block(X, U, G,
+                vh, vm, trh, fh, trm, votes, thresh, rate,
+                elig, elig_w, trh_sum, trh_n,
+                wm, wm_sum, wm_n, prev_fh, wm_eff,
+                W_in, W_out, W_wm, out_budget,
+                k, LEAK, TRACE_D, ELIG_D, TRM_D, noise_eff,
+                WM, WM_DECAY, WM_LR, WM_BETA, WM_CAP, WM_GATE_CAP,
+                PERSIST, SELF_EXC, INHIB, TAGGATE, THETA,
+                ETA_TH, TARGET_RATE, SCALE_EVERY, tick0):
+    """T ticks of the loop. Mirrors BrainSim.step() line for line.
+
+    X (T, n_in) observation per tick; U (T, n_in) uniforms; G (T, n_motor)
+    standard normals. Scalar accumulators are returned because numba cannot
+    write back into python floats.
+    """
+    T, n_in = X.shape
+    H = vh.shape[0]; M = vm.shape[0]
+    ticks = tick0
+    for t in range(T):
+        ticks += 1
+        # --- sensory transduction --------------------------------------
+        si = np.empty(n_in)
+        for i in range(n_in):
+            si[i] = 1.0 if U[t, i] < 0.6 * X[t, i] else 0.0
+
+        # --- motor drive: LAST tick's hidden spikes (one-tick axonal delay)
+        drive = np.empty(M)
+        for m in range(M):
+            acc = 0.0
+            for h in range(H):
+                acc += W_out[m, h] * fh[h]
+            drive[m] = acc + noise_eff * G[t, m]
+
+        if WM:
+            # feed the WM pathway only the component of wm that the CURRENT
+            # input does not already explain (see brainsim.step)
+            n2 = 0.0
+            for h in range(H):
+                n2 += trh[h] * trh[h]
+            if n2 > 1e-9:
+                dot = 0.0
+                for h in range(H):
+                    dot += wm[h] * trh[h]
+                c = dot / n2
+                for h in range(H):
+                    wm_eff[h] = wm[h] - c * trh[h]
+            else:
+                for h in range(H):
+                    wm_eff[h] = wm[h]
+            for m in range(M):
+                acc = 0.0
+                for h in range(H):
+                    acc += W_wm[m, h] * wm_eff[h]
+                drive[m] += WM_BETA * acc
+
+        if PERSIST:
+            mn = 0.0
+            for m in range(M):
+                mn += trm[m]
+            mn /= M
+            for m in range(M):
+                drive[m] += SELF_EXC * trm[m] - INHIB * mn
+
+        fm = np.zeros(M)
+        for m in range(M):
+            vm[m] = vm[m] * LEAK + drive[m]
+            if vm[m] > 1.0:
+                fm[m] = 1.0
+                vm[m] = 0.0
+            trm[m] = trm[m] * TRM_D + fm[m]
+
+        # --- hidden: leaky integrate ------------------------------------
+        for h in range(H):
+            acc = 0.0
+            for i in range(n_in):
+                acc += W_in[h, i] * si[i]
+            vh[h] = vh[h] * LEAK + acc
+
+        # --- k-WTA: the k-th largest vh is the threshold ----------------
+        # selection sort of the top k; H=80, k=6, cheaper than a full sort and
+        # matches np.partition(vh, -k)[-k] exactly (the k-th largest value).
+        used = np.zeros(H, np.uint8)
+        thr = 0.0
+        for j in range(k):
+            best = -1
+            bv = 0.0
+            for h in range(H):
+                if used[h] == 0 and (best < 0 or vh[h] > bv):
+                    best = h
+                    bv = vh[h]
+            used[best] = 1
+            thr = bv
+        for h in range(H):
+            fh[h] = 1.0 if (vh[h] >= thr and vh[h] > thresh[h]) else 0.0
+            if fh[h] > 0.0:
+                vh[h] = 0.0
+            trh[h] = trh[h] * TRACE_D + fh[h]
+
+        if WM:
+            if WM_GATE_CAP:
+                nrm = 0.0
+                for h in range(H):
+                    nrm += wm[h] * wm[h]
+                g = 1.0 - np.sqrt(nrm) / WM_CAP
+                if g < 0.0:
+                    g = 0.0
+            else:
+                g = 1.0
+            for h in range(H):
+                wm[h] = wm[h] * WM_DECAY + WM_LR * g * fh[h]
+                prev_fh[h] = fh[h]
+                wm_sum[h] += wm_eff[h]
+            wm_n += 1
+
+        for h in range(H):
+            trh_sum[h] += trh[h]
+        trh_n += 1
+
+        # --- eligibility: winner-take-all on CREDIT ---------------------
+        if TAGGATE:
+            mx = trm[0]
+            for m in range(1, M):
+                if trm[m] > mx:
+                    mx = trm[m]
+            for m in range(M):
+                gm = 1.0 if (mx <= 0.0 or trm[m] >= THETA * mx) else 0.0
+                v = fm[m] * gm
+                for h in range(H):
+                    elig[m, h] = elig[m, h] * ELIG_D + (1.0 - ELIG_D) * v * trh[h]
+        else:
+            for m in range(M):
+                v = fm[m]
+                for h in range(H):
+                    elig[m, h] = elig[m, h] * ELIG_D + (1.0 - ELIG_D) * v * trh[h]
+        elig_w = elig_w * ELIG_D + (1.0 - ELIG_D)
+
+        for m in range(M):
+            votes[m] += fm[m]
+
+        # --- homeostasis (ETA_TH is 0.0 by default; 15 measured it harmful)
+        for h in range(H):
+            rate[h] += 0.001 * (fh[h] - rate[h])
+            thresh[h] += ETA_TH * (rate[h] - TARGET_RATE)
+            if thresh[h] < 0.05:
+                thresh[h] = 0.05
+            elif thresh[h] > 20.0:
+                thresh[h] = 20.0
+
+        if ticks % SCALE_EVERY == 0:
+            for m in range(M):
+                cur = 0.0
+                for h in range(H):
+                    cur += abs(W_out[m, h])
+                if cur > 1e-9:
+                    s = out_budget[m] / cur
+                    for h in range(H):
+                        W_out[m, h] *= s
+    return elig_w, trh_n, wm_n, ticks
+
+
+class FastBrainSim(BrainSim):
+    """Same class, same defaults, same reward()/replay()/sleep() -- only the
+    tick loop is replaced. Everything that decides anything stays in numpy, so
+    a divergence can only come from the block below."""
+
+    def observe(self, X):
+        X = np.ascontiguousarray(np.atleast_2d(X), dtype=np.float64)
+        T = X.shape[0]
+        U = self.rng.random((T, self.n_in))
+        G = self.rng.standard_normal((T, self.n_motor))
+        self.elig_w, self.trh_n, self.wm_n, self.ticks = _tick_block(
+            X, U, G,
+            self.vh, self.vm, self.trh, self.fh, self.trm, self.votes,
+            self.thresh, self.rate,
+            self.elig, float(self.elig_w), self.trh_sum, int(self.trh_n),
+            self.wm, self.wm_sum, int(self.wm_n), self._prev_fh, self._wm_eff,
+            self.W_in, self.W_out, self.W_wm, self._out_budget,
+            int(self.k), self.LEAK, self.TRACE_D, self.ELIG_D, self.TRM_D,
+            float(self.noise_eff),
+            bool(self.WM), self.WM_DECAY, self.WM_LR, self.WM_BETA, self.WM_CAP,
+            self.WM_GATE == "capacity",
+            bool(self.PERSIST), self.SELF_EXC, self.INHIB,
+            bool(self.TAGGATE), self.THETA,
+            self.ETA_TH, self.TARGET_RATE, int(self.SCALE_EVERY), int(self.ticks))

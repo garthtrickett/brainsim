@@ -286,6 +286,32 @@ happens INSIDE a loop that never stops.
 
 ---
 
+# brainsim v3 — the fluctuation thesis
+
+See **`V3.md`**. Written 2026-09-08, nothing built. Orthogonal to the v2
+substrate rewrite and testable in v1, which is the point of it.
+
+The claim: **Adam keeps one second moment and always shrinks; brains keep at
+least two, at different timescales, and their difference decides whether to
+shrink or grow.** A single estimator cannot separate "this is noisy" from "this
+just changed", which is exactly why `volatile-4` (0.420) is our worst task.
+
+- §9 — the thesis, and why the original parsimony framing was really Adam
+- §10 — the queue: differencing pair, reconsolidation, gate-spike event
+  boundaries, variance spectrum, quiet-triggered replay, adaptive timestep
+- §11 — further out: interference as a discovery signal, grown structure,
+  forgetting as the default
+
+**Critical path: the §9 gate vs Adam on a non-stationary supervised toy. No
+brainsim involved,** which also gives this project the external evidence it has
+never had. Nothing in §10 or §11 starts before that has a number.
+
+V3 absorbs step 8 (plasticity gating) and re-opens step 11 (predictive coding)
+on a cheaper claim — temporal differencing with no hierarchy and no top-down.
+**Step 7a remains a hard prerequisite**: every V3 prediction is a comparison.
+
+---
+
 # brainsim v2 — a fork, not an iteration
 
 Four changes remove every GLOBAL operation in the design. Anything global is a
