@@ -1,0 +1,14 @@
+Q2: eligibility consumption rules, tested in v1 (5 seeds)
+
+  rule                nway-8  volatile-4
+  full                 0.979       0.420
+  none                 0.889       0.369
+  half                 0.967       0.349
+  proportional         0.949       0.346
+
+  lock-10, 3 seeds (total rewards):
+    full           [243, 386, 440]  mean=356.3
+    proportional   [337, 374, 532]  mean=414.3
+    half           [289, 8, 477]  mean=258.0
+
+[exited with code 0]
