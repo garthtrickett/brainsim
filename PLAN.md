@@ -239,6 +239,51 @@ seed in five found none at all. Directed exploration is exactly what should help
 there. `ADAPTIVE` was cut on similarly sound evidence and reversed once its
 regime changed; this deserves the same re-examination.
 
+### 13. A second pass at the LLM / deep-net world, under the brain-plausibility lens
+
+Sequence AFTER step 11, so predictive coding and Forward-Forward compete for the
+same gap and can be ablated against each other rather than tested in isolation.
+
+The constraint is what makes this useful: forcing "what problem was this actually
+solving?" usually surfaces a biological answer.
+
+**13a. Content-addressed replay -- attention as CA3 pattern completion.**
+Self-attention is query-key matching: retrieve by similarity to what is being
+processed NOW. That is exactly what hippocampal CA3 recurrence does -- partial
+cue in, full episode out. Our replay samples by stored priority, which is blind
+to the current situation. Smallest change, clearest warrant, and it improves our
+strongest component (lock 9.5 -> 419).
+
+**13b. Forward-Forward / contrastive local learning -- for the layer that never
+learns.** Our deepest gap is that only `W_out` is plastic. Forward-Forward is the
+deep-learning world's OWN backprop-free local rule: two forward passes, positive
+and negative data, each layer optimising a local goodness objective. Contrastive
+Hebbian learning and equilibrium propagation are the same family. Value here is
+that it gives a SECOND independent candidate for the gap step 11 targets -- when
+two mechanisms compete for one gap, the ablation means something.
+
+**13c. Synaptic failure as dropout -- nearly free.** Dropout was invented as
+regularisation; real synapses fail to release 50-90% of the time, more aggressive
+than any dropout rate in use. We have noise on motor units but deterministic
+synapses. One line, strong warrant, plausibly helps the capacity limit step 9
+targets.
+
+Also worth a look: divisive normalisation (Carandini-Heeger -- the brain's
+LayerNorm, cheap and well established), and mixture-of-experts routing, which is
+BG gating over cortical modules and pairs with step 9's local pools.
+
+**The trap: "recurrence so it can think longer."** Chain-of-thought's analogue is
+recurrent deliberation, and cortex is massively recurrent while our hidden layer
+is feedforward per tick. But recurrence would interact with k-WTA, the
+eligibility trace and replay simultaneously, and the evidence of this project is
+that every added mechanism breaks something. Wants step 7's fast suite first, and
+its own step rather than a slot in a survey.
+
+**Excluded on principle:** backprop through layers; weight sharing across
+positions (no synapse can copy another's weights); a global error vector; and
+anything needing the whole dataset at once -- the premise is that learning
+happens INSIDE a loop that never stops.
+
 ## Cut, with reasons
 
 - **Predictive coding AS REPRESENTATION LEARNING** -- twice shelved on

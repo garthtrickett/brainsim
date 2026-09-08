@@ -184,9 +184,25 @@ class Compositional:
         self.colours = [_pat(rng, 0.20) for _ in range(n_colour)]
         combos = [(i, j) for i in range(n_shape) for j in range(n_colour)]
         rng.shuffle(combos)
-        self.test = combos[:held_out]; self.train = combos[held_out:]
-        # label depends on BOTH factors, so neither alone suffices
-        self.label = {(i, j): (i + j) % self.n_actions for i, j in combos}
+        # every held-out combo's LABEL must appear in training, or the task is
+        # unsolvable for a reason unrelated to representation
+        self.test, self.train = [], list(combos)
+        for c in list(self.train):
+            if len(self.test) >= held_out: break
+            if sum(1 for t in self.train if t[0] == c[0]) > 1:
+                self.train.remove(c); self.test.append(c)
+        # Label = SHAPE identity; colour is a nuisance factor.
+        #
+        # The first version used (i+j) % n, which is not linearly decodable even
+        # from a PERFECTLY factorised code -- so no representation could solve it
+        # with a linear readout, and held-out scored 0.002 against a 0.256 floor
+        # (systematically wrong, not chance). It tested the readout, not the code.
+        #
+        # With a nuisance factor the test is clean: a representation that
+        # FACTORISES shape from colour generalises to unseen (shape, colour)
+        # pairs for free, because colour is irrelevant. A purely CONJUNCTIVE code
+        # has no representation of the unseen pair at all and must memorise.
+        self.label = {(i, j): i % self.n_actions for i, j in combos}
         self.mode = "train"; self.name = f"compositional-{n_shape}x{n_colour}"
     def reset(self, rng):
         pool = self.train if self.mode == "train" else self.test
