@@ -198,11 +198,44 @@ class FastBrainSim(BrainSim):
     tick loop is replaced. Everything that decides anything stays in numpy, so
     a divergence can only come from the block below."""
 
+    def __init__(self, *a, **kw):
+        super().__init__(*a, **kw)
+        self._buf = []
+
+    # Buffer ticks and flush at decide(). Both runners in tasks.py do
+    # N x step(obs) then decide(), so this hooks the port in without changing
+    # either runner or any task -- control flow stays identical to the original,
+    # which means a divergence can only come from the kernel.
+    def step(self, x):
+        self._buf.append(np.asarray(x, dtype=np.float64))
+        return None                      # nothing in either runner reads this
+
+    def _flush(self):
+        if self._buf:
+            buf, self._buf = self._buf, []
+            self.observe(np.stack(buf))
+
+    def decide(self):
+        self._flush(); return super().decide()
+
+    def reward(self, *a, **kw):
+        self._flush(); return super().reward(*a, **kw)
+
     def observe(self, X):
         X = np.ascontiguousarray(np.atleast_2d(X), dtype=np.float64)
         T = X.shape[0]
-        U = self.rng.random((T, self.n_in))
-        G = self.rng.standard_normal((T, self.n_motor))
+        # BIT-EXACTNESS (PLAN.md step 7 flagged this as the thing that breaks a
+        # port). The original draws per tick, in order: random(n_in) then
+        # normal(0, noise_eff, n_motor). Drawing two big blocks instead reorders
+        # the stream and silently produces a DIFFERENT-but-plausible number,
+        # which is exactly the `port-keeps-the-reference-number` failure. So the
+        # draws stay interleaved. Cost is 2 numpy calls per tick instead of ~20.
+        # normal(0,s,n) == standard_normal(n)*s in value AND stream position,
+        # verified, so the kernel's `noise_eff * G` is equivalent.
+        U = np.empty((T, self.n_in)); G = np.empty((T, self.n_motor))
+        for t in range(T):
+            U[t] = self.rng.random(self.n_in)
+            G[t] = self.rng.standard_normal(self.n_motor)
         self.elig_w, self.trh_n, self.wm_n, self.ticks = _tick_block(
             X, U, G,
             self.vh, self.vm, self.trh, self.fh, self.trm, self.votes,
