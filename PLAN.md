@@ -302,6 +302,10 @@ just changed", which is exactly why `volatile-4` (0.420) is our worst task.
 - §11 — further out: interference as a discovery signal, grown structure,
   forgetting as the default
 
+Task work is scoped in **`DESIGN-tasks-v3.md`**: five additions, ordered, with
+the finding that the current suite has *no reward noise anywhere* and so cannot
+express the distinction §9 exists to make.
+
 **Critical path: the §9 gate vs Adam on a non-stationary supervised toy. No
 brainsim involved,** which also gives this project the external evidence it has
 never had. Nothing in §10 or §11 starts before that has a number.
