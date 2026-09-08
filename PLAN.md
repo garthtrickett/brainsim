@@ -172,7 +172,14 @@ draws, so bit-exactness breaks unless random draws are pre-generated in numpy an
 passed in as arrays. Design that in from the start, or the reference table cannot
 validate the port.
 
-### 8. Plasticity gating -- learn when NOT to update
+### 8. Plasticity gating  <- DONE (2026-09-08): measured, SHIP NOTHING
+
+Premise confirmed with a clean control (delay=0 at ceiling). But a PRIVILEGED
+perfect gate recovers only `delay=1` (0.03 -> 0.65 of ceiling); at `delay>=2` it
+does nothing and at `delay>=3` no configuration beats floor. No real gate can
+beat the oracle, so the ceiling on step 8 is one narrow case. `WM_HOLD` (the
+obvious memory fix) does nothing alone and trades delay=1 for delay=2 when
+combined. See `DESIGN-plasticity-gating.md`.
 
 The clean measured gap from step 5: **the design cannot absorb decisions that do
 not matter.** An unrewarded arbitrary action draws a negative RPE into a policy

@@ -227,6 +227,12 @@ class BrainSim:
     #   oracle_carry -- also skip eligibility consumption, so credit carries
     #                   forward to the decision that is actually scored
     PGATE       = "off"
+    # Step 8 follow-up. WM is cleared at EVERY reward() call, so the cue cannot
+    # survive a decision boundary -- which is why tmaze delay>=2 sits at floor
+    # even with a PERFECT plasticity gate. WM_HOLD clears only on done, making
+    # working memory cross-decision. tmaze-within works (0.999) because its
+    # delay is in ticks WITHIN one decision, which hid this entirely.
+    WM_HOLD     = False
     SURP_F, SURP_S = 0.10, 0.005   # fast/slow |RPE| averages
     LR_GAIN, NOISE_GAIN, VOL_CAP = 1.5, 1.5, 2.0
 
@@ -491,7 +497,8 @@ class BrainSim:
             self.elig[:] = 0.0; self.elig_w = 0.0
             self.buffer.append((z.copy(), de.copy(), nm, action, r))
             self.trh_sum[:] = 0.0; self.trh_n = 0
-            if self.WM: self.wm[:] = 0.0; self._prev_fh[:] = 0.0
+            if self.WM and not (self.WM_HOLD and not done):
+                self.wm[:] = 0.0; self._prev_fh[:] = 0.0
             self.decisions += 1
             if self.HIPPO: self.store_and_replay(zbar, action, r, done, _wbar)
             if self.decisions % self.SLEEP_EVERY == 0: self.sleep()
@@ -519,7 +526,8 @@ class BrainSim:
             # as the V(s) readout, which needed the same fix.
             self.W_wm += gate * lr * nm * dew / (float(wbar @ wbar) + 1e-3)
             np.clip(self.W_wm, -self.WMAX, self.WMAX, out=self.W_wm)
-            self.wm[:] = 0.0; self._prev_fh[:] = 0.0
+            if not (self.WM_HOLD and not done):
+                self.wm[:] = 0.0; self._prev_fh[:] = 0.0
             self.wm_sum[:] = 0.0; self.wm_n = 0
         self.ebar += self.EBAR_LR * (elig - self.ebar)
         self.W_out += gate * lr * nm * de
