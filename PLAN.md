@@ -199,9 +199,51 @@ vanished at first contact with code and never returned.** Largest conceptual gap
 largest work, hence last -- but it is the difference between a learning algorithm
 and the thing this project set out to build.
 
+### 11. Predictive coding, revisited on the RIGHT question
+
+Shelved twice, and the shelving was sound for the question asked -- but the
+question was too narrow. We tested predictive coding as a **representation
+learning algorithm** (does a learned encoder beat a fixed random one). That is
+one application. In neuroscience it is mostly a hierarchical
+prediction-and-error architecture supplying a learning signal to EVERY layer and
+a precision-weighted gate on how much to trust each error.
+
+Worse: step 6 probed the PREMISE (is there a representation gap?) and never the
+MECHANISM (does PC close anything?). That is the same error that let the
+hippocampus ship a headline which was actively harmful.
+
+Three ways back in, one of which converges with step 8:
+
+- **Precision weighting as the plasticity gate.** Step 8 needs a local signal for
+  "how much should this decision teach me?" Inverse-variance weighting of
+  prediction errors is the predictive-coding account of exactly that. If step 8's
+  relevance gate works, precision weighting is its principled generalisation; if
+  it fails, PC offers a better-motivated version of the same idea.
+- **Generative replay -- a forward model that replays what did NOT happen.**
+  Replay is our strongest mechanism (lock 9.5 -> 419) and can only replay what
+  occurred. A learned forward model turns replay into planning: Dyna with a
+  learned model. Uses the world model built in Part 1 and orphaned when curiosity
+  failed. A capability jump, not a tuning gain.
+- **An actual hierarchy.** We have ONE hidden layer. Predictive coding needs depth
+  to be itself -- predictions descending, errors ascending. Testing it on a single
+  layer was never a fair test of the theory.
+
+Sequence after step 8, so its relevance gate either subsumes or motivates this.
+
+### 12. Curiosity, revisited
+
+Cut in Part 2 for showing no effect at 0.1/0.3/1.0/3.0 across two environments.
+That verdict predates the working world model, the corrected `decide()`, and the
+lock's measured exploration wall -- ~4000 decisions to stumble on reward, and one
+seed in five found none at all. Directed exploration is exactly what should help
+there. `ADAPTIVE` was cut on similarly sound evidence and reversed once its
+regime changed; this deserves the same re-examination.
+
 ## Cut, with reasons
 
-- **Predictive coding** -- twice shelved on measurement, about to be a third time.
+- **Predictive coding AS REPRESENTATION LEARNING** -- twice shelved on
+  measurement, about to be a third time. Note this is NOT the same as retiring
+  predictive coding; see step 11.
 - **Volatile-specific tuning** -- symptom, not cause. Step 8 addresses the likely
   cause.
 - **Mojo** -- you would be porting an architecture step 9 is about to replace.
