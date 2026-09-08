@@ -121,6 +121,25 @@ class BrainSim:
     # Tune to your N: 0.99 for 4-way (matches non-local exactly), 0.90 for 8-way.
     TRM_D    = 0.97
 
+    # --- PFC working memory (36). Default OFF pending test.
+    # tmaze-within: cue VISIBLE scores 1.000, cue hidden 0.505 against a 0.504
+    # floor. A clean 0.50 gap that only memory can close.
+    # The GATE is the hard part -- write always and the cue is overwritten by the
+    # delay and choice patterns. Surprise was the planned gate and is REFUTED:
+    # the choice pattern is more surprising (0.173) than the cue (0.145), so a
+    # surprise gate would store the wrong thing.
+    # Gates to compare:
+    #   none      always write -- expected to fail, and it is the control
+    #   capacity  write strongly only while the store is EMPTY (self-gating:
+    #             a cell already in a persistent up-state resists new input)
+    #   change    write when the input differs from the previous tick
+    WM        = False
+    WM_GATE   = "capacity"
+    WM_DECAY  = 0.999    # persistent within a decision
+    WM_LR     = 0.15
+    WM_BETA   = 1.0      # how strongly WM drives the readout
+    WM_CAP    = 6.0      # capacity scale for the capacity gate
+
     # --- hippocampus: episodic store + replay (29). Default OFF pending test.
     # Two DIFFERENT mechanisms for backward credit, deliberately separable:
     #  (a) an eligibility trace spanning the replayed episode -- needs COMPRESSION,
@@ -203,6 +222,8 @@ class BrainSim:
         # accuracy from 0.92 to 0.24.
         self.trh_sum = np.zeros(n_hidden); self.trh_n = 0
         self.trm = np.zeros(n_motor)      # motor activity trace
+        self.wm = np.zeros(n_hidden)      # PFC working memory
+        self._prev_fh = np.zeros(n_hidden)
         self.w_v = np.zeros(n_hidden)     # striatal value weights V(s)
         self.surp_f = self.surp_s = 0.0   # fast / slow REWARD RATE averages
         self.noise_eff = self.NOISE       # NE-modulated exploration
@@ -252,6 +273,8 @@ class BrainSim:
 
         # 4/5: motor integrates last tick's hidden spikes, plus exploration noise
         drive = self.W_out @ self.fh + self.rng.normal(0, self.noise_eff, self.n_motor)
+        if self.WM:
+            drive = drive + self.WM_BETA * (self.W_out @ self.wm)
         if self.PERSIST:
             drive += self.SELF_EXC * self.trm - self.INHIB * self.trm.mean()
         self.vm = self.vm * self.LEAK + drive
@@ -269,6 +292,15 @@ class BrainSim:
         self.vh[self.fh > 0] = 0
 
         self.trh = self.trh * self.TRACE_D + self.fh
+        if self.WM:
+            if self.WM_GATE == "capacity":
+                g = max(0.0, 1.0 - float(np.linalg.norm(self.wm)) / self.WM_CAP)
+            elif self.WM_GATE == "change":
+                g = 1.0 if float(np.abs(self.fh - self._prev_fh).sum()) > 2 else 0.0
+            else:
+                g = 1.0
+            self.wm = self.wm * self.WM_DECAY + self.WM_LR * g * self.fh
+            self._prev_fh = self.fh.copy()
         self.trh_sum += self.trh; self.trh_n += 1
         # EMA, not a running sum: keeps magnitude independent of the time
         # constant. A plain sum at tau~200 accumulates ~200x a single outer
@@ -360,6 +392,11 @@ class BrainSim:
         """Deliver reward. NM is reward MINUS what was expected (02: raw reward
         instead of RPE => chance, because it never stops reinforcing the known)."""
         zbar = self.trh_sum / max(self.trh_n, 1)
+        if self.WM:
+            # The readout is driven by fh + WM_BETA*wm, so credit must be
+            # attributed to the same signal or the WM contribution is
+            # unlearnable -- driven but never reinforced.
+            zbar = zbar + self.WM_BETA * self.wm
         if self.VALUE_STATE:
             # V(s) from cortical input, as striatum does -- not one global mean.
             # A scalar baseline is useless when reward arrives 2x in 25,000 acts.

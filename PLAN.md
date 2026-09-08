@@ -123,6 +123,23 @@ invariance to nuisance transforms -- and a train/test split the runner does not
 have. Do not build this until such a task exists and the current encoder
 demonstrably fails on it.
 
+### 5b. Split README.md  <- scheduled, AFTER step 5 closes
+`README.md` is 794 lines and growing: a chronological log (Parts 1-11) where a
+reader has to reconstruct the current defaults from eleven rounds of revisions,
+several of which reverse each other. Two documents are needed:
+
+- **README.md** -- what the design IS. Current architecture, current defaults
+  with their measured justification, the task suite with floors and ceilings,
+  how to run it. A reference, readable without history.
+- **HISTORY.md** -- how it got here. Parts 1-11 as they stand, including every
+  refutation, retraction and shelved design. This is the more valuable half and
+  must not be trimmed: five mechanisms were validated honestly and later turned
+  harmful, three verdicts reversed when their regime moved, and two designs were
+  shelved unbuilt. A reader who sees only the final state learns none of that.
+
+Do this after step 5 so the split is made once against a settled architecture,
+rather than twice.
+
 ## Method rules (earned the hard way)
 
 - **Calibrate the task before ablating.** Floor and ceiling both make ablations

@@ -1,5 +1,11 @@
 # brainsim
 
+> **Note:** this file is a chronological record (Parts 1-11), not a reference.
+> The current architecture and defaults are spread across eleven rounds of
+> revisions, several of which reverse earlier ones. A split into a
+> current-state README and a HISTORY.md is scheduled in `PLAN.md` (5b), after
+> step 5 closes.
+
 The simplest AI I could design that works the way a brain works rather than the
 way an LLM works — then implemented, ablated, and corrected until each part
 earned its place or was cut.

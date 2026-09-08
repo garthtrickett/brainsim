@@ -133,6 +133,57 @@ class TMaze:
     def correct(self): return self.c
 
 
+class TMazeWithin:
+    """Memory test with NO irrelevant decisions: cue, delay and choice all occur
+    within a SINGLE scored decision, as phases of the tick sequence.
+
+    `TMaze` turned out to measure tolerance of irrelevant decisions, not memory.
+    Suppressing learning on its unscored steps took cue-visible from 54% to 99%
+    of ceiling, and only then did a memory gap appear (0.248 visible vs 0.128
+    hidden). This variant removes the confound at the task level instead: every
+    decision is scored, so there is no arbitrary action to be punished for.
+
+    Memory must span the tick gap, not a decision gap: trh decays at tau~4.5
+    ticks, so a 40-tick separation is 0.8^40 = 1e-4 -- structurally impossible
+    without a persistent store, which is the point.
+    """
+    def __init__(self, n=2, cue_ticks=10, delay_ticks=30, seed=0):
+        rng = np.random.default_rng(seed)
+        self.n_actions = n
+        self.cues = [_pat(rng, 0.30) for _ in range(n)]
+        self.neutral = _pat(rng, 0.30)
+        self.choice = _pat(rng, 0.30)
+        self.cue_ticks, self.delay_ticks = cue_ticks, delay_ticks
+        self.name = f"tmaze-within-{n}d{delay_ticks}"
+    def observation_sequence(self, rng):
+        self.c = int(rng.integers(self.n_actions))
+        return ([self.cues[self.c]] * self.cue_ticks
+                + [self.neutral] * self.delay_ticks
+                + [self.choice] * 10)
+    def reset(self, rng):
+        self._seq = self.observation_sequence(rng); self._i = 0
+        return self._seq[0]
+    def step(self, a):
+        return np.zeros(N_IN), float(a == self.c), True
+    def correct(self): return self.c
+
+
+def run_within(agent, task, decisions, seed=0):
+    """Runner for phase-structured tasks: the observation CHANGES across ticks
+    within one decision, so the standard runner (one obs per decision) cannot
+    present them."""
+    rng = np.random.default_rng(seed); hist = []
+    for _ in range(decisions):
+        seq = task.observation_sequence(rng)
+        for obs in seq:
+            agent.step(obs)
+        a = agent.decide()
+        _, r, _ = task.step(a)
+        agent.reward(r, action=a, done=True)
+        hist.append(r)
+    return np.array(hist)
+
+
 def run(agent, task, decisions, ticks=30, seed=0):
     """The ONE runner. Returns reward per decision."""
     rng = np.random.default_rng(seed)
