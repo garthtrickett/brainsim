@@ -305,7 +305,19 @@ intrinsic rather than a bolted-on module that took four interface attempts), and
 active inference as the foundation (unifies the orphaned world model, externally
 supplied reward, and argmax action selection — and restores the Part 1 premise).
 
-## Why a fork
+## Why a fork — REVISED: only continuous time forks
+
+Checking the "they all interact" claim change by change, five of the six land
+incrementally in v1 with parity checks (batching, numba, seed-generated
+connectivity, local pools, parallel NM loops). Only **continuous time** breaks
+the task interface, the runner, replay's episode definition and eligibility
+consumption simultaneously.
+
+So: freeze the reference (7a), land the substrate changes incrementally, run the
+rule science (8, 11, 12, 13) on the resulting fast suite, and fork once at the
+end for continuous time alone. See `V2.md` for the rule/substrate split.
+
+## Original reasoning, kept
 
 The four changes interact; none can land alone with anything still working. That
 breaks the method this project runs on — change one thing, run the suite.
