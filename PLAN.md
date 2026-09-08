@@ -147,7 +147,13 @@ rather than twice.
 Ordered by leverage, after the six-step roadmap closes. The first is
 infrastructure rather than science, and that is exactly why it is first.
 
-### 7. Freeze the numbers, then make the suite fast (numba + batching)
+### 7. Freeze the numbers, then make the suite fast  <- DONE (2026-09-08)
+
+`reference.json`, 8 seeds, external baselines. Port is bit-exact (12/12), 5-8x
+faster, full build 470s. **brainsim beats every baseline on nway-4, nway-8,
+tmaze and lock-10 -- lock by 38x over the best alternative, with tabular-Q at
+0.000 -- and loses xor-2 and volatile-4 to tabular-Q, the one baseline with zero
+interference.** See HISTORY.md Part 14.
 
 The dominant failure of this project has not been bad mechanisms -- it has been
 **measurement**. Four wrong conclusions from n=3. Six instruments that measured

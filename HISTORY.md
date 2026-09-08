@@ -859,3 +859,71 @@ independent of whether the module works.**
   volatile-4         0.463 -> 0.424
   lock-10            419.0 -> 339.8  (-19%, still 34x the no-replay baseline)
 ```
+
+---
+
+# Part 14 — Step 7: the first external evidence (2026-09-08)
+
+Every number this project produced for thirteen parts was measured against our
+own floor, our own ceiling and our own ablations. "0.978 on nway-8" could have
+been a good result or a slow reinvention of something a ten-line algorithm does
+better. Step 7 answers that, and the answer is not uniform.
+
+## The table (8 seeds, `reference.json`)
+
+```
+task                  floor  brainsim  softmax    tab-Q   mlp-bp  ceiling
+nway-4                0.251     0.997    0.993    0.923    0.875    1.000
+nway-8                0.126     0.978    0.976    0.909    0.810    1.000
+xor-2                 0.504     0.825    0.785    0.950    0.776    1.000
+volatile-4            0.251     0.371    0.342    0.781    0.198    1.000
+tmaze-within-30       0.504     0.999        -        -        -    1.000
+tmaze-within-60       0.504     0.998        -        -        -    1.000
+lock-10              12.500   415.125   10.750    0.000    1.500 1333.000
+```
+
+Baselines are deliberately generous: `tabular-q` is handed exact state identity,
+which the agent never sees.
+
+## What it says
+
+**The headline is `lock-10`.** brainsim scores 415 total rewards against 10.75
+for the best baseline and **0.000 for tabular Q-learning**, which never stumbles
+on the reward at all. That is 38x the best alternative and 33x the floor, and it
+is the reverse-replay result (9.5 -> 419) finally measured against something
+outside itself. It is also only 31% of the 1333 ceiling, so the win is over the
+alternatives, not over the task.
+
+**We beat backprop on every task we win, and on `lock-10` by 277x.**
+
+**Two real losses, and they share one cause.** `xor-2` (0.825 vs 0.950) and
+`volatile-4` (0.371 vs 0.781) both go to tabular-Q -- the one baseline with a
+separate entry per state and therefore **zero interference**. Where states must
+not contaminate each other, 80 shared hidden units lose. Where generalisation or
+exploration matters, they win.
+
+## The consequence for v3, which is uncomfortable
+
+`V3.md` §9 argued that `volatile-4` is our worst task because a fixed learning
+rate cannot be right both just after a switch and deep into a block.
+
+**Tabular-Q has a fixed learning rate and scores more than double.** Two
+independent things now point the same way: `DESIGN-tasks-v3.md` found the suite
+contains no reward noise at all, so the noisy-vs-changed confusion §9 exists to
+resolve is not present; and the baseline that wins is the one that cannot
+interfere with itself.
+
+So the `volatile-4` deficit is most likely **catastrophic interference**, not
+learning-rate adaptation. That weakens §9's motivating example and strengthens
+§11.1 (interference as a discovery signal) considerably. §9's first experiment
+stands on its own -- it never involved our tasks -- but the claim that it fixes
+`volatile-4` should not be made.
+
+## Infrastructure
+
+- The numba port is **bit-exact**, 12/12 cases, 5-8x faster. The gate was
+  equality, not closeness, because `port-keeps-the-reference-number`.
+- The first 8-seed build was SIGKILLed 34s from the end when `paseo.service`
+  restarted: `work run`'s setsid escapes the session but not the systemd cgroup,
+  and no `.exit` file is written, so it is indistinguishable from still running.
+  Long jobs now run under `systemd-run --user --scope` and flush per task.
