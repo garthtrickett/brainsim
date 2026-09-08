@@ -22,17 +22,26 @@ python3 experiments/23_calibrate_tasks.py         # task floors and ceilings
 
 ## Where it stands
 
-| task | floor | current | ceiling | what it tests |
-|---|---|---|---|---|
-| `nway-4` | 0.253 | **0.997** | 1.000 | 4-way discrimination |
-| `nway-8` | 0.122 | **0.978** | 1.000 | 8-way; selection under load |
-| `xor-2` | 0.501 | **0.839** | 1.000 | conjunctions (identical marginals) |
-| `volatile-4` | 0.250 | **0.424** | 1.000 | non-stationary contingencies |
-| `tmaze-within d30` | 0.504 | **0.999** | 1.000 | working memory across 30 ticks |
-| `tmaze-within d60` | 0.504 | **0.999** | 1.000 | working memory across 60 ticks |
-| `lock-10` | ~12 rew | **339.8** | ~1333 | sparse reward (2 rewards / 25k actions) |
+The frozen reference uses eight agent seeds on task seed zero. Baselines and
+individual scores are in `reference.json`; remaining-v1 experiments and their
+different seed protocol are documented in [V1-RESULTS.md](V1-RESULTS.md).
 
-Floors are measured with a random policy, ceilings with an oracle — never assumed.
+| task | measured floor | baseline | measured ceiling |
+| --- | ---: | ---: | ---: |
+| `nway-4` | 0.251 | 0.997 | 1.000 |
+| `nway-8` | 0.126 | 0.978 | 1.000 |
+| `xor-2` | 0.504 | 0.825 | 1.000 |
+| `volatile-4` | 0.251 | 0.371 | 1.000 |
+| `tmaze-within-30` | 0.504 | 0.999 | 1.000 |
+| `tmaze-within-60` | 0.504 | 0.998 | 1.000 |
+| `lock-10` | 12.500 | 415.125 | 1333.000 |
+
+Lock scores count total rewards over 12,000 decisions; other scores are tail
+accuracy. These small synthetic-task comparisons do not establish superiority
+over deep learning generally.
+
+Validation: `python check_v1.py` and `python check_reference.py --out results/local-reference.json`.
+Install the existing pinned experiment dependencies with `pip install -r requirements.txt`.
 
 ## Architecture
 
@@ -89,9 +98,9 @@ the pool, a threshold supplied by pooled inhibition. The tag is then consumed.
 
 - **Cannot absorb decisions that do not matter.** An unrewarded arbitrary action
   draws a negative RPE into a policy sharing hidden units with the step that counts.
-- **One global NM scalar and one global k-WTA pool.** Both assume a single
-  competitive population; scaling past ~hundreds of units needs local pools and
-  parallel loops, which is a redesign rather than a port.
+- **One global NM scalar and one global k-WTA pool by default.** Local-pool
+  instruments now exist, but did not earn a default at the tested scale. Larger
+  networks and parallel loops still need their own evidence.
 - **No body.** The Part 1 design specified homeostatic set-points; the
   implementation takes reward from a task. Embodiment was dropped at first
   contact with code and never returned.
@@ -104,3 +113,6 @@ the pool, a threshold supplied by pooled inhibition. The tag is then consumed.
   noise from change; one estimator cannot, which is what Adam does. Orthogonal
   to v2 and testable in v1.
 - **`HISTORY.md`** — the more valuable half of the documentation.
+- **`V1-RESULTS.md`** — remaining-v1 investigations, exact commands, results and
+  explicit deferrals. Experimental knobs remain off by default.
+- **`V3-NEXT.md`** — why the next experiment can precede the continuous-time fork.

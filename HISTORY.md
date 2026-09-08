@@ -927,3 +927,45 @@ stands on its own -- it never involved our tasks -- but the claim that it fixes
   restarted: `work run`'s setsid escapes the session but not the systemd cgroup,
   and no `.exit` file is written, so it is indistinguishable from still running.
   Long jobs now run under `systemd-run --user --scope` and flush per task.
+
+---
+
+# Part 15 — Completing the v1 investigations (2026-09-08)
+
+The handoff stopped after launching step 9. It had finished, but its result was
+confounded: `max(1, 6//P)*P` gives four/eight winners at four/eight pools, despite
+the probe claiming constant sparsity. Corrected to P=1/2/3/6 at k=6, with both
+kernels checked and invalid configurations rejected.
+
+The second surprise was in the task, not the agent. The roadmap's capacity
+ladder still used numbers from `(shape+colour)%4`; the current task had changed
+to shape identity in fc84358. Running both labels with the same current agent
+gave 0.363 versus 0.964. A stale task definition was being interpreted as an
+architectural diagnosis. Local pools did not reliably repair the harder label.
+
+The remaining investigations produced no new default:
+
+- Frozen held-out evaluation: fixed encoder 0.751 versus 0.257 chance, eight
+  seeds. The representation prerequisite fails; PC hierarchy and Forward-Forward
+  remain untested rather than being declared ineffective.
+- A local action-conditioned forward model predicts observations accurately,
+  but learned-model backups score 580.0 versus 596.2 for equal-count real backups.
+  Extra training explains the apparent gain over the 551.7 control.
+- Curiosity coefficients 0.1/0.5 score 541.3/558.8; broad paired intervals include
+  zero. Dramatic discovery gains in individual seeds do not survive averaging.
+- Context retrieval scores 535.5 versus shuffled queries 539.8. One rewarded
+  path is a weak setting for a context advantage, and no advantage was measured.
+- Synaptic failure has no reliable capacity gain over matched attenuation.
+  A small nway gain has a stronger attenuation control; 50% failure hurts XOR
+  in every seed. A plausible biological story again did not earn a default.
+
+The new experiments pair task and agent seeds; the frozen reference fixes the
+task at zero. Their absolute means are not interchangeable. All 56 original
+reference scores reproduce exactly with the final integration. Exact source
+snapshots accompany 530 evidence rows, so intermediate instrumentation can be
+reconstructed rather than guessed from the latest implementation.
+
+This closes the bounded v1 investigations, not the deferred embodiment or
+continuous-time capability. `V1-RESULTS.md` gives commands, results and limits;
+`V3-NEXT.md` recommends testing the standalone two-timescale hypothesis before
+rewriting the substrate. V3 remains a hypothesis, not an inferred success.

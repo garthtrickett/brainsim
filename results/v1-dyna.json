@@ -1,0 +1,345 @@
+{
+  "protocol": {
+    "study": "dyna",
+    "seeds": 6,
+    "seed_start": 0,
+    "tasks": [
+      "lock-10"
+    ],
+    "arms": [
+      "off",
+      "real",
+      "model"
+    ],
+    "task_seed": "paired to agent seed"
+  },
+  "sources": {
+    "brainsim.py": "5f5478523741e5a11946aad335669ff91c6a7f4bd65aee96474409f618d0eccb",
+    "fastsim.py": "a7e95186d9875db6ee482abc87642cce9c09ea9f8a264bb0514de443478ff07f",
+    "tasks.py": "d3943af39a3e4467b1e79ac84e1e990b95fd01aa14adb6548a210ea153f72108",
+    "research_agents.py": "71c3d2658073d4632e35c6f90c8188b133b01b77da4e9df1c626f0cdf6b8de7d",
+    "transition_model.py": "76fb60ceed910188212d72bc8c7d3039a72f51054f369c3cb0b615fa1430524c",
+    "study_learning.py": "480ee2bbf3951c71440f37347a335d5593ac5e7d070e5eac69f505ee3ea47501",
+    "study_io.py": "7d74e090d4613782afd9fe09bb48d8a59e7f84e26ed9c2f142ecfc512d12d680"
+  },
+  "rows": {
+    "lock-10/controls/0": {
+      "floor": 12.0,
+      "ceiling": 1333.0,
+      "seconds": 0.16
+    },
+    "lock-10/off/0": {
+      "score": 243.0,
+      "first_reward": 631,
+      "early_rewards": 60.0,
+      "last_1000": 0.024,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 0,
+      "model_errors": [
+        0.007087084490962895,
+        0.0009482082406389342,
+        0.0009482082406389342
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 19.75
+    },
+    "lock-10/real/0": {
+      "score": 351.0,
+      "first_reward": 631,
+      "early_rewards": 78.0,
+      "last_1000": 0.042,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.007161064554538684,
+        0.0009184251475399546,
+        0.0009184251475399546
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 31.11
+    },
+    "lock-10/model/0": {
+      "score": 336.0,
+      "first_reward": 631,
+      "early_rewards": 81.0,
+      "last_1000": 0.03,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.007249771353263338,
+        0.0009326391498672796,
+        0.0009326391498672796
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 28.44
+    },
+    "lock-10/controls/1": {
+      "floor": 15.0,
+      "ceiling": 1333.0,
+      "seconds": 0.09
+    },
+    "lock-10/off/1": {
+      "score": 667.0,
+      "first_reward": 37,
+      "early_rewards": 182.0,
+      "last_1000": 0.06,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 0,
+      "model_errors": [
+        0.007037959843038208,
+        0.0006628620366874823,
+        0.0006628620366874823
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 24.68
+    },
+    "lock-10/real/1": {
+      "score": 692.0,
+      "first_reward": 37,
+      "early_rewards": 192.0,
+      "last_1000": 0.066,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.0069684748807851225,
+        0.0007060154102646602,
+        0.0007060154102646602
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 25.45
+    },
+    "lock-10/model/1": {
+      "score": 696.0,
+      "first_reward": 37,
+      "early_rewards": 196.0,
+      "last_1000": 0.061,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.006923638695834486,
+        0.0007319762294383011,
+        0.0007319762294383011
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 27.8
+    },
+    "lock-10/controls/2": {
+      "floor": 11.0,
+      "ceiling": 1333.0,
+      "seconds": 0.08
+    },
+    "lock-10/off/2": {
+      "score": 715.0,
+      "first_reward": 1220,
+      "early_rewards": 162.0,
+      "last_1000": 0.066,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 0,
+      "model_errors": [
+        0.006575561274451384,
+        0.0005784228501866096,
+        0.0005784228501866096
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 29.14
+    },
+    "lock-10/real/2": {
+      "score": 730.0,
+      "first_reward": 1220,
+      "early_rewards": 179.0,
+      "last_1000": 0.07,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.006567344098320283,
+        0.0005856490003138936,
+        0.0005856490003138936
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 36.06
+    },
+    "lock-10/model/2": {
+      "score": 745.0,
+      "first_reward": 1220,
+      "early_rewards": 185.0,
+      "last_1000": 0.055,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.0067075125155020695,
+        0.0007977665998008059,
+        0.0007977665998008059
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 24.53
+    },
+    "lock-10/controls/3": {
+      "floor": 17.0,
+      "ceiling": 1333.0,
+      "seconds": 0.14
+    },
+    "lock-10/off/3": {
+      "score": 860.0,
+      "first_reward": 391,
+      "early_rewards": 277.0,
+      "last_1000": 0.075,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 0,
+      "model_errors": [
+        0.006957083232767147,
+        0.0011638793528342167,
+        0.0011638793528342167
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 24.22
+    },
+    "lock-10/real/3": {
+      "score": 887.0,
+      "first_reward": 391,
+      "early_rewards": 267.0,
+      "last_1000": 0.078,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.006861249625565743,
+        0.0010685040322365505,
+        0.0010685040322365505
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 24.08
+    },
+    "lock-10/model/3": {
+      "score": 861.0,
+      "first_reward": 391,
+      "early_rewards": 255.0,
+      "last_1000": 0.077,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.006978990975005063,
+        0.0010357815484082038,
+        0.0010357815484082038
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 24.96
+    },
+    "lock-10/controls/4": {
+      "floor": 14.0,
+      "ceiling": 1333.0,
+      "seconds": 0.1
+    },
+    "lock-10/off/4": {
+      "score": 369.0,
+      "first_reward": 6483,
+      "early_rewards": 0.0,
+      "last_1000": 0.077,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 0,
+      "model_errors": [
+        0.007460408452134144,
+        0.0008848628107649872,
+        0.0008848628107649872
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 22.5
+    },
+    "lock-10/real/4": {
+      "score": 401.0,
+      "first_reward": 6483,
+      "early_rewards": 0.0,
+      "last_1000": 0.08,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.007451581575117834,
+        0.0009842887914364436,
+        0.0009842887914364436
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 27.18
+    },
+    "lock-10/model/4": {
+      "score": 389.0,
+      "first_reward": 6483,
+      "early_rewards": 0.0,
+      "last_1000": 0.082,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.00762784131372189,
+        0.0010192262967948671,
+        0.0010192262967948671
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 33.68
+    },
+    "lock-10/controls/5": {
+      "floor": 12.0,
+      "ceiling": 1333.0,
+      "seconds": 0.09
+    },
+    "lock-10/off/5": {
+      "score": 456.0,
+      "first_reward": 107,
+      "early_rewards": 117.0,
+      "last_1000": 0.055,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 0,
+      "model_errors": [
+        0.006728205056797507,
+        0.0006340382110446531,
+        0.0006340382110446531
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 27.37
+    },
+    "lock-10/real/5": {
+      "score": 516.0,
+      "first_reward": 107,
+      "early_rewards": 140.0,
+      "last_1000": 0.04,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.006898936280964417,
+        0.0005560759077142822,
+        0.0005560759077142822
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 21.69
+    },
+    "lock-10/model/5": {
+      "score": 453.0,
+      "first_reward": 107,
+      "early_rewards": 95.0,
+      "last_1000": 0.049,
+      "finite": true,
+      "external_episode_rewards": true,
+      "backups": 11999,
+      "model_errors": [
+        0.006740272759104433,
+        0.0005815251671920968,
+        0.0005815251671920968
+      ],
+      "observed_state_action_pairs": 18,
+      "seconds": 33.03
+    }
+  }
+}

@@ -1,0 +1,219 @@
+{
+  "protocol": {
+    "study": "replay",
+    "seeds": 6,
+    "seed_start": 0,
+    "tasks": [
+      "lock-10"
+    ],
+    "arms": [
+      "off",
+      "context",
+      "shuffled"
+    ],
+    "task_seed": "paired to agent seed"
+  },
+  "sources": {
+    "brainsim.py": "5f5478523741e5a11946aad335669ff91c6a7f4bd65aee96474409f618d0eccb",
+    "fastsim.py": "a7e95186d9875db6ee482abc87642cce9c09ea9f8a264bb0514de443478ff07f",
+    "tasks.py": "d3943af39a3e4467b1e79ac84e1e990b95fd01aa14adb6548a210ea153f72108",
+    "research_agents.py": "71c3d2658073d4632e35c6f90c8188b133b01b77da4e9df1c626f0cdf6b8de7d",
+    "transition_model.py": "76fb60ceed910188212d72bc8c7d3039a72f51054f369c3cb0b615fa1430524c",
+    "study_learning.py": "480ee2bbf3951c71440f37347a335d5593ac5e7d070e5eac69f505ee3ea47501",
+    "study_io.py": "7d74e090d4613782afd9fe09bb48d8a59e7f84e26ed9c2f142ecfc512d12d680"
+  },
+  "rows": {
+    "lock-10/controls/0": {
+      "floor": 12.0,
+      "ceiling": 1333.0,
+      "seconds": 0.1
+    },
+    "lock-10/off/0": {
+      "score": 243.0,
+      "first_reward": 631,
+      "early_rewards": 60.0,
+      "last_1000": 0.024,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 16.1
+    },
+    "lock-10/context/0": {
+      "score": 264.0,
+      "first_reward": 631,
+      "early_rewards": 67.0,
+      "last_1000": 0.019,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 24.16
+    },
+    "lock-10/shuffled/0": {
+      "score": 269.0,
+      "first_reward": 631,
+      "early_rewards": 75.0,
+      "last_1000": 0.031,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 24.0
+    },
+    "lock-10/controls/1": {
+      "floor": 15.0,
+      "ceiling": 1333.0,
+      "seconds": 0.08
+    },
+    "lock-10/off/1": {
+      "score": 667.0,
+      "first_reward": 37,
+      "early_rewards": 182.0,
+      "last_1000": 0.06,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 22.73
+    },
+    "lock-10/context/1": {
+      "score": 645.0,
+      "first_reward": 37,
+      "early_rewards": 171.0,
+      "last_1000": 0.067,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 29.57
+    },
+    "lock-10/shuffled/1": {
+      "score": 624.0,
+      "first_reward": 37,
+      "early_rewards": 158.0,
+      "last_1000": 0.057,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 32.9
+    },
+    "lock-10/controls/2": {
+      "floor": 11.0,
+      "ceiling": 1333.0,
+      "seconds": 0.08
+    },
+    "lock-10/off/2": {
+      "score": 715.0,
+      "first_reward": 1220,
+      "early_rewards": 162.0,
+      "last_1000": 0.066,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 22.7
+    },
+    "lock-10/context/2": {
+      "score": 674.0,
+      "first_reward": 1220,
+      "early_rewards": 162.0,
+      "last_1000": 0.06,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 46.18
+    },
+    "lock-10/shuffled/2": {
+      "score": 691.0,
+      "first_reward": 1220,
+      "early_rewards": 167.0,
+      "last_1000": 0.064,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 27.43
+    },
+    "lock-10/controls/3": {
+      "floor": 17.0,
+      "ceiling": 1333.0,
+      "seconds": 0.09
+    },
+    "lock-10/off/3": {
+      "score": 860.0,
+      "first_reward": 391,
+      "early_rewards": 277.0,
+      "last_1000": 0.075,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 21.39
+    },
+    "lock-10/context/3": {
+      "score": 841.0,
+      "first_reward": 391,
+      "early_rewards": 264.0,
+      "last_1000": 0.08,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 30.34
+    },
+    "lock-10/shuffled/3": {
+      "score": 881.0,
+      "first_reward": 391,
+      "early_rewards": 264.0,
+      "last_1000": 0.081,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 32.63
+    },
+    "lock-10/controls/4": {
+      "floor": 14.0,
+      "ceiling": 1333.0,
+      "seconds": 0.08
+    },
+    "lock-10/off/4": {
+      "score": 369.0,
+      "first_reward": 6483,
+      "early_rewards": 0.0,
+      "last_1000": 0.077,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 19.67
+    },
+    "lock-10/context/4": {
+      "score": 369.0,
+      "first_reward": 6483,
+      "early_rewards": 0.0,
+      "last_1000": 0.08,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 25.86
+    },
+    "lock-10/shuffled/4": {
+      "score": 366.0,
+      "first_reward": 6483,
+      "early_rewards": 0.0,
+      "last_1000": 0.071,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 30.4
+    },
+    "lock-10/controls/5": {
+      "floor": 12.0,
+      "ceiling": 1333.0,
+      "seconds": 0.11
+    },
+    "lock-10/off/5": {
+      "score": 456.0,
+      "first_reward": 107,
+      "early_rewards": 117.0,
+      "last_1000": 0.055,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 24.02
+    },
+    "lock-10/context/5": {
+      "score": 420.0,
+      "first_reward": 107,
+      "early_rewards": 101.0,
+      "last_1000": 0.041,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 22.25
+    },
+    "lock-10/shuffled/5": {
+      "score": 408.0,
+      "first_reward": 107,
+      "early_rewards": 113.0,
+      "last_1000": 0.043,
+      "finite": true,
+      "external_episode_rewards": true,
+      "seconds": 30.62
+    }
+  }
+}

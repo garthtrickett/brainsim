@@ -1,0 +1,1135 @@
+{
+  "protocol": {
+    "seeds": 6,
+    "pools": [
+      1,
+      2,
+      3,
+      6
+    ],
+    "k": 6,
+    "hidden": 80,
+    "decisions": 4000,
+    "tail": 1000,
+    "task_seed": "paired to agent seed"
+  },
+  "sources": {
+    "brainsim.py": "f4bf4aad2c4ef7e9c066aeb8e7d22eab7e07e206118f991fcff7adfdb87511d0",
+    "fastsim.py": "0258c7d21b3a83e7353fdd54685a48d5e4e23e9d9be091146fcee8b4065f9076",
+    "tasks.py": "d3943af39a3e4467b1e79ac84e1e990b95fd01aa14adb6548a210ea153f72108",
+    "study_pools.py": "d8fade2b59065c8beb4e53fa8e2a147973362966245f306530de6af5864956ac",
+    "study_io.py": "7d74e090d4613782afd9fe09bb48d8a59e7f84e26ed9c2f142ecfc512d12d680"
+  },
+  "rows": {
+    "legacy-additive-4x4/controls/0": {
+      "floor": 0.262,
+      "ceiling": 1.0,
+      "seconds": 0.07
+    },
+    "legacy-additive-4x4/P1/0": {
+      "score": 0.384,
+      "early": 0.312,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.39
+    },
+    "legacy-additive-4x4/P2/0": {
+      "score": 0.397,
+      "early": 0.295,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.99
+    },
+    "legacy-additive-4x4/P3/0": {
+      "score": 0.385,
+      "early": 0.29,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.17
+    },
+    "legacy-additive-4x4/P6/0": {
+      "score": 0.385,
+      "early": 0.318,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.78
+    },
+    "legacy-additive-4x4/controls/1": {
+      "floor": 0.243,
+      "ceiling": 1.0,
+      "seconds": 0.12
+    },
+    "legacy-additive-4x4/P1/1": {
+      "score": 0.339,
+      "early": 0.339,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.88
+    },
+    "legacy-additive-4x4/P2/1": {
+      "score": 0.409,
+      "early": 0.291,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.58
+    },
+    "legacy-additive-4x4/P3/1": {
+      "score": 0.378,
+      "early": 0.343,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.31
+    },
+    "legacy-additive-4x4/P6/1": {
+      "score": 0.39,
+      "early": 0.351,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.67
+    },
+    "legacy-additive-4x4/controls/2": {
+      "floor": 0.254,
+      "ceiling": 1.0,
+      "seconds": 0.12
+    },
+    "legacy-additive-4x4/P1/2": {
+      "score": 0.315,
+      "early": 0.309,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 3.14
+    },
+    "legacy-additive-4x4/P2/2": {
+      "score": 0.357,
+      "early": 0.274,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.13
+    },
+    "legacy-additive-4x4/P3/2": {
+      "score": 0.308,
+      "early": 0.329,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.65
+    },
+    "legacy-additive-4x4/P6/2": {
+      "score": 0.416,
+      "early": 0.311,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.06
+    },
+    "legacy-additive-4x4/controls/3": {
+      "floor": 0.267,
+      "ceiling": 1.0,
+      "seconds": 0.13
+    },
+    "legacy-additive-4x4/P1/3": {
+      "score": 0.377,
+      "early": 0.342,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.53
+    },
+    "legacy-additive-4x4/P2/3": {
+      "score": 0.302,
+      "early": 0.293,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.04
+    },
+    "legacy-additive-4x4/P3/3": {
+      "score": 0.341,
+      "early": 0.327,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.08
+    },
+    "legacy-additive-4x4/P6/3": {
+      "score": 0.39,
+      "early": 0.3,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.54
+    },
+    "legacy-additive-4x4/controls/4": {
+      "floor": 0.247,
+      "ceiling": 1.0,
+      "seconds": 0.08
+    },
+    "legacy-additive-4x4/P1/4": {
+      "score": 0.389,
+      "early": 0.351,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.08
+    },
+    "legacy-additive-4x4/P2/4": {
+      "score": 0.392,
+      "early": 0.322,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.97
+    },
+    "legacy-additive-4x4/P3/4": {
+      "score": 0.396,
+      "early": 0.356,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.03
+    },
+    "legacy-additive-4x4/P6/4": {
+      "score": 0.362,
+      "early": 0.287,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.05
+    },
+    "legacy-additive-4x4/controls/5": {
+      "floor": 0.238,
+      "ceiling": 1.0,
+      "seconds": 0.07
+    },
+    "legacy-additive-4x4/P1/5": {
+      "score": 0.372,
+      "early": 0.292,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.05
+    },
+    "legacy-additive-4x4/P2/5": {
+      "score": 0.337,
+      "early": 0.258,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.14
+    },
+    "legacy-additive-4x4/P3/5": {
+      "score": 0.372,
+      "early": 0.309,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.97
+    },
+    "legacy-additive-4x4/P6/5": {
+      "score": 0.346,
+      "early": 0.263,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.98
+    },
+    "shape-4x4/controls/0": {
+      "floor": 0.236,
+      "ceiling": 1.0,
+      "seconds": 0.08
+    },
+    "shape-4x4/P1/0": {
+      "score": 0.986,
+      "early": 0.797,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.83
+    },
+    "shape-4x4/P2/0": {
+      "score": 0.969,
+      "early": 0.739,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 3.05
+    },
+    "shape-4x4/P3/0": {
+      "score": 0.964,
+      "early": 0.786,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.31
+    },
+    "shape-4x4/P6/0": {
+      "score": 0.951,
+      "early": 0.784,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.92
+    },
+    "shape-4x4/controls/1": {
+      "floor": 0.236,
+      "ceiling": 1.0,
+      "seconds": 0.09
+    },
+    "shape-4x4/P1/1": {
+      "score": 0.949,
+      "early": 0.749,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.37
+    },
+    "shape-4x4/P2/1": {
+      "score": 0.972,
+      "early": 0.77,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.92
+    },
+    "shape-4x4/P3/1": {
+      "score": 0.955,
+      "early": 0.742,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.03
+    },
+    "shape-4x4/P6/1": {
+      "score": 0.966,
+      "early": 0.793,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.87
+    },
+    "shape-4x4/controls/2": {
+      "floor": 0.234,
+      "ceiling": 1.0,
+      "seconds": 0.08
+    },
+    "shape-4x4/P1/2": {
+      "score": 0.973,
+      "early": 0.874,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.24
+    },
+    "shape-4x4/P2/2": {
+      "score": 0.965,
+      "early": 0.836,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.08
+    },
+    "shape-4x4/P3/2": {
+      "score": 0.968,
+      "early": 0.853,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.92
+    },
+    "shape-4x4/P6/2": {
+      "score": 0.984,
+      "early": 0.855,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.75
+    },
+    "shape-4x4/controls/3": {
+      "floor": 0.26,
+      "ceiling": 1.0,
+      "seconds": 0.09
+    },
+    "shape-4x4/P1/3": {
+      "score": 0.98,
+      "early": 0.846,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.11
+    },
+    "shape-4x4/P2/3": {
+      "score": 0.977,
+      "early": 0.857,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.24
+    },
+    "shape-4x4/P3/3": {
+      "score": 0.983,
+      "early": 0.857,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.81
+    },
+    "shape-4x4/P6/3": {
+      "score": 0.976,
+      "early": 0.821,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.6
+    },
+    "shape-4x4/controls/4": {
+      "floor": 0.274,
+      "ceiling": 1.0,
+      "seconds": 0.08
+    },
+    "shape-4x4/P1/4": {
+      "score": 0.979,
+      "early": 0.856,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.2
+    },
+    "shape-4x4/P2/4": {
+      "score": 0.97,
+      "early": 0.77,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.82
+    },
+    "shape-4x4/P3/4": {
+      "score": 0.979,
+      "early": 0.829,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.61
+    },
+    "shape-4x4/P6/4": {
+      "score": 0.982,
+      "early": 0.847,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.84
+    },
+    "shape-4x4/controls/5": {
+      "floor": 0.255,
+      "ceiling": 1.0,
+      "seconds": 0.07
+    },
+    "shape-4x4/P1/5": {
+      "score": 0.917,
+      "early": 0.716,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.99
+    },
+    "shape-4x4/P2/5": {
+      "score": 0.927,
+      "early": 0.704,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.26
+    },
+    "shape-4x4/P3/5": {
+      "score": 0.905,
+      "early": 0.726,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.97
+    },
+    "shape-4x4/P6/5": {
+      "score": 0.923,
+      "early": 0.666,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.78
+    },
+    "volatile-4/controls/0": {
+      "floor": 0.235,
+      "ceiling": 1.0,
+      "seconds": 0.04
+    },
+    "volatile-4/P1/0": {
+      "score": 0.448,
+      "early": 0.297,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.17
+    },
+    "volatile-4/P2/0": {
+      "score": 0.395,
+      "early": 0.272,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.88
+    },
+    "volatile-4/P3/0": {
+      "score": 0.49,
+      "early": 0.291,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.07
+    },
+    "volatile-4/P6/0": {
+      "score": 0.252,
+      "early": 0.285,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.02
+    },
+    "volatile-4/controls/1": {
+      "floor": 0.271,
+      "ceiling": 1.0,
+      "seconds": 0.04
+    },
+    "volatile-4/P1/1": {
+      "score": 0.258,
+      "early": 0.505,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.02
+    },
+    "volatile-4/P2/1": {
+      "score": 0.274,
+      "early": 0.702,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.91
+    },
+    "volatile-4/P3/1": {
+      "score": 0.313,
+      "early": 0.537,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.93
+    },
+    "volatile-4/P6/1": {
+      "score": 0.262,
+      "early": 0.606,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.85
+    },
+    "volatile-4/controls/2": {
+      "floor": 0.215,
+      "ceiling": 1.0,
+      "seconds": 0.04
+    },
+    "volatile-4/P1/2": {
+      "score": 0.337,
+      "early": 0.412,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.56
+    },
+    "volatile-4/P2/2": {
+      "score": 0.224,
+      "early": 0.402,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.36
+    },
+    "volatile-4/P3/2": {
+      "score": 0.429,
+      "early": 0.352,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.59
+    },
+    "volatile-4/P6/2": {
+      "score": 0.292,
+      "early": 0.382,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.91
+    },
+    "volatile-4/controls/3": {
+      "floor": 0.247,
+      "ceiling": 1.0,
+      "seconds": 0.06
+    },
+    "volatile-4/P1/3": {
+      "score": 0.317,
+      "early": 0.346,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.34
+    },
+    "volatile-4/P2/3": {
+      "score": 0.232,
+      "early": 0.457,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.26
+    },
+    "volatile-4/P3/3": {
+      "score": 0.246,
+      "early": 0.449,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.16
+    },
+    "volatile-4/P6/3": {
+      "score": 0.257,
+      "early": 0.449,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.7
+    },
+    "volatile-4/controls/4": {
+      "floor": 0.234,
+      "ceiling": 1.0,
+      "seconds": 0.12
+    },
+    "volatile-4/P1/4": {
+      "score": 0.44,
+      "early": 0.446,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 5.83
+    },
+    "volatile-4/P2/4": {
+      "score": 0.44,
+      "early": 0.377,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 3.71
+    },
+    "volatile-4/P3/4": {
+      "score": 0.482,
+      "early": 0.381,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 3.64
+    },
+    "volatile-4/P6/4": {
+      "score": 0.336,
+      "early": 0.429,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.44
+    },
+    "volatile-4/controls/5": {
+      "floor": 0.249,
+      "ceiling": 1.0,
+      "seconds": 0.04
+    },
+    "volatile-4/P1/5": {
+      "score": 0.233,
+      "early": 0.301,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.76
+    },
+    "volatile-4/P2/5": {
+      "score": 0.321,
+      "early": 0.237,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.8
+    },
+    "volatile-4/P3/5": {
+      "score": 0.253,
+      "early": 0.245,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.5
+    },
+    "volatile-4/P6/5": {
+      "score": 0.219,
+      "early": 0.217,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.43
+    },
+    "xor-2/controls/0": {
+      "floor": 0.494,
+      "ceiling": 1.0,
+      "seconds": 0.11
+    },
+    "xor-2/P1/0": {
+      "score": 0.821,
+      "early": 0.739,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.39
+    },
+    "xor-2/P2/0": {
+      "score": 0.815,
+      "early": 0.684,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.29
+    },
+    "xor-2/P3/0": {
+      "score": 0.818,
+      "early": 0.632,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.39
+    },
+    "xor-2/P6/0": {
+      "score": 0.801,
+      "early": 0.681,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.0
+    },
+    "xor-2/controls/1": {
+      "floor": 0.492,
+      "ceiling": 1.0,
+      "seconds": 0.16
+    },
+    "xor-2/P1/1": {
+      "score": 0.933,
+      "early": 0.856,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.77
+    },
+    "xor-2/P2/1": {
+      "score": 0.938,
+      "early": 0.812,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 3.15
+    },
+    "xor-2/P3/1": {
+      "score": 0.912,
+      "early": 0.812,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 3.26
+    },
+    "xor-2/P6/1": {
+      "score": 0.908,
+      "early": 0.807,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.22
+    },
+    "xor-2/controls/2": {
+      "floor": 0.555,
+      "ceiling": 1.0,
+      "seconds": 0.09
+    },
+    "xor-2/P1/2": {
+      "score": 0.888,
+      "early": 0.776,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.5
+    },
+    "xor-2/P2/2": {
+      "score": 0.893,
+      "early": 0.79,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.39
+    },
+    "xor-2/P3/2": {
+      "score": 0.884,
+      "early": 0.794,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.48
+    },
+    "xor-2/P6/2": {
+      "score": 0.893,
+      "early": 0.785,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.5
+    },
+    "xor-2/controls/3": {
+      "floor": 0.492,
+      "ceiling": 1.0,
+      "seconds": 0.12
+    },
+    "xor-2/P1/3": {
+      "score": 0.899,
+      "early": 0.778,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.64
+    },
+    "xor-2/P2/3": {
+      "score": 0.886,
+      "early": 0.765,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.72
+    },
+    "xor-2/P3/3": {
+      "score": 0.861,
+      "early": 0.772,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.8
+    },
+    "xor-2/P6/3": {
+      "score": 0.89,
+      "early": 0.749,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.36
+    },
+    "xor-2/controls/4": {
+      "floor": 0.515,
+      "ceiling": 1.0,
+      "seconds": 0.11
+    },
+    "xor-2/P1/4": {
+      "score": 0.908,
+      "early": 0.781,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.43
+    },
+    "xor-2/P2/4": {
+      "score": 0.906,
+      "early": 0.755,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.22
+    },
+    "xor-2/P3/4": {
+      "score": 0.878,
+      "early": 0.771,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.62
+    },
+    "xor-2/P6/4": {
+      "score": 0.888,
+      "early": 0.746,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.42
+    },
+    "xor-2/controls/5": {
+      "floor": 0.519,
+      "ceiling": 1.0,
+      "seconds": 0.1
+    },
+    "xor-2/P1/5": {
+      "score": 0.907,
+      "early": 0.753,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.42
+    },
+    "xor-2/P2/5": {
+      "score": 0.908,
+      "early": 0.679,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.41
+    },
+    "xor-2/P3/5": {
+      "score": 0.879,
+      "early": 0.811,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.61
+    },
+    "xor-2/P6/5": {
+      "score": 0.878,
+      "early": 0.793,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 1.92
+    },
+    "nway-8/controls/0": {
+      "floor": 0.138,
+      "ceiling": 1.0,
+      "seconds": 0.03
+    },
+    "nway-8/P1/0": {
+      "score": 0.985,
+      "early": 0.553,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.5
+    },
+    "nway-8/P2/0": {
+      "score": 0.968,
+      "early": 0.538,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.28
+    },
+    "nway-8/P3/0": {
+      "score": 0.984,
+      "early": 0.718,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 4.33
+    },
+    "nway-8/P6/0": {
+      "score": 0.968,
+      "early": 0.587,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 3.76
+    },
+    "nway-8/controls/1": {
+      "floor": 0.108,
+      "ceiling": 1.0,
+      "seconds": 0.06
+    },
+    "nway-8/P1/1": {
+      "score": 0.987,
+      "early": 0.597,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 5.51
+    },
+    "nway-8/P2/1": {
+      "score": 0.986,
+      "early": 0.68,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 6.22
+    },
+    "nway-8/P3/1": {
+      "score": 0.987,
+      "early": 0.549,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 4.09
+    },
+    "nway-8/P6/1": {
+      "score": 0.989,
+      "early": 0.498,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 3.63
+    },
+    "nway-8/controls/2": {
+      "floor": 0.133,
+      "ceiling": 1.0,
+      "seconds": 0.04
+    },
+    "nway-8/P1/2": {
+      "score": 0.976,
+      "early": 0.684,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 4.72
+    },
+    "nway-8/P2/2": {
+      "score": 0.974,
+      "early": 0.632,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 4.84
+    },
+    "nway-8/P3/2": {
+      "score": 0.983,
+      "early": 0.656,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 6.11
+    },
+    "nway-8/P6/2": {
+      "score": 0.977,
+      "early": 0.663,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 4.35
+    },
+    "nway-8/controls/3": {
+      "floor": 0.13,
+      "ceiling": 1.0,
+      "seconds": 0.07
+    },
+    "nway-8/P1/3": {
+      "score": 0.975,
+      "early": 0.718,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 4.37
+    },
+    "nway-8/P2/3": {
+      "score": 0.953,
+      "early": 0.667,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 3.45
+    },
+    "nway-8/P3/3": {
+      "score": 0.958,
+      "early": 0.558,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 3.38
+    },
+    "nway-8/P6/3": {
+      "score": 0.977,
+      "early": 0.605,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.7
+    },
+    "nway-8/controls/4": {
+      "floor": 0.118,
+      "ceiling": 1.0,
+      "seconds": 0.03
+    },
+    "nway-8/P1/4": {
+      "score": 0.989,
+      "early": 0.711,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.57
+    },
+    "nway-8/P2/4": {
+      "score": 0.984,
+      "early": 0.797,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.56
+    },
+    "nway-8/P3/4": {
+      "score": 0.984,
+      "early": 0.752,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.3
+    },
+    "nway-8/P6/4": {
+      "score": 0.989,
+      "early": 0.763,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.48
+    },
+    "nway-8/controls/5": {
+      "floor": 0.125,
+      "ceiling": 1.0,
+      "seconds": 0.03
+    },
+    "nway-8/P1/5": {
+      "score": 0.971,
+      "early": 0.705,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.82
+    },
+    "nway-8/P2/5": {
+      "score": 0.97,
+      "early": 0.527,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.29
+    },
+    "nway-8/P3/5": {
+      "score": 0.985,
+      "early": 0.633,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.16
+    },
+    "nway-8/P6/5": {
+      "score": 0.974,
+      "early": 0.67,
+      "nominal_winners": 6,
+      "observed_mean_winners": 6.0,
+      "observed_max_winners": 6.0,
+      "seconds": 2.38
+    }
+  }
+}

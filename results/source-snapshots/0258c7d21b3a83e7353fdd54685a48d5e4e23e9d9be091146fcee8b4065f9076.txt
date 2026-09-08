@@ -13,15 +13,19 @@ number`: twice already a reimplementation returned a plausible wrong number
 caught only by a reference value measured before the port. So there are TWO
 separate validations here, for two separate risks:
 
-  1. ALGORITHM. check_v1.py compares complete reward trajectories exactly and
-     internal floating-point state within roundoff. This is stronger than the
-     original check_port.py, which compared only reward trajectories. Arithmetic
-     is not claimed bit-exact: numpy and explicit loops can sum differently.
+  1. ALGORITHM. `_tick_block` is checked BIT-EXACTLY against the numpy
+     implementation, by feeding both the identical pre-drawn random arrays.
+     Any difference is a port bug, full stop.
 
-  2. RNG STREAM. Sensory and motor draws are interleaved per tick in numpy,
-     then passed to the kernel. This preserves the original stream. Experimental
-     transmission masks use a separate stream. check_reference.py verifies every
-     frozen per-seed score; a different trajectory is never excused as new RNG.
+  2. RNG STREAM. The kernel consumes randomness in bulk -- one (T, n_in) draw
+     per decision instead of T draws of n_in -- because per-tick numpy RNG calls
+     would dominate the jitted loop. Same distribution, different stream, so
+     per-seed numbers legitimately differ and only the DISTRIBUTION can be
+     compared. That is checked against reference.json over many seeds.
+
+Splitting them matters: if the two were checked together, a real port bug would
+be excusable as "just the RNG stream", which is precisely the excuse that lets a
+broken port ship.
 """
 import numpy as np
 from numba import njit
@@ -29,7 +33,7 @@ from brainsim import BrainSim
 
 
 @njit(cache=True, fastmath=False)
-def _tick_block(X, U, G, transmission, transmission_gain,
+def _tick_block(X, U, G,
                 vh, vm, trh, fh, trm, votes, thresh, rate,
                 elig, elig_w, trh_sum, trh_n,
                 wm, wm_sum, wm_n, prev_fh, wm_eff,
@@ -59,10 +63,8 @@ def _tick_block(X, U, G, transmission, transmission_gain,
         for m in range(M):
             acc = 0.0
             for h in range(H):
-                weight = W_out[m, h]
-                if transmission.shape[0]: weight *= transmission[t, m, h]
-                acc += weight * fh[h]
-            drive[m] = transmission_gain * acc + noise_eff * G[t, m]
+                acc += W_out[m, h] * fh[h]
+            drive[m] = acc + noise_eff * G[t, m]
 
         if WM:
             # feed the WM pathway only the component of wm that the CURRENT
@@ -241,13 +243,8 @@ class FastBrainSim(BrainSim):
         for t in range(T):
             U[t] = self.rng.random(self.n_in)
             G[t] = self.rng.standard_normal(self.n_motor)
-        if not 0 <= self.TRANSMISSION_FAILURE <= 1 or self.TRANSMISSION_GAIN < 0:
-            raise ValueError("invalid transmission failure probability or gain")
-        transmission = np.empty((0, 0, 0), dtype=np.bool_)
-        if self.TRANSMISSION_FAILURE:
-            transmission = self.transmission_rng.random((T, self.n_motor, self.n_hidden)) >= self.TRANSMISSION_FAILURE
         self.elig_w, self.trh_n, self.wm_n, self.ticks = _tick_block(
-            X, U, G, transmission, float(self.TRANSMISSION_GAIN),
+            X, U, G,
             self.vh, self.vm, self.trh, self.fh, self.trm, self.votes,
             self.thresh, self.rate,
             self.elig, float(self.elig_w), self.trh_sum, int(self.trh_n),
