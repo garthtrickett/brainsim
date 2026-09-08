@@ -284,6 +284,55 @@ positions (no synapse can copy another's weights); a global error vector; and
 anything needing the whole dataset at once -- the premise is that learning
 happens INSIDE a loop that never stops.
 
+---
+
+# brainsim v2 — a fork, not an iteration
+
+Four changes remove every GLOBAL operation in the design. Anything global is a
+scaling killer: it forces every unit to coordinate with every other, and a brain
+scales precisely because **no part of it ever waits for the whole.**
+
+| global chokepoint now | v2 |
+|---|---|
+| every neuron evaluated every tick, 74 of 80 discarded | **event-driven** — only spikes propagate; saves roughly tick-rate ÷ firing-rate |
+| k-WTA ranks all units against each other | **local pools** — each group competes within itself |
+| trials halt everything every 30 ticks | **continuous time** — no global barrier |
+| one neuromodulator scalar for the whole net | **parallel loops**, each with its own signal |
+
+Two further changes are about being BETTER, not bigger, and should not be
+confused with the above: recurrent settling dynamics (makes working memory
+intrinsic rather than a bolted-on module that took four interface attempts), and
+active inference as the foundation (unifies the orphaned world model, externally
+supplied reward, and argmax action selection — and restores the Part 1 premise).
+
+## Why a fork
+
+The four changes interact; none can land alone with anything still working. That
+breaks the method this project runs on — change one thing, run the suite.
+
+**v2 changes the machine, not the science.**
+
+- **Carried forward:** the task suite (stimulus -> action -> reward ports to
+  continuous time with a thin adapter), the measured floors and ceilings, the
+  learning RULES that survived ablation (three-factor + RPE, reverse replay with
+  TD bootstrapping, `TAGGATE`, `V(s)`), `HISTORY.md`, and the method rules.
+- **Rebuilt:** the simulation core, the competition structure, neuromodulation,
+  and the loop itself.
+
+The validated rules become **hypotheses to re-test on the new substrate**, not
+things to re-derive. That is the return on having ablated them properly.
+
+## The discipline
+
+v1 stays as the reference implementation. **v2 must beat it on the same tasks
+against the same floors and ceilings before v1 is retired.** Otherwise there is
+no way to distinguish a better architecture from a differently-broken one -- and
+the record in HISTORY.md is a long demonstration that this cannot be judged by
+reasoning alone.
+
+This puts **step 7 on the critical path**: a frozen `(seed, config) -> number`
+table with external baselines is what makes a v2 falsifiable at all.
+
 ## Cut, with reasons
 
 - **Predictive coding AS REPRESENTATION LEARNING** -- twice shelved on
