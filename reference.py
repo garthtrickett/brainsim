@@ -23,6 +23,17 @@ sys.path.insert(0, "/home/gust/code/brainsim")
 import tasks, baselines
 from brainsim import BrainSim
 
+# --fast swaps in the numba port. Legitimate ONLY because check_port.py gates it
+# on bit-exactness (12/12 EXACT), not on closeness -- an approximate port would
+# make this table a plausible wrong number, which is the failure this whole file
+# exists to prevent. Cross-checked below against the numbers the pure-numpy run
+# had already produced before it was killed.
+_AGENT = BrainSim
+def use_fast():
+    global _AGENT
+    from fastsim import FastBrainSim
+    _AGENT = FastBrainSim
+
 # (name, task factory, n_actions, decisions, tail, runner)
 SUITE = [
     ("nway-4",          lambda: tasks.NWay(4, seed=0),            4,  4000, 1000, "run"),
@@ -48,14 +59,17 @@ def measure(fn, mk, decisions, tail, seeds, **kw):
 
 
 def brainsim_run(mk, n_act, decisions, tail, seed, runner, **over):
-    a = BrainSim(n_motor=n_act, seed=seed)
+    a = _AGENT(n_motor=n_act, seed=seed)
     for k, v in over.items(): setattr(a, k, v)
     r = tasks.run_within(a, mk(), decisions, seed=seed) if runner == "within" \
         else tasks.run(a, mk(), decisions, seed=seed)
     return score(r, tail)
 
 
-def build(seeds, with_baselines=True):
+def build(seeds, with_baselines=True, out=None):
+    # INCREMENTAL. A paseo.service restart SIGKILLs this process group without
+    # warning -- it ate a 29-minute run 34s from the end on 2026-09-08. Each
+    # task is flushed as it completes, so a kill costs one task, not all of them.
     table = {"seeds": seeds, "suite": {}}
     for name, mk, n_act, dec, tail, runner in SUITE:
         t0 = time.time()
@@ -74,6 +88,8 @@ def build(seeds, with_baselines=True):
         s = " ".join(f"{k}={np.mean(v):.3f}" for k, v in row.items()
                      if isinstance(v, list))
         print(f"  {name:<18} {s}   [{row['seconds']}s]", flush=True)
+        if out:                      # flush after every task, not at the end
+            json.dump(table, open(out, "w"), indent=1)
     return table
 
 
@@ -91,9 +107,12 @@ if __name__ == "__main__":
     p.add_argument("--seeds", type=int, default=8)
     p.add_argument("--out", default="reference.json")
     p.add_argument("--no-baselines", action="store_true")
+    p.add_argument("--fast", action="store_true", help="use the bit-exact numba port")
     args = p.parse_args()
-    print(f"building reference table, {args.seeds} seeds\n", flush=True)
-    t = build(args.seeds, not args.no_baselines)
+    if args.fast: use_fast()
+    print(f"building reference table, {args.seeds} seeds"
+          f"{' [numba port, bit-exact]' if args.fast else ''}\n", flush=True)
+    t = build(args.seeds, not args.no_baselines, out=args.out)
     json.dump(t, open(args.out, "w"), indent=1)
     print("\n" + summary(t), flush=True)
     print(f"\nwritten to {args.out}", flush=True)
