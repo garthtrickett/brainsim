@@ -1,0 +1,140 @@
+=== claim 2: does anything persist across a 3-decision gap? ===
+  trh similarity decision k vs k+3: 0.5111
+  (adjacent decisions, for scale:   0.5583)
+
+=== claim 3: is the CUE more surprising than the delay steps? ===
+  surprise at cue    : 0.1449
+  surprise at delay  : 0.1277
+  surprise at choice : 0.1727
+
+=== claims 1+4: cue available at decision time (oracle memory) ===
+  standard tmaze (cue hidden):  0.122   floor 0.123 ceiling 0.250
+  cue visible at decision:      0.134
+  -> memory is the only missing piece? False
+
+[exited with code 0]
+---
+isolating memory from multi-step credit assignment
+  variant                              score   floor  ceiling  of ceiling
+  delay=1, cue hidden                  0.262   0.250    0.500        52%
+  delay=1, cue VISIBLE                 0.277   0.250    0.500        55%
+  delay=2, cue hidden                  0.162   0.167    0.333        49%
+  delay=2, cue VISIBLE                 0.173   0.167    0.333        52%
+  delay=3, cue hidden                  0.122   0.125    0.250        49%
+  delay=3, cue VISIBLE                 0.134   0.125    0.250        54%
+
+  If cue-VISIBLE is far below its ceiling even at delay=1, the task's
+  multi-step reward structure -- not memory -- is what defeats the design.
+
+[exited with code 0]
+---
+does suppressing learning on irrelevant decisions rescue it?
+
+  variant                                    score  ceiling   of ceil
+  delay=1 visible, learn on all              0.277    0.500      55%
+  delay=1 visible, skip unscored             0.442    0.500      88%
+  delay=3 visible, learn on all              0.134    0.250      54%
+  delay=3 visible, skip unscored             0.248    0.250      99%
+  delay=3 HIDDEN, skip unscored              0.128    0.250      51%
+
+  If 'skip unscored' reaches ceiling with the cue visible, tmaze measures
+  tolerance of irrelevant decisions, not memory -- and the last row then
+  isolates whether memory alone is the remaining gap.
+
+[exited with code 0]
+---
+calibrating tmaze-within (floor/ceiling measured, not assumed)
+
+  delay 30 ticks, cue hidden     score=0.529  floor=0.504  ceiling=1.000
+  delay 30 ticks, cue VISIBLE    score=1.000  floor=0.504  ceiling=1.000
+  delay 60 ticks, cue hidden     score=0.505  floor=0.504  ceiling=1.000
+  delay 60 ticks, cue VISIBLE    score=1.000  floor=0.504  ceiling=1.000
+
+  cue-VISIBLE near 1.0 and cue-hidden near floor = a clean memory test.
+
+[exited with code 0]
+---
+=== does WM hold CUE-SPECIFIC information at choice time? ===
+  gate=none      wm(cue0) vs wm(cue1) cos=1.000  ||wm||=122.25   not discriminative
+  gate=capacity  wm(cue0) vs wm(cue1) cos=1.000  ||wm||=5.73   not discriminative
+  gate=change    wm(cue0) vs wm(cue1) cos=1.000  ||wm||=122.25   not discriminative
+
+=== accuracy by gate (floor 0.504, ceiling 1.000, cue-visible=1.000) ===
+  no WM (baseline)           0.529
+  WM gate=none               0.500
+  WM gate=capacity           0.500
+  WM gate=change             0.500
+  WM capacity, beta=0.3      0.507
+  WM capacity, LR=0.4        0.497
+
+[exited with code 0]
+---
+REFERENCE: a perfect cue-only store gives cos=0.722
+           anything near that is storing the cue; 1.0 is storing nothing.
+
+   WM_LR  WM_CAP     cos     acc   (floor 0.504, ceiling 1.000)
+    0.15    6.00   0.969   0.900
+    0.50    3.00   0.815   0.718
+    1.00    2.00   0.636   0.794
+    1.00    1.00   0.636   0.794
+    2.00    1.00   0.618   0.641
+    2.00    0.50   0.618   0.641
+
+[exited with code 0]
+---
+WM regression, 5 seeds
+
+  task                      WM on   WM off  verdict
+  nway-4                    0.546    0.999  REGRESSION (-0.452)
+  nway-8                    0.285    0.988  REGRESSION (-0.703)
+  xor-2                     0.607    0.764  REGRESSION (-0.157)
+  volatile-4                0.333    0.496  REGRESSION (-0.163)
+  tmaze-within d30          0.897    0.523  target (floor 0.504) (+0.374)
+  tmaze-within d60          0.908    0.503  target (floor 0.504) (+0.405)
+
+lock-10, 4 seeds:
+  WM on    [23, 25, 23, 27]  mean=24.5
+  WM off   [370, 468, 460, 378]  mean=419.0
+
+[exited with code 0]
+---
+  log: /home/gust/paseo/paseo-home/work/logs/d942bdb8-1788846589140.log
+COMPLETE exit=0
+WM regression, 5 seeds
+
+  task                      WM on   WM off  verdict
+  nway-4                    0.999    0.999  OK (+0.000)
+  nway-8                    0.991    0.988  OK (+0.003)
+  xor-2                     0.904    0.764  OK (+0.141)
+  volatile-4                0.290    0.496  REGRESSION (-0.206)
+  tmaze-within d30          0.998    0.523  target (floor 0.504) (+0.476)
+  tmaze-within d60          0.996    0.503  target (floor 0.504) (+0.493)
+
+lock-10, 4 seeds:
+  WM on    [87, 136, 5, 5]  mean=58.2
+  WM off   [370, 468, 460, 378]  mean=419.0
+
+[exited with code 0]
+---
+residual-WM check
+  lock-10   WM on: [431, 462, 564, 414] mean=467.8   (no-WM = 419.0)
+  tmaze d30 WM on: 1.000   (floor 0.504, no-WM ~0.51)
+  tmaze d60 WM on: 0.998   (floor 0.504, no-WM ~0.51)
+  nway-8     WM on=0.990  off=0.990
+  volatile-4 WM on=0.238  off=0.411
+
+[exited with code 0]
+---
+step 5 final: WM on vs off, all tasks
+
+  task                    WM on   WM off     delta
+  nway-4                  0.997    0.999   -0.002
+  nway-8                  0.978    0.987   -0.009
+  xor-2                   0.839    0.761   +0.079
+  volatile-4              0.424    0.463   -0.039
+  tmaze-within d30        0.999    0.529   +0.470
+  tmaze-within d60        0.999    0.505   +0.494
+  lock-10 (rewards)       339.8    419.0    -79.2
+
+[exited with code 0]
+---

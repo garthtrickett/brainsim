@@ -101,7 +101,7 @@ The sleep gradient already IS error-driven supervised learning with a teaching
 signal. Naming it as a third learning system clarifies the architecture before
 the larger changes. Near-zero risk.
 
-### 5. PFC working memory  <- NEXT (BG shelved, so needs its own gate)
+### 5. PFC working memory  <- DONE (tmaze 0.51 -> 0.999)
 Depends on step 3 for the gate. `tmaze-2d3` is at floor (0.127 vs 0.123) because
 nothing persists across decisions. Our failed `commitment` experiment belongs
 here: commitment is a PFC state held deliberately and released by a gate, not a
@@ -123,7 +123,7 @@ invariance to nuisance transforms -- and a train/test split the runner does not
 have. Do not build this until such a task exists and the current encoder
 demonstrably fails on it.
 
-### 5b. Split README.md  <- scheduled, AFTER step 5 closes
+### 5b. Split README.md  <- NEXT
 `README.md` is 794 lines and growing: a chronological log (Parts 1-11) where a
 reader has to reconstruct the current defaults from eleven rounds of revisions,
 several of which reverse each other. Two documents are needed:

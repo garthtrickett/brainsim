@@ -798,3 +798,58 @@ moved, after the refractory period, `TARGET_RATE=0.01`, threshold homeostasis,
 and the pretrained encoder. The pattern is not carelessness in the original
 measurement -- each was correct when taken. It is that **nothing re-checks a
 shipped component when the thing around it changes.**
+
+
+---
+
+# Part 12: step 5 — working memory, and four wrong interfaces
+
+`tmaze-2d3` was at floor (0.124 vs 0.123). Two things had to be fixed before a
+module could even be evaluated.
+
+## The task was not a memory test
+
+An ORACLE with the cue handed to it at decision time reached **54% of ceiling**.
+Memory could not be the missing piece if perfect memory does not help. Suppressing
+learning on the unscored steps took cue-visible from 54% to **99%** -- so
+`tmaze-2d3` was measuring *tolerance of irrelevant decisions*, with memory buried
+underneath.
+
+That is an architectural gap worth naming on its own: **the design cannot absorb
+decisions that do not matter.** An unrewarded arbitrary action draws a negative
+RPE that corrupts a policy sharing hidden units with the step that counts. The
+lock survives multi-step episodes only because every state there has a correct
+action. `TMazeWithin` fixes the confound at the task level: cue, delay and choice
+become phases within ONE scored decision. Calibrated: cue-visible 1.000,
+cue-hidden 0.505 against a 0.504 floor -- a clean 0.50 gap only memory can close.
+
+## The mechanism was right first time; the interface was wrong four times
+
+| attempt | memory task | everything else |
+|---|---|---|
+| shared `W_out` | 0.897 | lock **-94%** |
+| separate zero-init pathway | 0.998 | lock -86% |
+| replay corrects both pathways | 0.996 | lock -95% -- *worse*, refuting my diagnosis |
+| residual (orthogonal to current input) | 1.000 | lock **+49**, volatile below floor |
+| + normalised update | 0.999 | shipped |
+
+Sharing `W_out` injected memory through weights trained for `fh`. A separate
+pathway still duplicated it wherever `wm` is a scaled copy of `trh` (constant
+observation within a decision). The residual -- feeding the pathway only what the
+current input does not explain -- silences it exactly there. The final
+normalisation is the **fourth** magnitude bug of the same shape in this project,
+after the eligibility sum, the EMA, and `V(s)`: an unnormalised delta rule lets
+weights grow until a near-zero input produces a large drive.
+
+**A new module's interface is a design decision with its own failure modes,
+independent of whether the module works.**
+
+## Shipped
+
+```
+  tmaze-within d30   0.529 -> 0.999      d60  0.505 -> 0.999
+  xor-2              0.761 -> 0.839
+  nway-4/8           within noise
+  volatile-4         0.463 -> 0.424
+  lock-10            419.0 -> 339.8  (-19%, still 34x the no-replay baseline)
+```

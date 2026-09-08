@@ -133,10 +133,25 @@ class BrainSim:
     #   capacity  write strongly only while the store is EMPTY (self-gating:
     #             a cell already in a persistent up-state resists new input)
     #   change    write when the input differs from the previous tick
-    WM        = False
+    # 37: SHIPPED ON. Two tasks go from structurally impossible (at floor -- no
+    # state outlives a decision) to solved:
+    #   tmaze-within d30  0.529 -> 0.999      d60  0.505 -> 0.999
+    #   xor-2             0.761 -> 0.839
+    #   nway-4/8, volatile-4: within noise (-0.002, -0.009, -0.039)
+    #   lock-10           419.0 -> 339.8  (-19%, still 34x the no-replay 9.5)
+    # An unnormalised W_wm update trades the other way (lock +49, volatile BELOW
+    # its floor). Taking the variant that drives no task below chance.
+    WM        = True
     WM_GATE   = "capacity"
     WM_DECAY  = 0.999    # persistent within a decision
     WM_LR     = 0.15
+    # 37: WM gets its OWN readout pathway, initialised to ZERO. Sharing W_out was
+    # catastrophic -- it injected W_out @ wm through weights trained for fh, and
+    # inflated the credit term, so every non-memory task collapsed:
+    #   nway-4 0.999->0.546, nway-8 0.988->0.285, lock 419->24.5.
+    # A separate zero-init pathway contributes NOTHING until it earns weight, so
+    # tasks that do not need memory never see it. PFC->motor is a distinct
+    # projection with its own synapses, which is also the biology.
     WM_BETA   = 1.0      # how strongly WM drives the readout
     WM_CAP    = 6.0      # capacity scale for the capacity gate
 
@@ -223,6 +238,11 @@ class BrainSim:
         self.trh_sum = np.zeros(n_hidden); self.trh_n = 0
         self.trm = np.zeros(n_motor)      # motor activity trace
         self.wm = np.zeros(n_hidden)      # PFC working memory
+        self.W_wm = np.zeros((n_motor, n_hidden))   # PFC->motor, zero-init
+        self.elig_wm = np.zeros((n_motor, n_hidden))
+        self.ebar_wm = np.zeros((n_motor, n_hidden))
+        self.wm_sum = np.zeros(n_hidden); self.wm_n = 0
+        self._wm_eff = np.zeros(n_hidden)
         self._prev_fh = np.zeros(n_hidden)
         self.w_v = np.zeros(n_hidden)     # striatal value weights V(s)
         self.surp_f = self.surp_s = 0.0   # fast / slow REWARD RATE averages
@@ -274,7 +294,17 @@ class BrainSim:
         # 4/5: motor integrates last tick's hidden spikes, plus exploration noise
         drive = self.W_out @ self.fh + self.rng.normal(0, self.noise_eff, self.n_motor)
         if self.WM:
-            drive = drive + self.WM_BETA * (self.W_out @ self.wm)
+            # Feed the WM pathway only what the CURRENT input does not already
+            # explain. Where the observation is constant within a decision (lock,
+            # nway, volatile) wm is a scaled copy of trh, so the pathway merely
+            # duplicates W_out -- two controllers on one variable, and lock-10
+            # fell 419 -> 58. Removing the component parallel to trh makes the
+            # contribution ~0 exactly there, while leaving it intact when wm
+            # holds something the input does not (a cue from 40 ticks ago).
+            n2 = float(self.trh @ self.trh)
+            resid = self.wm - (float(self.wm @ self.trh) / n2) * self.trh if n2 > 1e-9 else self.wm
+            self._wm_eff = resid
+            drive = drive + self.WM_BETA * (self.W_wm @ resid)
         if self.PERSIST:
             drive += self.SELF_EXC * self.trm - self.INHIB * self.trm.mean()
         self.vm = self.vm * self.LEAK + drive
@@ -301,6 +331,7 @@ class BrainSim:
                 g = 1.0
             self.wm = self.wm * self.WM_DECAY + self.WM_LR * g * self.fh
             self._prev_fh = self.fh.copy()
+            self.wm_sum += getattr(self, "_wm_eff", self.wm); self.wm_n += 1
         self.trh_sum += self.trh; self.trh_n += 1
         # EMA, not a running sum: keeps magnitude independent of the time
         # constant. A plain sum at tau~200 accumulates ~200x a single outer
@@ -342,9 +373,15 @@ class BrainSim:
         return int(winners[self.rng.integers(len(winners))])
 
     # ---- 6/7: feel, then learn ---------------------------------------------
-    def store_and_replay(self, z, action, r, done):
-        """Episodic memory: bind (state, action, outcome), replay on completion."""
-        self.episode.append((z.copy(), int(action), float(r)))
+    def store_and_replay(self, z, action, r, done, w=None):
+        """Episodic memory: bind (state, action, outcome), replay on completion.
+
+        37: the episode records the WM state too. Replay corrected only W_out,
+        so on a replay-dependent task the WM pathway drifted uncorrected while
+        the main pathway was retrained -- lock-10 fell 419 -> 58.
+        """
+        self.episode.append((z.copy(), int(action), float(r),
+                             None if w is None else w.copy()))
         if len(self.episode) > self.HIPPO_WINDOW:
             self.episode = self.episode[-self.HIPPO_WINDOW:]
         if not done:
@@ -378,13 +415,17 @@ class BrainSim:
         elig = np.zeros_like(self.W_out)
         order = list(reversed(ep)) if self.HIPPO_REVERSE else list(ep)
         vnext = 0.0                                  # terminal value
-        for (z, a, r) in order:
+        for item in order:
+            z, a, r = item[0], item[1], item[2]
+            w = item[3] if len(item) > 3 else None
             v = float(self.w_v @ z)
             nm = (r + self.HIPPO_GAMMA * vnext - v) if self.HIPPO_BOOTSTRAP else (r - v)
             elig *= decay
             elig[a] += z
             self.W_out += self.HIPPO_LR * nm * elig
             self.w_v += self.VALUE_W_LR * nm * z / (z @ z + 1e-6)
+            if self.WM and w is not None:
+                self.W_wm[a] += self.HIPPO_LR * nm * w      # correct BOTH pathways
             vnext = float(self.w_v @ z)              # fresh, hence reverse order
         np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
 
@@ -392,11 +433,7 @@ class BrainSim:
         """Deliver reward. NM is reward MINUS what was expected (02: raw reward
         instead of RPE => chance, because it never stops reinforcing the known)."""
         zbar = self.trh_sum / max(self.trh_n, 1)
-        if self.WM:
-            # The readout is driven by fh + WM_BETA*wm, so credit must be
-            # attributed to the same signal or the WM contribution is
-            # unlearnable -- driven but never reinforced.
-            zbar = zbar + self.WM_BETA * self.wm
+        _wbar = (self.wm_sum / max(self.wm_n, 1)) if self.WM else None
         if self.VALUE_STATE:
             # V(s) from cortical input, as striatum does -- not one global mean.
             # A scalar baseline is useless when reward arrives 2x in 25,000 acts.
@@ -439,8 +476,9 @@ class BrainSim:
             self.elig[:] = 0.0; self.elig_w = 0.0
             self.buffer.append((z.copy(), de.copy(), nm, action, r))
             self.trh_sum[:] = 0.0; self.trh_n = 0
+            if self.WM: self.wm[:] = 0.0; self._prev_fh[:] = 0.0
             self.decisions += 1
-            if self.HIPPO: self.store_and_replay(zbar, action, r, done)
+            if self.HIPPO: self.store_and_replay(zbar, action, r, done, _wbar)
             if self.decisions % self.SLEEP_EVERY == 0: self.sleep()
             return
         # Normalise by accumulated weight -> a true weighted MEAN outer product,
@@ -451,6 +489,23 @@ class BrainSim:
         elig = self.elig / max(self.elig_w, 1e-9)
         de = elig - self.ebar
         self.trh_sum[:] = 0.0; self.trh_n = 0
+        if self.WM:
+            # Separate pathway, separate credit: same three-factor rule, with wm
+            # as the presynaptic signal instead of trh.
+            wbar = self.wm_sum / max(self.wm_n, 1)
+            dw = np.outer(np.eye(self.n_motor)[action], wbar) if action is not None \
+                 else np.zeros_like(self.W_wm)
+            dew = dw - self.ebar_wm
+            self.ebar_wm += self.EBAR_LR * (dw - self.ebar_wm)
+            # NORMALISE by input magnitude. Where the residual is near zero
+            # (constant observation within a decision) an unnormalised rule lets
+            # W_wm grow without bound until a tiny input still produces a large
+            # drive -- volatile-4 fell BELOW its floor, 0.411 -> 0.238. Same bug
+            # as the V(s) readout, which needed the same fix.
+            self.W_wm += lr * nm * dew / (float(wbar @ wbar) + 1e-3)
+            np.clip(self.W_wm, -self.WMAX, self.WMAX, out=self.W_wm)
+            self.wm[:] = 0.0; self._prev_fh[:] = 0.0
+            self.wm_sum[:] = 0.0; self.wm_n = 0
         self.ebar += self.EBAR_LR * (elig - self.ebar)
         self.W_out += lr * nm * de
         np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
@@ -464,7 +519,7 @@ class BrainSim:
             self.buffer.append((self.trh.copy(), elig.copy(), nm, action, r))
         self.decisions += 1
         if self.HIPPO and action is not None:
-            self.store_and_replay(zbar, action, r, done)
+            self.store_and_replay(zbar, action, r, done, _wbar)
         if self.decisions % self.SLEEP_EVERY == 0:
             self.sleep()
 
