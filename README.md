@@ -747,3 +747,48 @@ sloppy. The regime changed underneath them. That is the measurement-scope rule
 applied to one's own shipped results, and it is now the third time tonight a
 verdict reversed when its substrate moved (the sleep gradient at n=3 vs n=6;
 V(s); ADAPTIVE).
+
+
+---
+
+# Part 11: step 4 — the cerebellum was a deletion
+
+The plan said "name the sleep gradient as the third learning system". Naming is
+descriptive and cannot be wrong, which makes it useless as a step. The real
+question: **does the thing I would be naming still work?**
+
+It was validated in Part 3 at +0.06 over MATCHED local replay, 5/5 seeds --
+before `V(s)`, before the hippocampus, before the `decide()` fix. Four regime
+changes. It is now net negative.
+
+```
+                             nway-8    xor-2   volatile      lock-10
+  shipped                     0.882    0.756      0.419        282.4
+  - local replay              0.967    0.756      0.271        419.4
+  - local replay - downscale  0.988    0.722      0.450        433.2   <- SHIPPED
+  - ALL sleep                   --       --         --          60.2   <- collapse
+```
+
+`sleep()` now reduces to **hippocampal replay alone**. The local replay loop (which
+contained the gradient pass) and the 0.98 downscale are both off. The downscale
+was the worst of them: it shrank exactly the weights replay had just
+strengthened, costing 151 rewards on the lock.
+
+Final: nway-8 **+0.106**, volatile **+0.031**, lock-10 **+150.8 (53%)**,
+xor-2 -0.034, nway-4 and tmaze unchanged.
+
+## The arm I nearly read without checking
+
+`- ALL sleep` scored best on nway-8 (0.988) in the decomposition. It also
+**collapses the lock to 60.2** because it kills hippocampal replay too -- they
+live in the same method. I had not measured the lock under that arm. Reading the
+decomposition table alone would have deleted the mechanism that broke the
+sparse-reward wall.
+
+## Fifth of its kind
+
+Fifth mechanism validated honestly and later turned harmful when the regime
+moved, after the refractory period, `TARGET_RATE=0.01`, threshold homeostasis,
+and the pretrained encoder. The pattern is not carelessness in the original
+measurement -- each was correct when taken. It is that **nothing re-checks a
+shipped component when the thing around it changes.**

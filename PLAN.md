@@ -96,12 +96,12 @@ pattern (k-WTA retired the refractory period, `TARGET_RATE`, and threshold
 homeostasis).
 Validates on: `nway-8`, where local is 0.592 against 0.900 non-local.
 
-### 4. Cerebellum — consolidation, not capability  <- NEXT
+### 4. Cerebellum  <- DONE: the answer was DELETE, not name
 The sleep gradient already IS error-driven supervised learning with a teaching
 signal. Naming it as a third learning system clarifies the architecture before
 the larger changes. Near-zero risk.
 
-### 5. PFC working memory, BG-gated
+### 5. PFC working memory  <- NEXT (BG shelved, so needs its own gate)
 Depends on step 3 for the gate. `tmaze-2d3` is at floor (0.127 vs 0.123) because
 nothing persists across decisions. Our failed `commitment` experiment belongs
 here: commitment is a PFC state held deliberately and released by a gate, not a

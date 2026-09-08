@@ -46,9 +46,22 @@ class BrainSim:
     # saturation: removing it drops the local rule 0.90 -> 0.81.
     SCALE_EVERY = 1000
     SLEEP_EVERY = 50     # 13: sleep cadence, in decisions
-    SLEEP_REPLAY = 60    # 13: replayed episodes per sleep
+    # 33 (step 4): 0 by default. This loop ran BOTH the local replay and the
+    # gradient pass, and both are now harmful -- subsumed by hippocampal replay
+    # and then obstructing it. sleep() reduces to hippocampal replay alone.
+    #                        nway-8   xor-2   volatile   lock-10
+    #   shipped               0.882   0.756     0.419      282.4
+    #   -local replay         0.967   0.756     0.271      419.4
+    #   -local replay -down   0.988   0.722     0.450      433.2   <- SHIPPED
+    #   -ALL sleep            (kills hippocampal replay)    60.2   <- collapse
+    # Step 4 was planned as "name the sleep gradient as a third learning system".
+    # The answer is that it should be DELETED: validated in Part 3 at +0.06 over
+    # matched replay, four regime changes ago, and now net negative.
+    SLEEP_REPLAY = 0
     SLEEP_ETA = 0.05     # 13: gradient step size inside sleep
-    DOWNSCALE = 0.98     # step 9: shrink all, preserve the order
+    # 33: 1.0 (off). Cost +0.106 on nway-8 and 151 rewards on lock-10 -- it was
+    # shrinking exactly the weights hippocampal replay had just strengthened.
+    DOWNSCALE = 1.0      # was 0.98: shrink all, preserve the order
     # 15: a NO-OP as configured -- np.clip(W_out, 0, ...) already sets weights to
     # exactly 0, so nothing is ever left below the threshold. Ablating it gives
     # bit-identical results. Kept because pruning is real in the design; it just
@@ -420,7 +433,7 @@ class BrainSim:
 
     # ---- 9: sleep -----------------------------------------------------------
     def sleep(self):
-        """Body offline. Replay, then a gradient pass, then downscale and prune.
+        """Body offline. Hippocampal replay; everything else is off by default.
 
         13: replay alone gives +0.05 (acc@400); the gradient adds +0.06 on top of
         MATCHED replay, better in 5/5 seeds. Replay is uniform, NOT prioritised --

@@ -1,0 +1,46 @@
+does the sleep gradient still contribute? 6 seeds
+
+  config                           nway-4       nway-8        xor-2   volatile-4
+  shipped (gradient on)             0.999        0.882        0.756        0.419
+  gradient OFF                      0.998        0.879        0.751        0.295
+  no sleep at all                   0.999        0.987        0.712        0.447
+  gradient off + no hippo           0.998        0.879        0.751        0.295
+
+lock-10, 5 seeds (total rewards; replay's flagship result):
+  shipped          [57, 408, 333, 266, 348]  mean=282.4
+  gradient OFF     [137, 462, 342, 314, 350]  mean=321.0
+
+[exited with code 0]
+---
+decomposing sleep(), 4 seeds, incremental output
+  config                        nway-4      nway-8       xor-2  volatile-4
+  shipped                        1.000       0.827       0.776       0.396
+  - downscale                    1.000       0.833       0.759       0.288
+  - local replay                 0.998       0.956       0.820       0.283
+  - downscale - replay           0.999       0.987       0.761       0.463
+  - gradient                     1.000       0.822       0.767       0.227
+  - everything                   0.998       0.988       0.751       0.487
+
+lock-10, 4 seeds:
+  shipped          [57, 408, 333, 266]  mean=266.0
+  - downscale      [98, 387, 144, 301]  mean=232.5
+  - gradient       [137, 462, 342, 314]  mean=313.8
+
+[exited with code 0]
+---
+candidates, 6 seeds, incremental
+  config                               nway-8        xor-2   volatile-4
+  shipped                               0.882        0.756        0.419
+  - local replay                        0.967        0.756        0.271
+  - local replay - downscale            0.988        0.722        0.450
+  - gradient only                       0.879        0.751        0.295
+
+lock-10, 5 seeds -- does the candidate keep hippocampal replay working?
+  shipped                      [57, 408, 333, 266, 348]  mean=282.4
+  - local replay               [293, 604, 484, 194, 522]  mean=419.4
+  - local replay - downscale   [370, 468, 460, 378, 490]  mean=433.2
+  - gradient only              [137, 462, 342, 314, 350]  mean=321.0
+  - ALL sleep (kills hippo)    [7, 6, 89, 193, 6]  mean=60.2
+
+[exited with code 0]
+---
