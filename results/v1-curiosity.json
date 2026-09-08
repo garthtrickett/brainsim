@@ -1,0 +1,435 @@
+{
+  "protocol": {
+    "study": "curiosity",
+    "seeds": 6,
+    "seed_start": 0,
+    "tasks": [
+      "lock-10"
+    ],
+    "arms": [
+      "off",
+      "bonus-0.1",
+      "bonus-0.5"
+    ],
+    "task_seed": "paired to agent seed"
+  },
+  "sources": {
+    "brainsim.py": "5f5478523741e5a11946aad335669ff91c6a7f4bd65aee96474409f618d0eccb",
+    "fastsim.py": "a7e95186d9875db6ee482abc87642cce9c09ea9f8a264bb0514de443478ff07f",
+    "tasks.py": "d3943af39a3e4467b1e79ac84e1e990b95fd01aa14adb6548a210ea153f72108",
+    "research_agents.py": "71c3d2658073d4632e35c6f90c8188b133b01b77da4e9df1c626f0cdf6b8de7d",
+    "transition_model.py": "76fb60ceed910188212d72bc8c7d3039a72f51054f369c3cb0b615fa1430524c",
+    "study_learning.py": "480ee2bbf3951c71440f37347a335d5593ac5e7d070e5eac69f505ee3ea47501",
+    "study_io.py": "7d74e090d4613782afd9fe09bb48d8a59e7f84e26ed9c2f142ecfc512d12d680"
+  },
+  "rows": {
+    "lock-10/controls/0": {
+      "floor": 12.0,
+      "ceiling": 1333.0,
+      "seconds": 0.04
+    },
+    "lock-10/off/0": {
+      "score": 243.0,
+      "first_reward": 631,
+      "early_rewards": 60.0,
+      "last_1000": 0.024,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 0.0,
+      "model": {
+        "next_mse": 1.3800027657163044e-08,
+        "state_only_mse": 0.07173129001519456,
+        "unconditional_mse": 0.16529612298214694,
+        "reward_mse": 2.337656707462885e-14,
+        "reward_mean_mse": 0.021521635685293937,
+        "positive_reward_samples": 44,
+        "predicted_on_positive": 0.999999509610599,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 20.44
+    },
+    "lock-10/bonus-0.1/0": {
+      "score": 295.0,
+      "first_reward": 163,
+      "early_rewards": 85.0,
+      "last_1000": 0.03,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 1.432700501563487,
+      "model": {
+        "next_mse": 9.666150227870182e-09,
+        "state_only_mse": 0.06893004813773289,
+        "unconditional_mse": 0.1628912957156184,
+        "reward_mse": 1.0824419374662529e-14,
+        "reward_mean_mse": 0.02247603594674915,
+        "positive_reward_samples": 46,
+        "predicted_on_positive": 0.9999997381963047,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 30.85
+    },
+    "lock-10/bonus-0.5/0": {
+      "score": 295.0,
+      "first_reward": 479,
+      "early_rewards": 75.0,
+      "last_1000": 0.023,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 7.165683421808961,
+      "model": {
+        "next_mse": 7.006821883941029e-08,
+        "state_only_mse": 0.0717147622921612,
+        "unconditional_mse": 0.16959060453794944,
+        "reward_mse": 4.989234634534071e-15,
+        "reward_mean_mse": 0.027708703601286175,
+        "positive_reward_samples": 57,
+        "predicted_on_positive": 0.9999998299695124,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 25.67
+    },
+    "lock-10/controls/1": {
+      "floor": 15.0,
+      "ceiling": 1333.0,
+      "seconds": 0.21
+    },
+    "lock-10/off/1": {
+      "score": 667.0,
+      "first_reward": 37,
+      "early_rewards": 182.0,
+      "last_1000": 0.06,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 0.0,
+      "model": {
+        "next_mse": 2.5423818987575886e-09,
+        "state_only_mse": 0.05192165572406948,
+        "unconditional_mse": 0.19811757953605288,
+        "reward_mse": 8.297119512229794e-11,
+        "reward_mean_mse": 0.05642855598983239,
+        "positive_reward_samples": 120,
+        "predicted_on_positive": 0.999994304850978,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 25.95
+    },
+    "lock-10/bonus-0.1/1": {
+      "score": 584.0,
+      "first_reward": 1410,
+      "early_rewards": 111.0,
+      "last_1000": 0.062,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 1.6646043369853687,
+      "model": {
+        "next_mse": 2.0768348758778543e-08,
+        "state_only_mse": 0.050651075141261444,
+        "unconditional_mse": 0.20072216547667748,
+        "reward_mse": 2.3876188965947394e-10,
+        "reward_mean_mse": 0.06110072240779671,
+        "positive_reward_samples": 130,
+        "predicted_on_positive": 0.9999948448178186,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 25.69
+    },
+    "lock-10/bonus-0.5/1": {
+      "score": 461.0,
+      "first_reward": 1882,
+      "early_rewards": 63.0,
+      "last_1000": 0.076,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 8.318672289436902,
+      "model": {
+        "next_mse": 2.371114010696036e-08,
+        "state_only_mse": 0.04549994178080165,
+        "unconditional_mse": 0.2033112330650943,
+        "reward_mse": 1.6198070166011963e-11,
+        "reward_mean_mse": 0.060694887977001226,
+        "positive_reward_samples": 128,
+        "predicted_on_positive": 0.9999971536105413,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 26.67
+    },
+    "lock-10/controls/2": {
+      "floor": 11.0,
+      "ceiling": 1333.0,
+      "seconds": 0.12
+    },
+    "lock-10/off/2": {
+      "score": 715.0,
+      "first_reward": 1220,
+      "early_rewards": 162.0,
+      "last_1000": 0.066,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 0.0,
+      "model": {
+        "next_mse": 2.3704345001160777e-07,
+        "state_only_mse": 0.0383907577638051,
+        "unconditional_mse": 0.19910997606840763,
+        "reward_mse": 5.322509965023886e-16,
+        "reward_mean_mse": 0.06214083535137432,
+        "positive_reward_samples": 133,
+        "predicted_on_positive": 0.9999999935744793,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 29.55
+    },
+    "lock-10/bonus-0.1/2": {
+      "score": 793.0,
+      "first_reward": 34,
+      "early_rewards": 246.0,
+      "last_1000": 0.066,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 1.6798978954404353,
+      "model": {
+        "next_mse": 1.2828647950543365e-05,
+        "state_only_mse": 0.03190021080530954,
+        "unconditional_mse": 0.19858766491688096,
+        "reward_mse": 8.094884481558896e-17,
+        "reward_mean_mse": 0.06773460642471871,
+        "positive_reward_samples": 146,
+        "predicted_on_positive": 0.9999999972539805,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 37.26
+    },
+    "lock-10/bonus-0.5/2": {
+      "score": 774.0,
+      "first_reward": 242,
+      "early_rewards": 237.0,
+      "last_1000": 0.066,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 8.397224102498628,
+      "model": {
+        "next_mse": 1.8538982100385612e-05,
+        "state_only_mse": 0.031899951469176256,
+        "unconditional_mse": 0.19927830913427472,
+        "reward_mse": 8.991477054410835e-17,
+        "reward_mean_mse": 0.0664526346478548,
+        "positive_reward_samples": 143,
+        "predicted_on_positive": 0.999999997820605,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 23.44
+    },
+    "lock-10/controls/3": {
+      "floor": 17.0,
+      "ceiling": 1333.0,
+      "seconds": 0.05
+    },
+    "lock-10/off/3": {
+      "score": 860.0,
+      "first_reward": 391,
+      "early_rewards": 277.0,
+      "last_1000": 0.075,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 0.0,
+      "model": {
+        "next_mse": 6.829207189985292e-06,
+        "state_only_mse": 0.04702480325036764,
+        "unconditional_mse": 0.19038008902302625,
+        "reward_mse": 1.3607414825762766e-19,
+        "reward_mean_mse": 0.06810798655965027,
+        "positive_reward_samples": 147,
+        "predicted_on_positive": 0.9999999995985684,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 25.02
+    },
+    "lock-10/bonus-0.1/3": {
+      "score": 863.0,
+      "first_reward": 284,
+      "early_rewards": 273.0,
+      "last_1000": 0.077,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 1.5760637673227833,
+      "model": {
+        "next_mse": 3.5770846085933645e-06,
+        "state_only_mse": 0.047733914316915926,
+        "unconditional_mse": 0.19008162201451453,
+        "reward_mse": 4.699293201314797e-21,
+        "reward_mean_mse": 0.06810694801842747,
+        "positive_reward_samples": 147,
+        "predicted_on_positive": 0.9999999999081663,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 23.98
+    },
+    "lock-10/bonus-0.5/3": {
+      "score": 798.0,
+      "first_reward": 907,
+      "early_rewards": 195.0,
+      "last_1000": 0.069,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 7.889544065912167,
+      "model": {
+        "next_mse": 6.037428057949995e-07,
+        "state_only_mse": 0.045571711042989384,
+        "unconditional_mse": 0.19095003021921417,
+        "reward_mse": 3.4188003080273904e-18,
+        "reward_mean_mse": 0.06903284735048178,
+        "positive_reward_samples": 149,
+        "predicted_on_positive": 0.9999999975755427,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 23.97
+    },
+    "lock-10/controls/4": {
+      "floor": 14.0,
+      "ceiling": 1333.0,
+      "seconds": 0.08
+    },
+    "lock-10/off/4": {
+      "score": 369.0,
+      "first_reward": 6483,
+      "early_rewards": 0.0,
+      "last_1000": 0.077,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 0.0,
+      "model": {
+        "next_mse": 6.910485527686359e-06,
+        "state_only_mse": 0.024213220082475673,
+        "unconditional_mse": 0.1929504404962359,
+        "reward_mse": 5.880282479636316e-09,
+        "reward_mean_mse": 0.07268770919009247,
+        "positive_reward_samples": 152,
+        "predicted_on_positive": 0.9999849219787321,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 24.26
+    },
+    "lock-10/bonus-0.1/4": {
+      "score": 558.0,
+      "first_reward": 3738,
+      "early_rewards": 1.0,
+      "last_1000": 0.066,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 1.1398881771010092,
+      "model": {
+        "next_mse": 2.3312790297108337e-05,
+        "state_only_mse": 0.030206003112085714,
+        "unconditional_mse": 0.1783817471669791,
+        "reward_mse": 6.059286384277811e-11,
+        "reward_mean_mse": 0.06347874775018428,
+        "positive_reward_samples": 135,
+        "predicted_on_positive": 0.99999851097171,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 27.64
+    },
+    "lock-10/bonus-0.5/4": {
+      "score": 814.0,
+      "first_reward": 367,
+      "early_rewards": 216.0,
+      "last_1000": 0.068,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 5.694124794436083,
+      "model": {
+        "next_mse": 6.317783792142526e-06,
+        "state_only_mse": 0.031370922956268116,
+        "unconditional_mse": 0.17388719481127768,
+        "reward_mse": 2.5201381930594036e-14,
+        "reward_mean_mse": 0.06727602648795625,
+        "positive_reward_samples": 145,
+        "predicted_on_positive": 0.9999999736686077,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 37.29
+    },
+    "lock-10/controls/5": {
+      "floor": 12.0,
+      "ceiling": 1333.0,
+      "seconds": 0.19
+    },
+    "lock-10/off/5": {
+      "score": 456.0,
+      "first_reward": 107,
+      "early_rewards": 117.0,
+      "last_1000": 0.055,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 0.0,
+      "model": {
+        "next_mse": 4.9788953798823866e-06,
+        "state_only_mse": 0.0643212193631248,
+        "unconditional_mse": 0.1979201703680685,
+        "reward_mse": 4.0989327899865596e-13,
+        "reward_mean_mse": 0.0495357079350813,
+        "positive_reward_samples": 104,
+        "predicted_on_positive": 0.999999331543986,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 28.95
+    },
+    "lock-10/bonus-0.1/5": {
+      "score": 155.0,
+      "first_reward": 1176,
+      "early_rewards": 1.0,
+      "last_1000": 0.031,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 1.7931065402150377,
+      "model": {
+        "next_mse": 4.47655164909586e-06,
+        "state_only_mse": 0.08460364306215593,
+        "unconditional_mse": 0.19020879345373629,
+        "reward_mse": 9.414647312314956e-08,
+        "reward_mean_mse": 0.02994348296601942,
+        "positive_reward_samples": 61,
+        "predicted_on_positive": 0.9993408154925937,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 18.7
+    },
+    "lock-10/bonus-0.5/5": {
+      "score": 211.0,
+      "first_reward": 933,
+      "early_rewards": 3.0,
+      "last_1000": 0.035,
+      "finite": true,
+      "external_episode_rewards": true,
+      "bonus_total": 8.935266578753795,
+      "model": {
+        "next_mse": 1.0849002237219869e-05,
+        "state_only_mse": 0.08197130523560764,
+        "unconditional_mse": 0.1882883407933869,
+        "reward_mse": 9.141490537751894e-10,
+        "reward_mean_mse": 0.027833266540396914,
+        "positive_reward_samples": 57,
+        "predicted_on_positive": 0.9999248617644487,
+        "observed_state_action_pairs": 18,
+        "pairs_with_3_samples": 18
+      },
+      "seconds": 30.91
+    }
+  }
+}

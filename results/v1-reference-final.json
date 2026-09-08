@@ -1,0 +1,351 @@
+{
+  "protocol": {
+    "seeds": 8,
+    "comparison": "exact per-seed score"
+  },
+  "sources": {
+    "brainsim.py": "5f5478523741e5a11946aad335669ff91c6a7f4bd65aee96474409f618d0eccb",
+    "fastsim.py": "a1b10aaa0aed73044b7cbb63fc74037e1923334a4927e1e5aa3d97da80c546a3",
+    "tasks.py": "d3943af39a3e4467b1e79ac84e1e990b95fd01aa14adb6548a210ea153f72108",
+    "reference.py": "662736c6792ad3edf9791fc5ec756c9d55920227e3ddaa80fb5b0a8230e59b33",
+    "reference.json": "0e2bd78f8e386d1a566ebd7e7a029bb7ea0140da271d21144e4fbb54be8409ba"
+  },
+  "rows": {
+    "nway-4/0": {
+      "score": 0.999,
+      "expected": 0.999,
+      "exact": true,
+      "seconds": 3.89
+    },
+    "nway-4/1": {
+      "score": 0.998,
+      "expected": 0.998,
+      "exact": true,
+      "seconds": 2.21
+    },
+    "nway-4/2": {
+      "score": 0.996,
+      "expected": 0.996,
+      "exact": true,
+      "seconds": 2.28
+    },
+    "nway-4/3": {
+      "score": 0.994,
+      "expected": 0.994,
+      "exact": true,
+      "seconds": 2.68
+    },
+    "nway-4/4": {
+      "score": 0.994,
+      "expected": 0.994,
+      "exact": true,
+      "seconds": 2.53
+    },
+    "nway-4/5": {
+      "score": 0.996,
+      "expected": 0.996,
+      "exact": true,
+      "seconds": 2.35
+    },
+    "nway-4/6": {
+      "score": 0.999,
+      "expected": 0.999,
+      "exact": true,
+      "seconds": 2.76
+    },
+    "nway-4/7": {
+      "score": 0.999,
+      "expected": 0.999,
+      "exact": true,
+      "seconds": 3.03
+    },
+    "nway-8/0": {
+      "score": 0.985,
+      "expected": 0.985,
+      "exact": true,
+      "seconds": 2.63
+    },
+    "nway-8/1": {
+      "score": 0.984,
+      "expected": 0.984,
+      "exact": true,
+      "seconds": 2.88
+    },
+    "nway-8/2": {
+      "score": 0.984,
+      "expected": 0.984,
+      "exact": true,
+      "seconds": 3.01
+    },
+    "nway-8/3": {
+      "score": 0.961,
+      "expected": 0.961,
+      "exact": true,
+      "seconds": 2.32
+    },
+    "nway-8/4": {
+      "score": 0.981,
+      "expected": 0.981,
+      "exact": true,
+      "seconds": 2.88
+    },
+    "nway-8/5": {
+      "score": 0.98,
+      "expected": 0.98,
+      "exact": true,
+      "seconds": 3.49
+    },
+    "nway-8/6": {
+      "score": 0.976,
+      "expected": 0.976,
+      "exact": true,
+      "seconds": 3.37
+    },
+    "nway-8/7": {
+      "score": 0.975,
+      "expected": 0.975,
+      "exact": true,
+      "seconds": 2.79
+    },
+    "xor-2/0": {
+      "score": 0.821,
+      "expected": 0.821,
+      "exact": true,
+      "seconds": 3.01
+    },
+    "xor-2/1": {
+      "score": 0.834,
+      "expected": 0.834,
+      "exact": true,
+      "seconds": 2.39
+    },
+    "xor-2/2": {
+      "score": 0.88,
+      "expected": 0.88,
+      "exact": true,
+      "seconds": 2.4
+    },
+    "xor-2/3": {
+      "score": 0.823,
+      "expected": 0.823,
+      "exact": true,
+      "seconds": 2.84
+    },
+    "xor-2/4": {
+      "score": 0.808,
+      "expected": 0.808,
+      "exact": true,
+      "seconds": 2.91
+    },
+    "xor-2/5": {
+      "score": 0.799,
+      "expected": 0.799,
+      "exact": true,
+      "seconds": 2.85
+    },
+    "xor-2/6": {
+      "score": 0.8,
+      "expected": 0.8,
+      "exact": true,
+      "seconds": 3.4
+    },
+    "xor-2/7": {
+      "score": 0.837,
+      "expected": 0.837,
+      "exact": true,
+      "seconds": 2.18
+    },
+    "volatile-4/0": {
+      "score": 0.448,
+      "expected": 0.448,
+      "exact": true,
+      "seconds": 2.56
+    },
+    "volatile-4/1": {
+      "score": 0.498,
+      "expected": 0.498,
+      "exact": true,
+      "seconds": 2.62
+    },
+    "volatile-4/2": {
+      "score": 0.238,
+      "expected": 0.238,
+      "exact": true,
+      "seconds": 2.53
+    },
+    "volatile-4/3": {
+      "score": 0.512,
+      "expected": 0.512,
+      "exact": true,
+      "seconds": 2.6
+    },
+    "volatile-4/4": {
+      "score": 0.404,
+      "expected": 0.404,
+      "exact": true,
+      "seconds": 2.71
+    },
+    "volatile-4/5": {
+      "score": 0.177,
+      "expected": 0.177,
+      "exact": true,
+      "seconds": 2.45
+    },
+    "volatile-4/6": {
+      "score": 0.324,
+      "expected": 0.324,
+      "exact": true,
+      "seconds": 2.71
+    },
+    "volatile-4/7": {
+      "score": 0.371,
+      "expected": 0.371,
+      "exact": true,
+      "seconds": 2.5
+    },
+    "tmaze-within-30/0": {
+      "score": 0.9986666666666667,
+      "expected": 0.9986666666666667,
+      "exact": true,
+      "seconds": 5.96
+    },
+    "tmaze-within-30/1": {
+      "score": 1.0,
+      "expected": 1.0,
+      "exact": true,
+      "seconds": 5.86
+    },
+    "tmaze-within-30/2": {
+      "score": 0.9986666666666667,
+      "expected": 0.9986666666666667,
+      "exact": true,
+      "seconds": 7.92
+    },
+    "tmaze-within-30/3": {
+      "score": 0.9993333333333333,
+      "expected": 0.9993333333333333,
+      "exact": true,
+      "seconds": 5.12
+    },
+    "tmaze-within-30/4": {
+      "score": 0.9993333333333333,
+      "expected": 0.9993333333333333,
+      "exact": true,
+      "seconds": 8.42
+    },
+    "tmaze-within-30/5": {
+      "score": 1.0,
+      "expected": 1.0,
+      "exact": true,
+      "seconds": 5.94
+    },
+    "tmaze-within-30/6": {
+      "score": 1.0,
+      "expected": 1.0,
+      "exact": true,
+      "seconds": 6.56
+    },
+    "tmaze-within-30/7": {
+      "score": 0.998,
+      "expected": 0.998,
+      "exact": true,
+      "seconds": 5.39
+    },
+    "tmaze-within-60/0": {
+      "score": 1.0,
+      "expected": 1.0,
+      "exact": true,
+      "seconds": 7.81
+    },
+    "tmaze-within-60/1": {
+      "score": 0.998,
+      "expected": 0.998,
+      "exact": true,
+      "seconds": 7.79
+    },
+    "tmaze-within-60/2": {
+      "score": 1.0,
+      "expected": 1.0,
+      "exact": true,
+      "seconds": 7.4
+    },
+    "tmaze-within-60/3": {
+      "score": 0.998,
+      "expected": 0.998,
+      "exact": true,
+      "seconds": 7.02
+    },
+    "tmaze-within-60/4": {
+      "score": 0.9953333333333333,
+      "expected": 0.9953333333333333,
+      "exact": true,
+      "seconds": 7.6
+    },
+    "tmaze-within-60/5": {
+      "score": 1.0,
+      "expected": 1.0,
+      "exact": true,
+      "seconds": 10.21
+    },
+    "tmaze-within-60/6": {
+      "score": 0.9993333333333333,
+      "expected": 0.9993333333333333,
+      "exact": true,
+      "seconds": 11.25
+    },
+    "tmaze-within-60/7": {
+      "score": 0.9953333333333333,
+      "expected": 0.9953333333333333,
+      "exact": true,
+      "seconds": 8.16
+    },
+    "lock-10/0": {
+      "score": 243.0,
+      "expected": 243.0,
+      "exact": true,
+      "seconds": 8.21
+    },
+    "lock-10/1": {
+      "score": 386.0,
+      "expected": 386.0,
+      "exact": true,
+      "seconds": 10.62
+    },
+    "lock-10/2": {
+      "score": 440.0,
+      "expected": 440.0,
+      "exact": true,
+      "seconds": 15.15
+    },
+    "lock-10/3": {
+      "score": 290.0,
+      "expected": 290.0,
+      "exact": true,
+      "seconds": 12.55
+    },
+    "lock-10/4": {
+      "score": 517.0,
+      "expected": 517.0,
+      "exact": true,
+      "seconds": 13.87
+    },
+    "lock-10/5": {
+      "score": 395.0,
+      "expected": 395.0,
+      "exact": true,
+      "seconds": 12.95
+    },
+    "lock-10/6": {
+      "score": 363.0,
+      "expected": 363.0,
+      "exact": true,
+      "seconds": 15.93
+    },
+    "lock-10/7": {
+      "score": 687.0,
+      "expected": 687.0,
+      "exact": true,
+      "seconds": 15.21
+    }
+  }
+}

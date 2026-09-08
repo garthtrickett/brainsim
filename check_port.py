@@ -31,3 +31,5 @@ for name, mk, nm, dec in CASES:
               f"   {t1-t0:.1f}s -> {t2-t1:.1f}s ({(t1-t0)/max(t2-t1,1e-9):.1f}x)",
               flush=True)
 print("\nGATE:", "PASS -- port is bit-exact" if ok else "FAIL -- do not use the port")
+if not ok:
+    raise SystemExit(1)

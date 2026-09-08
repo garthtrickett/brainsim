@@ -241,16 +241,11 @@ class BrainSim:
     # at k/P. P must divide k; balanced pool sizes may differ by one unit.
     # The original P=4/8 probe silently changed k=6 into 4/8 winners.
     POOLS       = 1
-    # Step 13c instruments. Transmission failure and matched deterministic
-    # attenuation default off. Masks use their own RNG, preserving the baseline.
-    TRANSMISSION_FAILURE = 0.0
-    TRANSMISSION_GAIN = 1.0
     SURP_F, SURP_S = 0.10, 0.005   # fast/slow |RPE| averages
     LR_GAIN, NOISE_GAIN, VOL_CAP = 1.5, 1.5, 2.0
 
     def __init__(self, n_in=40, n_hidden=80, n_motor=2, k=6, seed=0):
         self.rng = np.random.default_rng(seed)
-        self.transmission_rng = np.random.default_rng([seed, 1303])
         self.n_in, self.n_hidden, self.n_motor, self.k = n_in, n_hidden, n_motor, k
         r = self.rng
         self.W_in  = (r.random((n_hidden, n_in)) < 0.25) * r.random((n_hidden, n_in)) * 1.2
@@ -320,12 +315,7 @@ class BrainSim:
         si = (self.rng.random(self.n_in) < 0.6 * x).astype(float)
 
         # 4/5: motor integrates last tick's hidden spikes, plus exploration noise
-        if self.TRANSMISSION_FAILURE:
-            mask = self.transmission_rng.random(self.W_out.shape) >= self.TRANSMISSION_FAILURE
-            signal = (self.W_out * mask) @ self.fh
-        else:
-            signal = self.W_out @ self.fh
-        drive = self.TRANSMISSION_GAIN * signal + self.rng.normal(0, self.noise_eff, self.n_motor)
+        drive = self.W_out @ self.fh + self.rng.normal(0, self.noise_eff, self.n_motor)
         if self.WM:
             # Feed the WM pathway only what the CURRENT input does not already
             # explain. Where the observation is constant within a decision (lock,
@@ -454,7 +444,11 @@ class BrainSim:
 
     def _replay_one(self):
         if not self.episodes: return
-        idx = self._sample_episode()
+        if self.HIPPO_PRIORITY:
+            w = np.array([e[1] for e in self.episodes], dtype=float) + 1e-3
+            idx = int(self.rng.choice(len(self.episodes), p=w / w.sum()))
+        else:
+            idx = int(self.rng.integers(len(self.episodes)))
         ep = self.episodes[idx][0]
         decay = (self.ELIG_D ** self.HIPPO_TICKS) if self.HIPPO_TRACE else 0.0
         elig = np.zeros_like(self.W_out)
@@ -474,16 +468,7 @@ class BrainSim:
             vnext = float(self.w_v @ z)              # fresh, hence reverse order
         np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
 
-    def _sample_episode(self):
-        """Selection seam: experiments can change retrieval without copying TD replay."""
-        if self.HIPPO_PRIORITY:
-            w = np.array([e[1] for e in self.episodes], dtype=float) + 1e-3
-            idx = int(self.rng.choice(len(self.episodes), p=w / w.sum()))
-        else:
-            idx = int(self.rng.integers(len(self.episodes)))
-        return idx
-
-    def reward(self, r, action=None, done=True, policy_bonus=0.0):
+    def reward(self, r, action=None, done=True):
         """Deliver reward. NM is reward MINUS what was expected (02: raw reward
         instead of RPE => chance, because it never stops reinforcing the known)."""
         zbar = self.trh_sum / max(self.trh_n, 1)
@@ -520,8 +505,6 @@ class BrainSim:
             self.noise_eff = self.NOISE * (1 + self.NOISE_GAIN * vol)
         else:
             lr = self.LR
-        if policy_bonus:
-            nm += policy_bonus
         # Step 8 gate. Scales the POLICY update only. V(s), the traces, replay
         # and every reset stay untouched -- skipping reward() wholesale is a bug
         # this project has already made once (it skipped the state resets too).

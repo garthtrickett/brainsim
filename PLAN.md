@@ -1,5 +1,35 @@
 # Plan
 
+## V1 investigation closure (2026-09-08)
+
+Remaining bounded investigations are closed; no new default is enabled. This
+does not claim every proposed mechanism was implemented. Dispositions:
+
+| Step | Result |
+| --- | --- |
+| 6 / 11 hierarchy / 13b | Fixed encoder generalises; registered gap absent; mechanisms deferred |
+| 7 | Frozen table and accelerated implementation verified |
+| 8 | Measured; no default gating change |
+| 9 | Corrected fair pool comparison; no reliable gain without regressions |
+| 10 | Explicitly deferred to continuous-time v2 |
+| 11 model-based replay | Model backups do not beat matched real backups |
+| 12 | Curiosity has no reliable external-reward gain |
+| 13a | Context retrieval does not beat shuffled queries |
+| 13c | Failure does not beat appropriate controls without regressions |
+
+Next: `V3-NEXT.md` recommends testing §9 directly before a v2 rewrite. V3 is
+unbuilt; its further queue has not been activated by these v1 investigations.
+
+`V1-RESULTS.md` records the current investigations and supersedes historical
+numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.
+In particular, the 0.946→0.385 capacity ladder used an additive shape/colour
+label; commit fc84358 changed the task to shape identity. It is not a measured
+capacity limit of the current task. The corrected pool test evaluates both labels.
+
+The original "Current state" and early per-step tables below are historical
+snapshots. Use `README.md` and the unchanged eight-seed `reference.json` for
+the shipped baseline, rather than reconstructing defaults from those snapshots.
+
 Where the project is, what to build next, and in what order. Ordering is by
 **what we can measure**, not by what would help most in principle — five of the
 six hypotheses tested on 2026-09-06/07 were wrong, and every unmeasurable result
@@ -107,7 +137,11 @@ nothing persists across decisions. Our failed `commitment` experiment belongs
 here: commitment is a PFC state held deliberately and released by a gate, not a
 motor-layer trick.
 
-### 6. Predictive-coding hierarchy — IN PROGRESS (see also step 11)
+### 6. Predictive-coding hierarchy — CLOSED: defer; fixed encoder passes held-out gate
+
+Rechecked with frozen evaluation weights over eight seeds: unseen 0.751 versus
+0.257 chance, seen 0.966. The specified at-chance prerequisite is absent.
+This is not a negative experiment on predictive coding itself. See `V1-RESULTS.md`.
 Twice now, measurement says representation is not the bottleneck:
 - hidden codes were MORE separable at 4/8 classes (0.549) than at the 2-class
   case that worked (0.622);
@@ -190,7 +224,11 @@ Ready task (the original `tmaze-2d3`), measured gap, and a real biological story
 gating plasticity is precisely what BG->PFC gating does. Should also help
 `volatile-4`, the weakest task, by suppressing updates just after a switch.
 
-### 9. Local competitive pools instead of one global k-WTA
+### 9. Local competitive pools — DONE: corrected measurement, keep default off
+
+Six seeds, five tasks, P=1/2/3/6 and k=6. No pooled setting shows a reliable
+capacity gain without regressions. The inherited P=4/8 experiment changed total
+sparsity and is archived as confounded. Full evidence: `V1-RESULTS.md`.
 
 Step 6's calibration produced a measured capacity limit:
 
@@ -204,7 +242,10 @@ With 80 units and k=6 that is not representation quality -- it is one global
 competition forcing everything through a single pool. Local pools fix it AND are
 the prerequisite for any scaling, and are what cortex does anyway.
 
-### 10. Embodiment -- restore the premise that was dropped
+### 10. Embodiment — DEFERRED to the continuous-time v2 fork
+
+This is the disposition specified by the revised rule/substrate split in `V2.md`.
+The v1 investigation closure does not claim an embodied or continuous-time agent.
 
 The Part 1 design specified `BODY = {energy, temp, damage}` with reward as
 homeostatic error. The implementation takes `reward(r)` from a task. **Embodiment
@@ -212,7 +253,12 @@ vanished at first contact with code and never returned.** Largest conceptual gap
 largest work, hence last -- but it is the difference between a learning algorithm
 and the thing this project set out to build.
 
-### 11. Predictive coding, revisited on the RIGHT question
+### 11. Predictive coding — CLOSED for v1; model backups do not beat real backups
+
+The representation gate fails (the fixed encoder generalises), step 8 supplies
+only a narrow gating result, and model-generated backups score 580.0 versus
+596.2 for equal-count real backups on six lock seeds. No new default is enabled.
+General precision weighting remains a v3 hypothesis. See `V1-RESULTS.md`.
 
 Shelved twice, and the shelving was sound for the question asked -- but the
 question was too narrow. We tested predictive coding as a **representation
@@ -243,7 +289,11 @@ Three ways back in, one of which converges with step 8:
 
 Sequence after step 8, so its relevance gate either subsumes or motivates this.
 
-### 12. Curiosity, revisited
+### 12. Curiosity — DONE: measured again, keep off
+
+Six lock seeds with external reward scored separately from intrinsic bonuses:
+baseline 551.7; coefficients 0.1/0.5 yield 541.3/558.8, with broad paired
+intervals spanning zero. No reliable discovery or total-reward improvement.
 
 Cut in Part 2 for showing no effect at 0.1/0.3/1.0/3.0 across two environments.
 That verdict predates the working world model, the corrected `decide()`, and the
@@ -252,7 +302,7 @@ seed in five found none at all. Directed exploration is exactly what should help
 there. `ADAPTIVE` was cut on similarly sound evidence and reversed once its
 regime changed; this deserves the same re-examination.
 
-### 13. A second pass at the LLM / deep-net world, under the brain-plausibility lens
+### 13. LLM / deep-net second pass — CLOSED for v1; no new default
 
 Sequence AFTER step 11, so predictive coding and Forward-Forward compete for the
 same gap and can be ablated against each other rather than tested in isolation.
@@ -261,6 +311,8 @@ The constraint is what makes this useful: forcing "what problem was this actuall
 solving?" usually surfaces a biological answer.
 
 **13a. Content-addressed replay -- attention as CA3 pattern completion.**
+**DONE, keep off:** context 535.5 versus shuffled 539.8 and baseline 551.7 over
+six lock seeds. No demonstrated query-specific benefit. See `V1-RESULTS.md`.
 Self-attention is query-key matching: retrieve by similarity to what is being
 processed NOW. That is exactly what hippocampal CA3 recurrence does -- partial
 cue in, full episode out. Our replay samples by stored priority, which is blind
@@ -275,11 +327,20 @@ Hebbian learning and equilibrium propagation are the same family. Value here is
 that it gives a SECOND independent candidate for the gap step 11 targets -- when
 two mechanisms compete for one gap, the ablation means something.
 
+**CLOSED, mechanism deferred:** the shared representation prerequisite fails in
+the eight-seed frozen-evaluation test. The fixed encoder generalises above chance
+in every seed. This does not experimentally refute Forward-Forward.
+
 **13c. Synaptic failure as dropout -- nearly free.** Dropout was invented as
 regularisation; real synapses fail to release 50-90% of the time, more aggressive
 than any dropout rate in use. We have noise on motor units but deterministic
 synapses. One line, strong warrant, plausibly helps the capacity limit step 9
 targets.
+
+**DONE, keep off:** six seeds on five tasks including the original capacity
+target, with matched attenuation controls. No reliable stochastic-specific
+capacity benefit; 50% failure hurts XOR in all six seeds. `V1-RESULTS.md` records
+the full contrasts, including the small nway gain and its stronger control.
 
 Also worth a look: divisive normalisation (Carandini-Heeger -- the brain's
 LayerNorm, cheap and well established), and mixture-of-experts routing, which is
