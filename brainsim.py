@@ -218,6 +218,15 @@ class BrainSim:
     # Shipped because volatile at 0.278 is 4% off its floor (near-failing) and
     # 0.419 is 23%, while the lock stays at 30x baseline. Robust beats peak.
     ADAPTIVE    = True   # NE/ACh: volatility from reward-rate change -> LR, noise
+    # Step 8: plasticity gating. "off" = current behaviour. "oracle" and
+    # "oracle_carry" are PRIVILEGED (they use `done` as a scored/unscored
+    # signal the agent could not know) and exist only to bound what any real
+    # relevance gate could achieve. If a PERFECT gate does not close the gap,
+    # there is no point building an imperfect one.
+    #   oracle       -- suppress the policy update on unscored decisions
+    #   oracle_carry -- also skip eligibility consumption, so credit carries
+    #                   forward to the decision that is actually scored
+    PGATE       = "off"
     SURP_F, SURP_S = 0.10, 0.005   # fast/slow |RPE| averages
     LR_GAIN, NOISE_GAIN, VOL_CAP = 1.5, 1.5, 2.0
 
@@ -466,6 +475,12 @@ class BrainSim:
             self.noise_eff = self.NOISE * (1 + self.NOISE_GAIN * vol)
         else:
             lr = self.LR
+        # Step 8 gate. Scales the POLICY update only. V(s), the traces, replay
+        # and every reset stay untouched -- skipping reward() wholesale is a bug
+        # this project has already made once (it skipped the state resets too).
+        gate = 1.0
+        if self.PGATE in ("oracle", "oracle_carry") and not done:
+            gate = 0.0
         if self.ACTION_GATED and action is not None:
             z = self.trh_sum / max(self.trh_n, 1)
             de = np.zeros_like(self.W_out)
@@ -502,19 +517,20 @@ class BrainSim:
             # W_wm grow without bound until a tiny input still produces a large
             # drive -- volatile-4 fell BELOW its floor, 0.411 -> 0.238. Same bug
             # as the V(s) readout, which needed the same fix.
-            self.W_wm += lr * nm * dew / (float(wbar @ wbar) + 1e-3)
+            self.W_wm += gate * lr * nm * dew / (float(wbar @ wbar) + 1e-3)
             np.clip(self.W_wm, -self.WMAX, self.WMAX, out=self.W_wm)
             self.wm[:] = 0.0; self._prev_fh[:] = 0.0
             self.wm_sum[:] = 0.0; self.wm_n = 0
         self.ebar += self.EBAR_LR * (elig - self.ebar)
-        self.W_out += lr * nm * de
+        self.W_out += gate * lr * nm * de
         np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
         # Consume the tag. Tag-and-capture: once the neuromodulator cashes the
         # eligibility, it is spent. Without this the tau~200 trace bleeds across
         # trials (200 ticks = 6.7 trials), averaging both classes together and
         # contaminating the update direction -- accuracy 0.58 vs 0.97.
-        self.elig[:] = 0.0
-        self.elig_w = 0.0
+        if not (self.PGATE == "oracle_carry" and gate == 0.0):
+            self.elig[:] = 0.0
+            self.elig_w = 0.0
         if action is not None:
             self.buffer.append((self.trh.copy(), elig.copy(), nm, action, r))
         self.decisions += 1
