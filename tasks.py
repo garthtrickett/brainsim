@@ -168,6 +168,36 @@ class TMazeWithin:
     def correct(self): return self.c
 
 
+class Compositional:
+    """shape x colour, label depends on BOTH. Train on 12 of 16, hold out 4.
+
+    Previous representation tests measured DISCRIMINATION of patterns the encoder
+    had already seen -- which a sparse random expansion does superbly (C(80,6) is
+    ~3e8 possible codes). Representation learning should instead matter for
+    generalising to combinations never seen, where a factorised code can place a
+    novel pair and a conjunctive one cannot.
+    """
+    def __init__(self, n_shape=4, n_colour=4, seed=0, held_out=4):
+        rng = np.random.default_rng(seed)
+        self.n_actions = 4
+        self.shapes  = [_pat(rng, 0.20) for _ in range(n_shape)]
+        self.colours = [_pat(rng, 0.20) for _ in range(n_colour)]
+        combos = [(i, j) for i in range(n_shape) for j in range(n_colour)]
+        rng.shuffle(combos)
+        self.test = combos[:held_out]; self.train = combos[held_out:]
+        # label depends on BOTH factors, so neither alone suffices
+        self.label = {(i, j): (i + j) % self.n_actions for i, j in combos}
+        self.mode = "train"; self.name = f"compositional-{n_shape}x{n_colour}"
+    def reset(self, rng):
+        pool = self.train if self.mode == "train" else self.test
+        self.i, self.j = pool[int(rng.integers(len(pool)))]
+        self.c = self.label[(self.i, self.j)]
+        return np.clip(self.shapes[self.i] + self.colours[self.j], 0, 1)
+    def step(self, a):
+        return np.zeros(N_IN), float(a == self.c), True
+    def correct(self): return self.c
+
+
 def run_within(agent, task, decisions, seed=0):
     """Runner for phase-structured tasks: the observation CHANGES across ticks
     within one decision, so the standard runner (one obs per decision) cannot

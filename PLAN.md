@@ -140,6 +140,72 @@ several of which reverse each other. Two documents are needed:
 Do this after step 5 so the split is made once against a settled architecture,
 rather than twice.
 
+---
+
+# Next: steps 7-10
+
+Ordered by leverage, after the six-step roadmap closes. The first is
+infrastructure rather than science, and that is exactly why it is first.
+
+### 7. Freeze the numbers, then make the suite fast (numba + batching)
+
+The dominant failure of this project has not been bad mechanisms -- it has been
+**measurement**. Four wrong conclusions from n=3. Six instruments that measured
+something other than their name. Five mechanisms validated honestly and later
+turned harmful, because **nothing re-checks a shipped component when its
+surroundings change**. Every module broke something else, and each was caught
+only by remembering to run a 20-minute suite.
+
+Commit a reference table of `(seed, config) -> number`, then make the full suite
+run in seconds. Every change is then diffed against everything, automatically,
+and regime-drift largely dies as a failure mode. It also makes 50 seeds routine,
+which kills the small-n problem. Everything after this is cheaper and safer.
+
+Sequencing note: `numba` has its own RNG and batched draws differ from N separate
+draws, so bit-exactness breaks unless random draws are pre-generated in numpy and
+passed in as arrays. Design that in from the start, or the reference table cannot
+validate the port.
+
+### 8. Plasticity gating -- learn when NOT to update
+
+The clean measured gap from step 5: **the design cannot absorb decisions that do
+not matter.** An unrewarded arbitrary action draws a negative RPE into a policy
+sharing hidden units with the step that counts. An ORACLE with the cue handed to
+it still reached only 54% of ceiling on `tmaze-2d3` for this reason alone.
+
+Ready task (the original `tmaze-2d3`), measured gap, and a real biological story:
+gating plasticity is precisely what BG->PFC gating does. Should also help
+`volatile-4`, the weakest task, by suppressing updates just after a switch.
+
+### 9. Local competitive pools instead of one global k-WTA
+
+Step 6's calibration produced a measured capacity limit:
+
+```
+  4 stimulus combinations   train 0.946
+  9 combinations            train 0.644
+ 16 combinations            train 0.385
+```
+
+With 80 units and k=6 that is not representation quality -- it is one global
+competition forcing everything through a single pool. Local pools fix it AND are
+the prerequisite for any scaling, and are what cortex does anyway.
+
+### 10. Embodiment -- restore the premise that was dropped
+
+The Part 1 design specified `BODY = {energy, temp, damage}` with reward as
+homeostatic error. The implementation takes `reward(r)` from a task. **Embodiment
+vanished at first contact with code and never returned.** Largest conceptual gap,
+largest work, hence last -- but it is the difference between a learning algorithm
+and the thing this project set out to build.
+
+## Cut, with reasons
+
+- **Predictive coding** -- twice shelved on measurement, about to be a third time.
+- **Volatile-specific tuning** -- symptom, not cause. Step 8 addresses the likely
+  cause.
+- **Mojo** -- you would be porting an architecture step 9 is about to replace.
+
 ## Method rules (earned the hard way)
 
 - **Calibrate the task before ablating.** Floor and ceiling both make ablations
