@@ -80,6 +80,12 @@ granted reference replicated its predecessors. See
 [V3-SLOPETIME-RESULTS.md](V3-SLOPETIME-RESULTS.md). All 608 reached rows are
 archived; the finite-menu experiment is closed without integration.
 
+The slope broader benchmark is now complete: steep and noisy ramps pass
+strictly, but the shallow ramp loses to the plain fast window — kink-smearing
+beats trend signal where it is weakest — closing 74/75 learning-negative. See
+[V3-SLOPEBENCH-RESULTS.md](V3-SLOPEBENCH-RESULTS.md). All 480 reached rows are
+archived; the finite-menu experiment is closed without integration.
+
 The slope-state follow-up is now complete: a trend regime gated on granted
 drift boundaries passed all 75 comparisons, beating SGD on the ramp with
 everything else preserved — the first full V3 positive. See

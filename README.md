@@ -130,6 +130,13 @@ win misses its 10% rule. See
 [V3-SLOPETIME-RESULTS.md](V3-SLOPETIME-RESULTS.md), or reproduce all 608 rows
 with `python check_v3_slopetime.py --evidence results/v3-slopetime --reproduce`.
 
+The broader benchmark replays the frozen trend regime on steeper, shallower
+and noisier ramps: steep and noisy pass strictly, but the shallow ramp loses
+to the plain fast window (kink-smearing beats trend signal where it is
+weakest), closing 74/75 learning-negative. See
+[V3-SLOPEBENCH-RESULTS.md](V3-SLOPEBENCH-RESULTS.md), or reproduce all 480 rows
+with `python check_v3_slopebench.py --evidence results/v3-slopebench --reproduce`.
+
 ## Architecture
 
 ```
