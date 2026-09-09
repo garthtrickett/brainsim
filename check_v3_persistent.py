@@ -261,6 +261,23 @@ def policy_checks():
                 changed = copy.deepcopy(manifest); changed['configs']['candidate']['lr'] = .1
                 write(path/'manifest.json', changed)
                 rejects(lambda: read_stage(path, 'diagnostics'))
+    # Exercise conditional learner paths only on an explicitly allowed development seed.
+    for arm in CONFIGS:
+        row = performance_row(50002, arm, manifest)
+        assert row['status'] == 'ok' and set(row['fixtures']) == set(FIXTURES)
+        assert row['fixtures']['mixed']['coordinates']['increase_first']['post_mse'] is not None
+    from study_v3_persistent import simulation
+    for name in FIXTURES:
+        data, (_, gates, _) = simulation(50002, name, 'constant', constants=manifest['constants'])
+        expected = manifest['constants'] if name == 'core' else [np.mean(manifest['constants'])]*len(data.coordinates)
+        np.testing.assert_array_equal(gates, np.tile(expected, (len(data.y), 1)))
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp)
+        store_stage(path, 'calibration', calibration)
+        envelope = json.loads((path/'calibration.json').read_text())
+        envelope['sources']['v3_persistent.py'] = 'altered'
+        write(path/'calibration.json', envelope)
+        rejects(lambda: read_stage(path, 'calibration'))
     print('PASS persistent policy: every 24-cell veto, 105 contrasts, exact cohorts, invalid data and stage/manifest enforcement', flush=True)
 
 

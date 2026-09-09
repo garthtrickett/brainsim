@@ -25,6 +25,9 @@ gain search boundary, with confirmation unrun. See `V3-SLICE-1-RESULTS.md`.
 The new bounded gain follow-up resolved the search boundary but failed independent
 detection when noise increased; performance remains unrun. See
 `V3-GAIN-FOLLOWUP-RESULTS.md`. This follow-up is closed; no further item is activated.
+A separately authorized persistent-detector test then passed passive observation
+but failed six learning-coupled detection cells. It is closed before performance;
+see `V3-PERSISTENT-RESULTS.md`. No subsequent item is activated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.

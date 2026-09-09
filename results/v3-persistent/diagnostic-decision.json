@@ -1,0 +1,347 @@
+{
+  "manifest_digest": "aaf91e440da487bd43ac31daef75c43c440b8611064879eb58d123973f363c6d",
+  "evidence_digest": "4083913ae2f131662fc0d30ec4d4995eb68fdc5fe4c6b01eea77ee3819236a7d",
+  "status": "detector_negative",
+  "cells": {
+    "fixed/quiet/blocks": {
+      "count": 8,
+      "total": 1600,
+      "rate": 0.005,
+      "interval95": [
+        0.00125,
+        0.01
+      ],
+      "pass": true
+    },
+    "fixed/noisy/blocks": {
+      "count": 14,
+      "total": 1600,
+      "rate": 0.00875,
+      "interval95": [
+        0.004375,
+        0.01375
+      ],
+      "pass": true
+    },
+    "fixed/switch_quiet/target_down": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 10.0625,
+      "latency_interval95": [
+        10.0,
+        10.15625
+      ]
+    },
+    "fixed/switch_quiet/target_up": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 10.09375,
+      "latency_interval95": [
+        10.0,
+        10.21875
+      ]
+    },
+    "fixed/switch_noisy/target_down": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 12.75,
+      "latency_interval95": [
+        11.90625,
+        13.5625
+      ]
+    },
+    "fixed/switch_noisy/target_up": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 13.40625,
+      "latency_interval95": [
+        12.8125,
+        14.0
+      ]
+    },
+    "fixed/noise_jump/noise_increase": {
+      "count": 0,
+      "total": 32,
+      "rate": 0.0,
+      "interval95": [
+        0.0,
+        0.0
+      ],
+      "pass": true,
+      "latency": 100.0,
+      "latency_interval95": [
+        100.0,
+        100.0
+      ]
+    },
+    "fixed/noise_jump/noise_decrease": {
+      "count": 0,
+      "total": 32,
+      "rate": 0.0,
+      "interval95": [
+        0.0,
+        0.0
+      ],
+      "pass": true,
+      "latency": 100.0,
+      "latency_interval95": [
+        100.0,
+        100.0
+      ]
+    },
+    "fixed/increase_first/target_down": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 12.0625,
+      "latency_interval95": [
+        11.71875,
+        12.40625
+      ]
+    },
+    "fixed/increase_first/target_up": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 11.6875,
+      "latency_interval95": [
+        11.1875,
+        12.1875
+      ]
+    },
+    "fixed/decrease_first/target_down": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 11.5625,
+      "latency_interval95": [
+        10.8125,
+        12.25
+      ]
+    },
+    "fixed/decrease_first/target_up": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 12.09375,
+      "latency_interval95": [
+        11.65625,
+        12.59375
+      ]
+    },
+    "closed/quiet/blocks": {
+      "count": 21,
+      "total": 1600,
+      "rate": 0.013125000000000001,
+      "interval95": [
+        0.008125,
+        0.018125000000000002
+      ],
+      "pass": true
+    },
+    "closed/noisy/blocks": {
+      "count": 0,
+      "total": 1600,
+      "rate": 0.0,
+      "interval95": [
+        0.0,
+        0.0
+      ],
+      "pass": true
+    },
+    "closed/switch_quiet/target_down": {
+      "count": 30,
+      "total": 32,
+      "rate": 0.9375,
+      "interval95": [
+        0.84375,
+        1.0
+      ],
+      "pass": true,
+      "latency": 34.125,
+      "latency_interval95": [
+        28.84375,
+        41.0
+      ]
+    },
+    "closed/switch_quiet/target_up": {
+      "count": 30,
+      "total": 32,
+      "rate": 0.9375,
+      "interval95": [
+        0.84375,
+        1.0
+      ],
+      "pass": true,
+      "latency": 33.0,
+      "latency_interval95": [
+        27.90625,
+        39.90625
+      ]
+    },
+    "closed/switch_noisy/target_down": {
+      "count": 1,
+      "total": 32,
+      "rate": 0.03125,
+      "interval95": [
+        0.0,
+        0.09375
+      ],
+      "pass": false,
+      "latency": 97.40625,
+      "latency_interval95": [
+        92.21875,
+        100.0
+      ]
+    },
+    "closed/switch_noisy/target_up": {
+      "count": 1,
+      "total": 32,
+      "rate": 0.03125,
+      "interval95": [
+        0.0,
+        0.09375
+      ],
+      "pass": false,
+      "latency": 97.34375,
+      "latency_interval95": [
+        92.03125,
+        100.0
+      ]
+    },
+    "closed/noise_jump/noise_increase": {
+      "count": 0,
+      "total": 32,
+      "rate": 0.0,
+      "interval95": [
+        0.0,
+        0.0
+      ],
+      "pass": true,
+      "latency": 100.0,
+      "latency_interval95": [
+        100.0,
+        100.0
+      ]
+    },
+    "closed/noise_jump/noise_decrease": {
+      "count": 0,
+      "total": 32,
+      "rate": 0.0,
+      "interval95": [
+        0.0,
+        0.0
+      ],
+      "pass": true,
+      "latency": 100.0,
+      "latency_interval95": [
+        100.0,
+        100.0
+      ]
+    },
+    "closed/increase_first/target_down": {
+      "count": 1,
+      "total": 32,
+      "rate": 0.03125,
+      "interval95": [
+        0.0,
+        0.09375
+      ],
+      "pass": false,
+      "latency": 96.90625,
+      "latency_interval95": [
+        90.71875,
+        100.0
+      ]
+    },
+    "closed/increase_first/target_up": {
+      "count": 16,
+      "total": 32,
+      "rate": 0.5,
+      "interval95": [
+        0.3125,
+        0.65625
+      ],
+      "pass": false,
+      "latency": 58.78125,
+      "latency_interval95": [
+        44.9375,
+        73.68828124999999
+      ]
+    },
+    "closed/decrease_first/target_down": {
+      "count": 22,
+      "total": 32,
+      "rate": 0.6875,
+      "interval95": [
+        0.53125,
+        0.84375
+      ],
+      "pass": false,
+      "latency": 42.78125,
+      "latency_interval95": [
+        29.8125,
+        55.875
+      ]
+    },
+    "closed/decrease_first/target_up": {
+      "count": 0,
+      "total": 32,
+      "rate": 0.0,
+      "interval95": [
+        0.0,
+        0.0
+      ],
+      "pass": false,
+      "latency": 100.0,
+      "latency_interval95": [
+        100.0,
+        100.0
+      ]
+    }
+  }
+}

@@ -16,6 +16,11 @@ range, but the detector falsely signaled on noise increases. Independent perform
 was not opened. See [V3-GAIN-FOLLOWUP-RESULTS.md](V3-GAIN-FOLLOWUP-RESULTS.md).
 The bounded follow-up is closed, with no further search or integration activated.
 
+The separately registered persistent detector now also has a result: all passive
+observer cells pass, but six learning-coupled detector cells fail. Performance was
+not opened. See [V3-PERSISTENT-RESULTS.md](V3-PERSISTENT-RESULTS.md). This experiment
+is closed; its observer result does not establish a learning rule.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
