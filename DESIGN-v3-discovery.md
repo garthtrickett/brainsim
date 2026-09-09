@@ -140,16 +140,21 @@ and complete tuning evidence in a committed manifest BEFORE confirmation.
 ## Discovery gate (ground-truth falsifier)
 
 On confirmation seeds, for each switching coordinate (core switch_quiet,
-switch_noisy, mixed increase_first, decrease_first), compute AUC of the
-candidate's pre-update score `z[t,j]` vs true `c[t,j]` over steps
-1000..5999. Aggregate seed-mean AUC over the four switching coordinates.
+switch_noisy, mixed increase_first, decrease_first), compute the
+polarity-invariant AUC* of the candidate's pre-update score `z[t,j]` vs true
+`c[t,j]` over steps 1000..5999: AUC* = max(AUC, 1 - AUC). Aggregate the
+seed-mean AUC* over the four switching coordinates.
 
-- `discovery_pass` requires: candidate mean AUC >= 0.65 with paired-bootstrap
-  95% lower bound > 0.55; shuffled mean AUC in [0.40, 0.60]; candidate-minus-
-  shuffled mean delta > 0.10 with 95% lower bound > 0.05. Oracle AUC is
-  reported (expected ≈ 1.0 modulo toggle alignment) but is not part of the
-  gate. If the gate fails, disposition is `discovery_negative` regardless of
-  MSE outcomes; extra capacity cannot pass as discovery.
+- `discovery_pass` requires: candidate mean polarity-invariant AUC* >= 0.65
+  with paired-bootstrap 95% lower bound > 0.55; shuffled mean AUC* in
+  [0.40, 0.60]; candidate-minus-shuffled mean delta > 0.10 with 95% lower
+  bound > 0.05. AUC* = max(AUC(z, c), 1 - AUC(z, c)): the allocated unit
+  fires on one pull direction and which binary label attaches to it is
+  arbitrary, so inversion is not failure (shuffled AUC* stays ~0.5 by
+  symmetry). Oracle AUC* is reported (expected ≈ 1.0 modulo toggle
+  alignment) but is not part of the gate. If the gate fails, disposition is
+  `discovery_negative` regardless of MSE outcomes; extra capacity cannot
+  pass as discovery.
 
 ## Partitions, confirmation and disposition
 
