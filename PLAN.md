@@ -19,7 +19,9 @@ does not claim every proposed mechanism was implemented. Dispositions:
 
 V3 §9's first standalone test is now complete: the registered candidate fails
 advancement. See `V3-RESULTS.md`. No agent integration follows, and the further
-v3 queue and v2 rewrite remain unactivated.
+v3 queue and v2 rewrite remain unactivated. The separately registered
+mean-disagreement successor also reached closure: tuning-inconclusive at the
+gain search boundary, with confirmation unrun. See `V3-SLICE-1-RESULTS.md`.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.

@@ -48,6 +48,11 @@ improves on Adam but fails the simpler-control, noisy-switch and retention
 criteria. It is not integrated. See [V3-RESULTS.md](V3-RESULTS.md). Reproduce it
 with `python check_v3_gate.py --evidence results/v3 --reproduce`.
 
+The mean-disagreement successor completed its bounded tuning search and stopped
+as inconclusive at the gain limit. Confirmation remains unrun; see
+[V3-SLICE-1-RESULTS.md](V3-SLICE-1-RESULTS.md). Reproduce its reached evidence
+with `python check_v3_slice1.py --evidence results/v3-slice1 --reproduce`.
+
 ## Architecture
 
 ```
