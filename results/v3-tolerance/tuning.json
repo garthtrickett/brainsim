@@ -11,7 +11,7 @@
     "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
     "DESIGN-v3-tolerance.md": "1f3229edb5a3ca1cd351c47bfee1bc95d70a8b924970e4796b80ae59a22b7e3f",
     "check_v3_burst.py": "177659e8f2adadf81d310a788d8c2ee65a70d4fa2a09a2dc883b2d8e306eaae3",
-    "check_v3_tolerance.py": "ee697084b5348c3d898b0016f55c4ad063cb63e1e6e45a4a10ec2725e480c9d7",
+    "check_v3_tolerance.py": "358fd87ffc18046743660b3f0ca09313a3c4ad8484b0181622cba65e3eb1cfa5",
     "report_v3_burst.py": "fc54e016287bd6f1c368a02885f0f92f435b09879659da8dd30e0be393c0b50a",
     "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
     "report_v3_retention.py": "de6e58181111615a58b1e31bea7df1c01d7377a4d0b789893f73b09a77b1fbdd",
@@ -24,7 +24,7 @@
     "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
     "study_v3_retention.py": "ce6c09b41b6427203f610b882b2db0d7680ddc2c232aa592c743ce98786a261a",
     "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
-    "study_v3_tolerance.py": "9bc50f3533be5423b2ce013fc1a7c543c4ac2c03a3db018130a52af5d43438cb",
+    "study_v3_tolerance.py": "5234259a660b014834604cecfc766d2ac8f21a94ebce35fe5798cfd0e03cf9aa",
     "v3_adwin.py": "994d32ad2ae9f160af83aff2c043da92fb439f659316f4e4de5ffeee30855e97",
     "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
     "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
@@ -391,7 +391,7 @@
           }
         }
       },
-      "seconds": 0.95
+      "seconds": 0.3
     },
     "window/0/111001": {
       "status": "ok",
@@ -742,7 +742,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.01
     },
     "window/0/111002": {
       "status": "ok",
@@ -1093,7 +1093,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.01
     },
     "window/0/111003": {
       "status": "ok",
@@ -1444,7 +1444,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.01
     },
     "window/0/111004": {
       "status": "ok",
@@ -1795,7 +1795,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.01
     },
     "window/0/111005": {
       "status": "ok",
@@ -2146,7 +2146,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.01
     },
     "window/0/111006": {
       "status": "ok",
@@ -3199,7 +3199,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/1/111001": {
       "status": "ok",
@@ -3550,7 +3550,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/1/111002": {
       "status": "ok",
@@ -4252,7 +4252,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.01
     },
     "window/1/111004": {
       "status": "ok",
@@ -4603,7 +4603,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/1/111005": {
       "status": "ok",
@@ -4954,7 +4954,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/1/111006": {
       "status": "ok",
@@ -5305,7 +5305,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/1/111007": {
       "status": "ok",
@@ -5656,7 +5656,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/2/111000": {
       "status": "ok",
@@ -6007,7 +6007,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/2/111001": {
       "status": "ok",
@@ -6358,7 +6358,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.01
     },
     "window/2/111002": {
       "status": "ok",
@@ -6709,7 +6709,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/2/111003": {
       "status": "ok",
@@ -7060,7 +7060,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.01
     },
     "window/2/111004": {
       "status": "ok",
@@ -7411,7 +7411,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.01
     },
     "window/2/111005": {
       "status": "ok",
@@ -7762,7 +7762,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.0
     },
     "window/2/111006": {
       "status": "ok",
@@ -8113,7 +8113,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/2/111007": {
       "status": "ok",
@@ -8464,7 +8464,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.0
     },
     "window/3/111000": {
       "status": "ok",
@@ -8815,7 +8815,7 @@
           }
         }
       },
-      "seconds": 0.13
+      "seconds": 0.0
     },
     "window/3/111001": {
       "status": "ok",
@@ -9166,7 +9166,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/3/111002": {
       "status": "ok",
@@ -9517,7 +9517,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.0
     },
     "window/3/111003": {
       "status": "ok",
@@ -9868,7 +9868,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/3/111004": {
       "status": "ok",
@@ -10219,7 +10219,7 @@
           }
         }
       },
-      "seconds": 0.15
+      "seconds": 0.0
     },
     "window/3/111005": {
       "status": "ok",
@@ -10570,7 +10570,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/3/111006": {
       "status": "ok",
@@ -10921,7 +10921,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.0
     },
     "window/3/111007": {
       "status": "ok",
@@ -11272,7 +11272,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.0
     },
     "window/4/111000": {
       "status": "ok",
@@ -11623,7 +11623,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/4/111001": {
       "status": "ok",
@@ -11974,7 +11974,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/4/111002": {
       "status": "ok",
@@ -12325,7 +12325,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.0
     },
     "window/4/111003": {
       "status": "ok",
@@ -12676,7 +12676,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/4/111004": {
       "status": "ok",
@@ -13027,7 +13027,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/4/111005": {
       "status": "ok",
@@ -13378,7 +13378,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.0
     },
     "window/4/111006": {
       "status": "ok",
@@ -13729,7 +13729,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/4/111007": {
       "status": "ok",
@@ -14431,7 +14431,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/5/111001": {
       "status": "ok",
@@ -14782,7 +14782,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/5/111002": {
       "status": "ok",
@@ -15133,7 +15133,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.0
     },
     "window/5/111003": {
       "status": "ok",
@@ -15484,7 +15484,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.01
     },
     "window/5/111004": {
       "status": "ok",
@@ -15835,7 +15835,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.0
     },
     "window/5/111005": {
       "status": "ok",
@@ -16186,7 +16186,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.01
     },
     "window/5/111006": {
       "status": "ok",
@@ -16537,7 +16537,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/5/111007": {
       "status": "ok",
@@ -16888,7 +16888,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.0
     },
     "window/6/111000": {
       "status": "ok",
@@ -17239,7 +17239,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/6/111001": {
       "status": "ok",
@@ -17590,7 +17590,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/6/111002": {
       "status": "ok",
@@ -18292,7 +18292,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/6/111004": {
       "status": "ok",
@@ -18994,7 +18994,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/6/111006": {
       "status": "ok",
@@ -19345,7 +19345,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/6/111007": {
       "status": "ok",
@@ -19696,7 +19696,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/7/111000": {
       "status": "ok",
@@ -20398,7 +20398,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.0
     },
     "window/7/111002": {
       "status": "ok",
@@ -20749,7 +20749,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/7/111003": {
       "status": "ok",
@@ -21100,7 +21100,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.01
     },
     "window/7/111004": {
       "status": "ok",
@@ -21451,7 +21451,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.0
     },
     "window/7/111005": {
       "status": "ok",
@@ -21802,7 +21802,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/7/111006": {
       "status": "ok",
@@ -22153,7 +22153,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/7/111007": {
       "status": "ok",
@@ -22504,7 +22504,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.01
     },
     "window/8/111000": {
       "status": "ok",
@@ -22855,7 +22855,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.0
     },
     "window/8/111001": {
       "status": "ok",
@@ -23557,7 +23557,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.0
     },
     "window/8/111003": {
       "status": "ok",
@@ -23908,7 +23908,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.01
     },
     "window/8/111004": {
       "status": "ok",
@@ -24259,7 +24259,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.01
     },
     "window/8/111005": {
       "status": "ok",
@@ -24610,7 +24610,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.01
     },
     "window/8/111006": {
       "status": "ok",
@@ -24961,7 +24961,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.01
     },
     "window/8/111007": {
       "status": "ok",
@@ -25312,7 +25312,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/9/111000": {
       "status": "ok",
@@ -25663,7 +25663,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.0
     },
     "window/9/111001": {
       "status": "ok",
@@ -26716,7 +26716,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/9/111004": {
       "status": "ok",
@@ -27067,7 +27067,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.01
     },
     "window/9/111005": {
       "status": "ok",
@@ -28120,7 +28120,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/10/111000": {
       "status": "ok",
@@ -28471,7 +28471,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/10/111001": {
       "status": "ok",
@@ -28822,7 +28822,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.01
     },
     "window/10/111002": {
       "status": "ok",
@@ -29524,7 +29524,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/10/111004": {
       "status": "ok",
@@ -30226,7 +30226,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/10/111006": {
       "status": "ok",
@@ -30928,7 +30928,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.02
     },
     "window/11/111000": {
       "status": "ok",
@@ -31981,7 +31981,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.02
     },
     "window/11/111003": {
       "status": "ok",
@@ -32332,7 +32332,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "window/11/111004": {
       "status": "ok",
@@ -32683,7 +32683,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/11/111005": {
       "status": "ok",
@@ -33736,7 +33736,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/0/111000": {
       "status": "ok",
@@ -34438,7 +34438,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.02
     },
     "sgd/0/111002": {
       "status": "ok",
@@ -36193,7 +36193,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/0/111007": {
       "status": "ok",
@@ -36895,7 +36895,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/1/111001": {
       "status": "ok",
@@ -37597,7 +37597,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/1/111003": {
       "status": "ok",
@@ -37948,7 +37948,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/1/111004": {
       "status": "ok",
@@ -39001,7 +39001,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.02
     },
     "sgd/1/111007": {
       "status": "ok",
@@ -39352,7 +39352,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.02
     },
     "sgd/2/111000": {
       "status": "ok",
@@ -39703,7 +39703,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/2/111001": {
       "status": "ok",
@@ -40054,7 +40054,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/2/111002": {
       "status": "ok",
@@ -40405,7 +40405,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/2/111003": {
       "status": "ok",
@@ -40756,7 +40756,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/2/111004": {
       "status": "ok",
@@ -41458,7 +41458,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/2/111006": {
       "status": "ok",
@@ -41809,7 +41809,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/2/111007": {
       "status": "ok",
@@ -42160,7 +42160,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/3/111000": {
       "status": "ok",
@@ -42511,7 +42511,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/3/111001": {
       "status": "ok",
@@ -42862,7 +42862,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/3/111002": {
       "status": "ok",
@@ -43213,7 +43213,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/3/111003": {
       "status": "ok",
@@ -43564,7 +43564,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/3/111004": {
       "status": "ok",
@@ -43915,7 +43915,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.01
     },
     "sgd/3/111005": {
       "status": "ok",
@@ -44266,7 +44266,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/3/111006": {
       "status": "ok",
@@ -44968,7 +44968,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/4/111000": {
       "status": "ok",
@@ -45319,7 +45319,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/4/111001": {
       "status": "ok",
@@ -45670,7 +45670,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/4/111002": {
       "status": "ok",
@@ -46372,7 +46372,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/4/111004": {
       "status": "ok",
@@ -46723,7 +46723,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.02
     },
     "sgd/4/111005": {
       "status": "ok",
@@ -47776,7 +47776,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/5/111000": {
       "status": "ok",
@@ -48127,7 +48127,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/5/111001": {
       "status": "ok",
@@ -49882,7 +49882,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/5/111006": {
       "status": "ok",
@@ -50935,7 +50935,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.02
     },
     "sgd/6/111001": {
       "status": "ok",
@@ -51286,7 +51286,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/6/111002": {
       "status": "ok",
@@ -52339,7 +52339,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/6/111005": {
       "status": "ok",
@@ -53041,7 +53041,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/6/111007": {
       "status": "ok",
@@ -53392,7 +53392,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/7/111000": {
       "status": "ok",
@@ -53743,7 +53743,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/7/111001": {
       "status": "ok",
@@ -54445,7 +54445,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/7/111003": {
       "status": "ok",
@@ -54796,7 +54796,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/7/111004": {
       "status": "ok",
@@ -55147,7 +55147,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.02
     },
     "sgd/7/111005": {
       "status": "ok",
@@ -55498,7 +55498,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/7/111006": {
       "status": "ok",
@@ -55849,7 +55849,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.02
     },
     "sgd/7/111007": {
       "status": "ok",
@@ -56551,7 +56551,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/8/111001": {
       "status": "ok",
@@ -59008,7 +59008,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/9/111000": {
       "status": "ok",
@@ -59359,7 +59359,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.01
     },
     "sgd/9/111001": {
       "status": "ok",
@@ -59710,7 +59710,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.02
     },
     "sgd/9/111002": {
       "status": "ok",
@@ -60763,7 +60763,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/9/111005": {
       "status": "ok",
@@ -61114,7 +61114,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/9/111006": {
       "status": "ok",
@@ -61465,7 +61465,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/9/111007": {
       "status": "ok",
@@ -61816,7 +61816,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/10/111000": {
       "status": "ok",
@@ -62167,7 +62167,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/10/111001": {
       "status": "ok",
@@ -62518,7 +62518,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/10/111002": {
       "status": "ok",
@@ -63922,7 +63922,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/10/111006": {
       "status": "ok",
@@ -64624,7 +64624,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.03
     },
     "sgd/11/111000": {
       "status": "ok",
@@ -64975,7 +64975,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/11/111001": {
       "status": "ok",
@@ -67081,7 +67081,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/11/111007": {
       "status": "ok",
@@ -68707,7 +68707,7 @@
           }
         }
       },
-      "seconds": 0.14
+      "seconds": 0.09
     },
     "adwin/0/111001": {
       "status": "ok",
@@ -69887,7 +69887,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.1
     },
     "adwin/0/111002": {
       "status": "ok",
@@ -71079,7 +71079,7 @@
           }
         }
       },
-      "seconds": 0.12
+      "seconds": 0.13
     },
     "adwin/0/111003": {
       "status": "ok",
@@ -72391,7 +72391,7 @@
           }
         }
       },
-      "seconds": 0.11
+      "seconds": 0.19
     },
     "adwin/0/111004": {
       "status": "ok",
@@ -73613,7 +73613,7 @@
           }
         }
       },
-      "seconds": 0.11
+      "seconds": 0.05
     },
     "adwin/0/111005": {
       "status": "ok",
@@ -76020,7 +76020,7 @@
           }
         }
       },
-      "seconds": 0.09
+      "seconds": 0.04
     },
     "adwin/0/111007": {
       "status": "ok",
@@ -77368,7 +77368,7 @@
           }
         }
       },
-      "seconds": 0.13
+      "seconds": 0.04
     },
     "adwin/1/111000": {
       "status": "ok",
@@ -78337,7 +78337,7 @@
           }
         }
       },
-      "seconds": 0.12
+      "seconds": 0.04
     },
     "adwin/1/111001": {
       "status": "ok",
@@ -79205,7 +79205,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.08
     },
     "adwin/1/111002": {
       "status": "ok",
@@ -80042,7 +80042,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.08
     },
     "adwin/1/111003": {
       "status": "ok",
@@ -81000,7 +81000,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.02
     },
     "adwin/1/111004": {
       "status": "ok",
@@ -81856,7 +81856,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.03
     },
     "adwin/1/111005": {
       "status": "ok",
@@ -82729,7 +82729,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.06
     },
     "adwin/1/111006": {
       "status": "ok",
@@ -83591,7 +83591,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.03
     },
     "adwin/1/111007": {
       "status": "ok",
@@ -84549,7 +84549,7 @@
           }
         }
       },
-      "seconds": 0.11
+      "seconds": 0.03
     },
     "adwin/2/111000": {
       "status": "ok",
@@ -85206,7 +85206,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.03
     },
     "adwin/2/111001": {
       "status": "ok",
@@ -85906,7 +85906,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.15
     },
     "adwin/2/111002": {
       "status": "ok",
@@ -86611,7 +86611,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.05
     },
     "adwin/2/111003": {
       "status": "ok",
@@ -87275,7 +87275,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.03
     },
     "adwin/2/111004": {
       "status": "ok",
@@ -87981,7 +87981,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.07
     },
     "adwin/2/111005": {
       "status": "ok",
@@ -88704,7 +88704,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.05
     },
     "adwin/2/111006": {
       "status": "ok",
@@ -89398,7 +89398,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.05
     },
     "adwin/2/111007": {
       "status": "ok",
@@ -90086,7 +90086,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.04
     },
     "adwin/3/111000": {
       "status": "ok",
@@ -91332,7 +91332,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.07
     },
     "adwin/3/111001": {
       "status": "ok",
@@ -92692,7 +92692,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.04
     },
     "adwin/3/111002": {
       "status": "ok",
@@ -93992,7 +93992,7 @@
           }
         }
       },
-      "seconds": 0.11
+      "seconds": 0.05
     },
     "adwin/3/111003": {
       "status": "ok",
@@ -95238,7 +95238,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.05
     },
     "adwin/3/111004": {
       "status": "ok",
@@ -96598,7 +96598,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.05
     },
     "adwin/3/111005": {
       "status": "ok",
@@ -97952,7 +97952,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.05
     },
     "adwin/3/111006": {
       "status": "ok",
@@ -99288,7 +99288,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.08
     },
     "adwin/3/111007": {
       "status": "ok",
@@ -100564,7 +100564,7 @@
           }
         }
       },
-      "seconds": 0.11
+      "seconds": 0.04
     },
     "adwin/4/111000": {
       "status": "ok",
@@ -101540,7 +101540,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.03
     },
     "adwin/4/111001": {
       "status": "ok",
@@ -102570,7 +102570,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.06
     },
     "adwin/4/111002": {
       "status": "ok",
@@ -103570,7 +103570,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.03
     },
     "adwin/4/111003": {
       "status": "ok",
@@ -106576,7 +106576,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.04
     },
     "adwin/4/111006": {
       "status": "ok",
@@ -107588,7 +107588,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.04
     },
     "adwin/4/111007": {
       "status": "ok",
@@ -108528,7 +108528,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.04
     },
     "adwin/5/111000": {
       "status": "ok",
@@ -109342,7 +109342,7 @@
           }
         }
       },
-      "seconds": 0.1
+      "seconds": 0.04
     },
     "adwin/5/111001": {
       "status": "ok",
@@ -110862,7 +110862,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.03
     },
     "adwin/5/111003": {
       "status": "ok",
@@ -111688,7 +111688,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.06
     },
     "adwin/5/111004": {
       "status": "ok",
@@ -112382,7 +112382,7 @@
           }
         }
       },
-      "seconds": 0.09
+      "seconds": 0.05
     },
     "adwin/5/111005": {
       "status": "ok",
@@ -113117,7 +113117,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.03
     },
     "adwin/5/111006": {
       "status": "ok",
@@ -113913,7 +113913,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.03
     },
     "adwin/5/111007": {
       "status": "ok",
@@ -114679,7 +114679,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.07
     },
     "adwin/6/111000": {
       "status": "ok",
@@ -115841,7 +115841,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.09
     },
     "adwin/6/111001": {
       "status": "ok",
@@ -117141,7 +117141,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.05
     },
     "adwin/6/111002": {
       "status": "ok",
@@ -118411,7 +118411,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.04
     },
     "adwin/6/111003": {
       "status": "ok",
@@ -119633,7 +119633,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.04
     },
     "adwin/6/111004": {
       "status": "ok",
@@ -120957,7 +120957,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.04
     },
     "adwin/6/111005": {
       "status": "ok",
@@ -122245,7 +122245,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.04
     },
     "adwin/6/111006": {
       "status": "ok",
@@ -123497,7 +123497,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.04
     },
     "adwin/6/111007": {
       "status": "ok",
@@ -124731,7 +124731,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.07
     },
     "adwin/7/111000": {
       "status": "ok",
@@ -126677,7 +126677,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.03
     },
     "adwin/7/111002": {
       "status": "ok",
@@ -127659,7 +127659,7 @@
           }
         }
       },
-      "seconds": 0.14
+      "seconds": 0.03
     },
     "adwin/7/111003": {
       "status": "ok",
@@ -128575,7 +128575,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.04
     },
     "adwin/7/111004": {
       "status": "ok",
@@ -129563,7 +129563,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.03
     },
     "adwin/7/111005": {
       "status": "ok",
@@ -130599,7 +130599,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.07
     },
     "adwin/7/111006": {
       "status": "ok",
@@ -131563,7 +131563,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.03
     },
     "adwin/7/111007": {
       "status": "ok",
@@ -132467,7 +132467,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.03
     },
     "adwin/8/111000": {
       "status": "ok",
@@ -133275,7 +133275,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.04
     },
     "adwin/8/111001": {
       "status": "ok",
@@ -134095,7 +134095,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.03
     },
     "adwin/8/111002": {
       "status": "ok",
@@ -134939,7 +134939,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.05
     },
     "adwin/8/111003": {
       "status": "ok",
@@ -135717,7 +135717,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.03
     },
     "adwin/8/111004": {
       "status": "ok",
@@ -136561,7 +136561,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.06
     },
     "adwin/8/111005": {
       "status": "ok",
@@ -137447,7 +137447,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.04
     },
     "adwin/8/111006": {
       "status": "ok",
@@ -138297,7 +138297,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.03
     },
     "adwin/8/111007": {
       "status": "ok",
@@ -139057,7 +139057,7 @@
           }
         }
       },
-      "seconds": 0.1
+      "seconds": 0.08
     },
     "adwin/9/111000": {
       "status": "ok",
@@ -140178,7 +140178,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.05
     },
     "adwin/9/111001": {
       "status": "ok",
@@ -141334,7 +141334,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.04
     },
     "adwin/9/111002": {
       "status": "ok",
@@ -142533,7 +142533,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.04
     },
     "adwin/9/111003": {
       "status": "ok",
@@ -143653,7 +143653,7 @@
           }
         }
       },
-      "seconds": 0.08
+      "seconds": 0.04
     },
     "adwin/9/111004": {
       "status": "ok",
@@ -146255,7 +146255,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.04
     },
     "adwin/9/111006": {
       "status": "ok",
@@ -147460,7 +147460,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.04
     },
     "adwin/9/111007": {
       "status": "ok",
@@ -148647,7 +148647,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.04
     },
     "adwin/10/111000": {
       "status": "ok",
@@ -149564,7 +149564,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.02
     },
     "adwin/10/111001": {
       "status": "ok",
@@ -150522,7 +150522,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/10/111002": {
       "status": "ok",
@@ -151481,7 +151481,7 @@
           }
         }
       },
-      "seconds": 0.09
+      "seconds": 0.03
     },
     "adwin/10/111003": {
       "status": "ok",
@@ -152385,7 +152385,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.03
     },
     "adwin/10/111004": {
       "status": "ok",
@@ -153362,7 +153362,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.03
     },
     "adwin/10/111005": {
       "status": "ok",
@@ -154387,7 +154387,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.02
     },
     "adwin/10/111006": {
       "status": "ok",
@@ -156245,7 +156245,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.04
     },
     "adwin/11/111000": {
       "status": "ok",
@@ -157030,7 +157030,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/11/111001": {
       "status": "ok",
@@ -158688,7 +158688,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.04
     },
     "adwin/11/111003": {
       "status": "ok",
@@ -159466,7 +159466,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.04
     },
     "adwin/11/111004": {
       "status": "ok",
@@ -160341,7 +160341,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/11/111005": {
       "status": "ok",
@@ -162862,7 +162862,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     }
   }
 }

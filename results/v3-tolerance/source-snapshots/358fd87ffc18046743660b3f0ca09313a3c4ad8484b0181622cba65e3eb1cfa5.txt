@@ -324,6 +324,11 @@ def lifecycle_checks():
         row = measure_row(110002, arm, config, alarm if arm == 'adwin_schedule' else None)
         assert row['status'] == 'ok' and len(row['fixtures']) == 5
         assert row['privileged_timing'] == (arm not in FAMILIES)
+        expected_prov = ('none' if arm in FAMILIES else 'observed' if arm == 'adwin_schedule'
+                         else 'true' if arm == 'reference' else arm)
+        for records in row['memory'].values():
+            for record in records.values():
+                assert record['provenance'] == expected_prov
     print('PASS tolerance lifecycle: provenance accounting, source/manifest/stage gates, complete reports, all-arm development fixtures', flush=True)
 
 
