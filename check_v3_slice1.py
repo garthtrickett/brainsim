@@ -308,6 +308,11 @@ def reproduce(directory, summary):
                 **detector_decision(actual_rows['diagnostics'])}))
         (out/'source-snapshots').mkdir()
         actual_summary = publish_report(out)
+        for stage, decision in summary['decisions'].items():
+            wanted = {k: v for k, v in decision.items() if k not in ('manifest_digest', 'evidence_digest')}
+            actual = {k: v for k, v in actual_summary['decisions'][stage].items()
+                      if k not in ('manifest_digest', 'evidence_digest')}
+            compare(wanted, actual, 'decision/' + stage)
         for key in ('status', 'screen', 'counts', 'reached', 'not_run', 'closed_scientifically'):
             compare(summary[key], actual_summary[key], 'summary/' + key)
     print('PASS full reached-stage reproduction; unapproved stages were not sampled', flush=True)
