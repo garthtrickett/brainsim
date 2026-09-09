@@ -73,6 +73,19 @@ everything else preserved — the first full V3 positive. See
 [V3-SLOPE-RESULTS.md](V3-SLOPE-RESULTS.md). All 576 reached rows are
 archived; no default change or agent integration follows.
 
+The slope-timing follow-up is now complete: that trend regime gated by
+observed ADWIN alarms closed learning-negative — false alarms on noise
+destroyed stability and the primary win missed its 10% rule — while the
+granted reference replicated its predecessors. See
+[V3-SLOPETIME-RESULTS.md](V3-SLOPETIME-RESULTS.md). All 608 reached rows are
+archived; the finite-menu experiment is closed without integration.
+
+The slope-state follow-up is now complete: a trend regime gated on granted
+drift boundaries passed all 75 comparisons, beating SGD on the ramp with
+everything else preserved — the first full V3 positive. See
+[V3-SLOPE-RESULTS.md](V3-SLOPE-RESULTS.md). All 576 reached rows are
+archived; no default change or agent integration follows.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
