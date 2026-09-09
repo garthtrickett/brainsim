@@ -53,6 +53,12 @@ as inconclusive at the gain limit. Confirmation remains unrun; see
 [V3-SLICE-1-RESULTS.md](V3-SLICE-1-RESULTS.md). Reproduce its reached evidence
 with `python check_v3_slice1.py --evidence results/v3-slice1 --reproduce`.
 
+A separately registered wider search resolved that gain boundary, but independent
+detection failed: the mean-disagreement gate also reacted to increases in noise.
+Performance confirmation was therefore not run. See
+[V3-GAIN-FOLLOWUP-RESULTS.md](V3-GAIN-FOLLOWUP-RESULTS.md), or reproduce all 3,984
+reached rows with `python check_v3_gain.py --evidence results/v3-gain-followup --reproduce`.
+
 ## Architecture
 
 ```

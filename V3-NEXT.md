@@ -11,6 +11,11 @@ highest gain, so tuning is inconclusive and confirmation was not opened. See
 [V3-SLICE-1-RESULTS.md](V3-SLICE-1-RESULTS.md). Further search requires a new
 registration; no agent integration follows.
 
+That separately registered follow-up is now complete: gain 64 won inside the wider
+range, but the detector falsely signaled on noise increases. Independent performance
+was not opened. See [V3-GAIN-FOLLOWUP-RESULTS.md](V3-GAIN-FOLLOWUP-RESULTS.md).
+The bounded follow-up is closed, with no further search or integration activated.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
