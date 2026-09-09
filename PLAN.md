@@ -48,6 +48,12 @@ change times and composed a fast window with ADWIN2: the tradeoff held
 passed) but the experiment closed learning-negative on drift, which neither
 component tracks. See `V3-RETENTION-RESULTS.md`. No further experiment or
 integration is activated.
+The separately authorized timing-tolerance study then perturbed the granted
+schedule and scheduled the frozen candidate by ADWIN's own alarms: the win
+survives ±2 steps and dies by ±8, tighter than any realistic detector, and the
+deployable arm failed retention on false alarms. The detector line closes with
+that number. See `V3-TOLERANCE-RESULTS.md`. No further experiment or
+integration is activated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.

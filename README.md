@@ -103,6 +103,14 @@ noiseless cell. See
 [V3-RETENTION-RESULTS.md](V3-RETENTION-RESULTS.md), or reproduce all 576 rows
 with `python check_v3_retention.py --evidence results/v3-retention --reproduce`.
 
+The timing-tolerance follow-up priced that win's privilege and closed the
+detector line with a number: the primary win survives ±2 steps of schedule
+jitter and is dead by ±8, far tighter than ADWIN's own error profile, and the
+deployable ADWIN-scheduled arm failed retention on noise-driven false alarms.
+See
+[V3-TOLERANCE-RESULTS.md](V3-TOLERANCE-RESULTS.md), or reproduce all 736 rows
+with `python check_v3_tolerance.py --evidence results/v3-tolerance --reproduce`.
+
 ## Architecture
 
 ```
