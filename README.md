@@ -143,6 +143,13 @@ See
 [V3-SLOPEGUARD-RESULTS.md](V3-SLOPEGUARD-RESULTS.md), or reproduce all 608 rows
 with `python check_v3_slopeguard.py --evidence results/v3-slopeguard --reproduce`.
 
+V4 inverts the program: a graded-response learner under frozen sloppy
+schedules (delays, misses, false alarms at stated rates). Adaptation holds
+everywhere including primary; only stability fails, only to false alarms.
+See
+[V4-ROBUST-RESULTS.md](V4-ROBUST-RESULTS.md), or reproduce all 544 rows
+with `python check_v4_robust.py --evidence results/v4-robust --reproduce`.
+
 Drift-boundary jitter leaves the slope win intact through ±256 steps and
 kills it by ±1024 — ramps forgive what steps do not — landing in the
 pre-stated middle band that authorizes nothing further. See
