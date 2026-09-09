@@ -7,10 +7,17 @@ earned its place or was cut.
 One loop that never stops. Learning happens *inside* it. Every learning signal a
 synapse uses is local: two neurons and one broadcast scalar. No backprop.
 
+Read that as a design claim, not a benchmark claim. The evidence here is small
+synthetic tasks, and it does not establish superiority over deep learning
+generally. What it does establish is a method: every hypothesis is registered
+with its falsifiers before any data is seen, and the ones that fail are closed
+and documented rather than quietly reworked — seven consecutive follow-ups have
+now closed without integration.
+
 **This file is what the design IS.** For how it got here — including five
 mechanisms that were validated and later turned harmful, three verdicts that
 reversed, and two designs shelved unbuilt — see [HISTORY.md](HISTORY.md). That
-half is the more useful one.
+half is the more useful one, and it is the reason to trust anything in this one.
 
 ## Run it
 
