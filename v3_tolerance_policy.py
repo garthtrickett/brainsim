@@ -5,7 +5,7 @@ from v3_retention_policy import SPECS, contrast, digest, finite, metric_values, 
 from v3_tolerance import ARMS, FAMILIES, FROZEN, GRIDS
 
 PROTOCOL = {'id': 'v3-tolerance-20260909-v1',
-            'registration_commit': '2734473d828c5ef5a890d5da7b6b160b22165c52',
+            'registration_commit': '9e203452af19caad4a173541e5d6888e4e6b2880',
             'registration_sha256': '1f3229edb5a3ca1cd351c47bfee1bc95d70a8b924970e4796b80ae59a22b7e3f'}
 SEEDS = {'development': tuple(range(110000, 110008)), 'tuning': tuple(range(111000, 111008)),
          'confirmation': tuple(range(113000, 113032))}
