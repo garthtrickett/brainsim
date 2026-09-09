@@ -1,5 +1,10 @@
 # Decision after the v1 investigations
 
+**Update, 2026-09-09:** the standalone test below is complete. The two-timescale
+candidate fails its registered detection, control-comparison and retention
+criteria. Do not integrate it into brainsim; see [V3-RESULTS.md](V3-RESULTS.md).
+The text below records the experiment-order decision that preceded the result.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
@@ -13,7 +18,8 @@ purpose remains embodiment and scaling; neither is demonstrated by these v1 runs
 The next implementation should be only V3 §9's standalone non-stationary
 supervised toy: Adam versus a precisely specified two-timescale modulation.
 No spiking-network rewrite, no hierarchy, and none of the speculative §10/§11
-queue should precede that result. No v3 optimiser has been implemented here.
+queue should precede that result. At this decision point no v3 optimiser had been implemented; the standalone
+instrument is now archived with its negative advancement result.
 
 Before running it, correct four instrument issues in the thesis:
 

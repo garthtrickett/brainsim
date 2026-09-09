@@ -43,6 +43,11 @@ over deep learning generally.
 Validation: `python check_v1.py` and `python check_reference.py --out results/local-reference.json`.
 Install the existing pinned experiment dependencies with `pip install -r requirements.txt`.
 
+V3's first standalone optimizer test is complete: the two-timescale candidate
+improves on Adam but fails the simpler-control, noisy-switch and retention
+criteria. It is not integrated. See [V3-RESULTS.md](V3-RESULTS.md). Reproduce it
+with `python check_v3_gate.py --evidence results/v3 --reproduce`.
+
 ## Architecture
 
 ```
