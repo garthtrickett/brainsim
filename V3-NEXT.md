@@ -45,6 +45,14 @@ retention. See [V3-DISCOVERY-RESULTS.md](V3-DISCOVERY-RESULTS.md). All 768
 reached rows are archived; the finite-menu experiment is closed without
 integration.
 
+The oracle-schedule retention follow-up is now complete: the fast-window/ADWIN2
+candidate held the adaptation/stability tradeoff (primary 0.083 against every
+control, every stable/noise cell against ADWIN passed) but closed
+learning-negative on drift, which neither component tracks, plus a strict-veto
+tie on a 0-vs-0 noiseless cell. See
+[V3-RETENTION-RESULTS.md](V3-RETENTION-RESULTS.md). All 576 reached rows are
+archived; the finite-menu experiment is closed without integration.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
