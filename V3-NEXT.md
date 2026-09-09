@@ -27,6 +27,11 @@ controls while preserving retention. See [V3-REFERENCE-RESULTS.md](V3-REFERENCE-
 It also showed that missed alarms can coexist with timely prediction recovery.
 This experiment is closed; no automatic follow-up is activated.
 
+The bounded-burst follow-up then tested how to use the signal: detected bursts
+failed independent learning advancement, and even the tuned perfect-timing oracle
+failed the full comparison against SGD. See [V3-BURST-RESULTS.md](V3-BURST-RESULTS.md).
+Its 704 reached rows are archived; this finite-menu experiment is closed.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
