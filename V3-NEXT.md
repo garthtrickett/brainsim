@@ -92,6 +92,13 @@ the same strict cell fails, everything else passes. See
 [V3-SLOPEGUARD-RESULTS.md](V3-SLOPEGUARD-RESULTS.md). All 608 reached rows are
 archived; the finite-menu experiment is closed without integration.
 
+The drift-timing tolerance follow-up is now complete: jittered drift
+boundaries leave the slope win intact through ±256 steps and kill it by
+±1024, with dropped boundaries failing the same cells — landing in the
+pre-stated middle band that authorizes nothing further. See
+[V3-DRIFTTOL-RESULTS.md](V3-DRIFTTOL-RESULTS.md). All 576 reached rows are
+archived; the finite-menu experiment is closed without integration.
+
 The slope-state follow-up is now complete: a trend regime gated on granted
 drift boundaries passed all 75 comparisons, beating SGD on the ramp with
 everything else preserved — the first full V3 positive. See
