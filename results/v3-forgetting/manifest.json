@@ -1,0 +1,448 @@
+{
+  "protocol": {
+    "id": "v3-forgetting-20260909-v1",
+    "registration_commit": "cd86be570c5f8f0c4c19c49f4561fa165f2fca34",
+    "registration_sha256": "d74023283153cc73c8c330f20200f7331b02a822e45eb0c2c54230fd631062af"
+  },
+  "sources": {
+    "DESIGN-v3-burst.md": "ef249ae9dcf9afe8822ee2c0f188f2e780596450b7fcc6881028191b3e8a4d5c",
+    "DESIGN-v3-forgetting.md": "d74023283153cc73c8c330f20200f7331b02a822e45eb0c2c54230fd631062af",
+    "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
+    "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
+    "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
+    "check_v3_burst.py": "177659e8f2adadf81d310a788d8c2ee65a70d4fa2a09a2dc883b2d8e306eaae3",
+    "check_v3_forgetting.py": "846f2b1fdba8e6e0197ee196f2acd33f2cb21c0983561cbc63fa22a5cb57371c",
+    "report_v3_burst.py": "fc54e016287bd6f1c368a02885f0f92f435b09879659da8dd30e0be393c0b50a",
+    "report_v3_forgetting.py": "91bef9c2ea16be5ce3b0f65deb7ad33600e24eeba61565639b0821acdb83f434",
+    "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
+    "report_v3_slice1.py": "b0eea587ada00c7a3dffd39a8050001a8cee4254bb822f92369c46f0f6b8ea20",
+    "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
+    "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
+    "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
+    "study_v3_burst.py": "ab8be80d2a2b63f27653d07810afaf72ad805b18570378e4571e16f90808bdd5",
+    "study_v3_forgetting.py": "409373f8d0f2e35591d1e2997b1879c0e170d55ac443ee81b7b7f2c64017751a",
+    "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
+    "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
+    "v3_adwin.py": "994d32ad2ae9f160af83aff2c043da92fb439f659316f4e4de5ffeee30855e97",
+    "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
+    "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
+    "v3_forgetting.py": "af006010aeb12ecb35083f97bf56674d127aa4c9f52db40cc85cf134efc3e189",
+    "v3_forgetting_policy.py": "6f77b05c45e60e25400abb23f9289f2ce7f03054817da50a935cc53cbe9dc49b",
+    "v3_gate.py": "9875703dad1ef620dd3b8d9323a5502d9612490ba9830b7d3581b39fed2571d1",
+    "v3_persistent.py": "14857640d40cb86546c5441f1a43275b5d674a9d2fb8e0cb0671d68a2248c0f9",
+    "v3_reference.py": "0b019a5066b214583e4897d73a16ec2a24a13b361aca4f876f089acd837144a2",
+    "v3_reference_policy.py": "2f3da6886e78035da72addc8fd468eea3fb9d0c10b7c1b76421beac139f83684",
+    "v3_slice1_decisions.py": "8c768720340933586b1b3220c1591b8e25c50aaf622c0e8962b10d128b24482b",
+    "v3_slice1_learning.py": "000e4be3ddf729f5e403074634b1861061b496c01488b2de8f3f4aada6384648",
+    "v3_slice1_streams.py": "6d5a264013357468f5882e929236831e94d3ae0e19b5b4d4ba35e1e9b087932d"
+  },
+  "seeds": {
+    "development": [
+      80000,
+      80001,
+      80002,
+      80003,
+      80004,
+      80005,
+      80006,
+      80007
+    ],
+    "tuning": [
+      81000,
+      81001,
+      81002,
+      81003,
+      81004,
+      81005,
+      81006,
+      81007
+    ],
+    "confirmation": [
+      83000,
+      83001,
+      83002,
+      83003,
+      83004,
+      83005,
+      83006,
+      83007,
+      83008,
+      83009,
+      83010,
+      83011,
+      83012,
+      83013,
+      83014,
+      83015,
+      83016,
+      83017,
+      83018,
+      83019,
+      83020,
+      83021,
+      83022,
+      83023,
+      83024,
+      83025,
+      83026,
+      83027,
+      83028,
+      83029,
+      83030,
+      83031
+    ]
+  },
+  "threshold": 0.4690234346011377,
+  "grids": {
+    "forget": [
+      {
+        "keep": 1,
+        "window": 32
+      },
+      {
+        "keep": 1,
+        "window": 128
+      },
+      {
+        "keep": 1,
+        "window": 512
+      },
+      {
+        "keep": 1,
+        "window": 6000
+      },
+      {
+        "keep": 4,
+        "window": 32
+      },
+      {
+        "keep": 4,
+        "window": 128
+      },
+      {
+        "keep": 4,
+        "window": 512
+      },
+      {
+        "keep": 4,
+        "window": 6000
+      },
+      {
+        "keep": 16,
+        "window": 32
+      },
+      {
+        "keep": 16,
+        "window": 128
+      },
+      {
+        "keep": 16,
+        "window": 512
+      },
+      {
+        "keep": 16,
+        "window": 6000
+      }
+    ],
+    "oracle": [
+      {
+        "keep": 1,
+        "window": 32
+      },
+      {
+        "keep": 1,
+        "window": 128
+      },
+      {
+        "keep": 1,
+        "window": 512
+      },
+      {
+        "keep": 1,
+        "window": 6000
+      },
+      {
+        "keep": 4,
+        "window": 32
+      },
+      {
+        "keep": 4,
+        "window": 128
+      },
+      {
+        "keep": 4,
+        "window": 512
+      },
+      {
+        "keep": 4,
+        "window": 6000
+      },
+      {
+        "keep": 16,
+        "window": 32
+      },
+      {
+        "keep": 16,
+        "window": 128
+      },
+      {
+        "keep": 16,
+        "window": 512
+      },
+      {
+        "keep": 16,
+        "window": 6000
+      }
+    ],
+    "window": [
+      {
+        "window": 1
+      },
+      {
+        "window": 2
+      },
+      {
+        "window": 4
+      },
+      {
+        "window": 8
+      },
+      {
+        "window": 16
+      },
+      {
+        "window": 32
+      },
+      {
+        "window": 64
+      },
+      {
+        "window": 128
+      },
+      {
+        "window": 256
+      },
+      {
+        "window": 512
+      },
+      {
+        "window": 1024
+      },
+      {
+        "window": 6000
+      }
+    ],
+    "sgd": [
+      {
+        "lr": 0.0001
+      },
+      {
+        "lr": 0.0004
+      },
+      {
+        "lr": 0.001
+      },
+      {
+        "lr": 0.004
+      },
+      {
+        "lr": 0.008
+      },
+      {
+        "lr": 0.016
+      },
+      {
+        "lr": 0.035743040182210514
+      },
+      {
+        "lr": 0.064
+      },
+      {
+        "lr": 0.128
+      },
+      {
+        "lr": 0.256
+      },
+      {
+        "lr": 0.512
+      },
+      {
+        "lr": 1.0
+      }
+    ],
+    "adwin": [
+      {
+        "delta": 0.0001,
+        "clock": 1
+      },
+      {
+        "delta": 0.0001,
+        "clock": 8
+      },
+      {
+        "delta": 0.0001,
+        "clock": 32
+      },
+      {
+        "delta": 0.001,
+        "clock": 1
+      },
+      {
+        "delta": 0.001,
+        "clock": 8
+      },
+      {
+        "delta": 0.001,
+        "clock": 32
+      },
+      {
+        "delta": 0.01,
+        "clock": 1
+      },
+      {
+        "delta": 0.01,
+        "clock": 8
+      },
+      {
+        "delta": 0.01,
+        "clock": 32
+      },
+      {
+        "delta": 0.1,
+        "clock": 1
+      },
+      {
+        "delta": 0.1,
+        "clock": 8
+      },
+      {
+        "delta": 0.1,
+        "clock": 32
+      }
+    ]
+  },
+  "screen": {
+    "status": "eligible",
+    "reasons": [],
+    "selected": {
+      "forget": {
+        "keep": 4,
+        "window": 32
+      },
+      "oracle": {
+        "keep": 1,
+        "window": 128
+      },
+      "window": {
+        "window": 8
+      },
+      "sgd": {
+        "lr": 0.128
+      },
+      "adwin": {
+        "delta": 0.1,
+        "clock": 1
+      },
+      "oracle_matched": {
+        "keep": 4,
+        "window": 32
+      },
+      "random": {
+        "keep": 4,
+        "window": 32
+      },
+      "noreset_matched": {
+        "window": 32
+      }
+    },
+    "indices": {
+      "forget": 4,
+      "oracle": 1,
+      "window": 3,
+      "sgd": 8,
+      "adwin": 9
+    },
+    "objectives": {
+      "forget": [
+        0.1307891329809035,
+        0.16208547495200604,
+        0.17397630149078064,
+        0.18149069838205895,
+        0.12775060821458267,
+        0.15884441517893494,
+        0.17067332439024585,
+        0.17820336140511164,
+        0.1312152418112874,
+        0.1648145474231566,
+        0.17678765166870558,
+        0.18423967960521442
+      ],
+      "oracle": [
+        0.03262928220584386,
+        0.024315397022086804,
+        0.025976568771801115,
+        0.08487002795352969,
+        0.05828496568077031,
+        0.052180442391830575,
+        0.05408431427153033,
+        0.11296073076082958,
+        0.13829141288725494,
+        0.18229976995441316,
+        0.19171018037301513,
+        0.25054922553323894
+      ],
+      "window": [
+        0.4569159560198287,
+        0.2363669233560401,
+        0.13352453178599832,
+        0.09677711806466086,
+        0.1042370741207305,
+        0.1579200546171406,
+        0.2862350055237606,
+        0.5540280874984169,
+        1.0845439791458154,
+        1.7076274260433166,
+        2.1327010814157106,
+        1.632850619450482
+      ],
+      "sgd": [
+        1.0013751552376644,
+        1.3523506713541742,
+        1.8020573559812607,
+        1.2862123105819192,
+        0.7709303953086847,
+        0.404059454567706,
+        0.19035429442778737,
+        0.11900752232811036,
+        0.08512886562499644,
+        0.09438013510939347,
+        0.16896451258754908,
+        0.4569159560198287
+      ],
+      "adwin": [
+        0.3216803273208576,
+        0.3514814976929703,
+        0.46421079937886844,
+        0.2564989666575172,
+        0.2887963957888361,
+        0.40292323571429056,
+        0.19277807204925967,
+        0.2240925835795966,
+        0.33862138225840477,
+        0.12771900772911893,
+        0.16158376372194155,
+        0.2615690158673562
+      ]
+    },
+    "random_frequency": {
+      "starts": 201,
+      "coordinate_time": 421488,
+      "probability": 0.00048054854257516646
+    }
+  },
+  "tuning_digest": "74e07b790d5ed0f86f6b872cf92e153e225609fc61136f36dd111f6567606914",
+  "expected_counts": {
+    "tuning": 480,
+    "confirmation": 256
+  }
+}
