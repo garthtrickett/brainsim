@@ -54,6 +54,10 @@ survives ±2 steps and dies by ±8, tighter than any realistic detector, and the
 deployable arm failed retention on false alarms. The detector line closes with
 that number. See `V3-TOLERANCE-RESULTS.md`. No further experiment or
 integration is activated.
+The separately authorized drift-boundary study then granted ramp times to the
+frozen candidate: drift failed at unchanged values with the enriched schedule
+engaged, isolating a mechanism gap rather than an ontology gap. See
+`V3-DRIFT-RESULTS.md`. No further experiment or integration is activated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.

@@ -60,6 +60,13 @@ noise-driven false alarms while holding primary. See
 [V3-TOLERANCE-RESULTS.md](V3-TOLERANCE-RESULTS.md). All 736 reached rows are
 archived; the detector line closes with that number, without integration.
 
+The drift-boundary follow-up is now complete: the frozen candidate on an
+enriched target-plus-ramp schedule failed the same six drift cells at
+unchanged values with the treatment fully engaged — perfect drift timing buys
+nothing, so the wall is the mechanism. See
+[V3-DRIFT-RESULTS.md](V3-DRIFT-RESULTS.md). All 480 reached rows are
+archived; the finite-menu experiment is closed without integration.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.

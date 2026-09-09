@@ -1,0 +1,315 @@
+{
+  "protocol": {
+    "id": "v3-drift-20260909-v1",
+    "registration_commit": "d25ccfe9eabf9af566aac2b21e5ec9f9d381b7a3",
+    "registration_sha256": "62a8eb8470e934430cfbcc9ee21fc3cad3c10853774ea795c4f38bcddcc713bb"
+  },
+  "sources": {
+    "DESIGN-v3-burst.md": "ef249ae9dcf9afe8822ee2c0f188f2e780596450b7fcc6881028191b3e8a4d5c",
+    "DESIGN-v3-drift.md": "62a8eb8470e934430cfbcc9ee21fc3cad3c10853774ea795c4f38bcddcc713bb",
+    "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
+    "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
+    "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
+    "check_v3_burst.py": "177659e8f2adadf81d310a788d8c2ee65a70d4fa2a09a2dc883b2d8e306eaae3",
+    "check_v3_drift.py": "2036356445d9846b4794c9b59f21eede6fd395a8c815d218db3b29aec18a4f15",
+    "report_v3_burst.py": "fc54e016287bd6f1c368a02885f0f92f435b09879659da8dd30e0be393c0b50a",
+    "report_v3_drift.py": "fe1495d85eda22b56f3b53a3450aa059e02d90839756b9e60ad782f5b03aa223",
+    "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
+    "report_v3_retention.py": "de6e58181111615a58b1e31bea7df1c01d7377a4d0b789893f73b09a77b1fbdd",
+    "report_v3_slice1.py": "b0eea587ada00c7a3dffd39a8050001a8cee4254bb822f92369c46f0f6b8ea20",
+    "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
+    "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
+    "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
+    "study_v3_burst.py": "ab8be80d2a2b63f27653d07810afaf72ad805b18570378e4571e16f90808bdd5",
+    "study_v3_drift.py": "6108728f27bddffc2ea0e2d77185fcee4f41b6cfb9364f493369d3469a30a815",
+    "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
+    "study_v3_retention.py": "ce6c09b41b6427203f610b882b2db0d7680ddc2c232aa592c743ce98786a261a",
+    "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
+    "v3_adwin.py": "994d32ad2ae9f160af83aff2c043da92fb439f659316f4e4de5ffeee30855e97",
+    "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
+    "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
+    "v3_drift.py": "f6893ab1db35ecbc1370573eb281410683d7244b1e35c5d06bb072563601ad38",
+    "v3_drift_policy.py": "3db06e919ac15b964c97eb15f586042c9f45f8d0af430053362bf0a02fa0d9ba",
+    "v3_forgetting.py": "af006010aeb12ecb35083f97bf56674d127aa4c9f52db40cc85cf134efc3e189",
+    "v3_gate.py": "9875703dad1ef620dd3b8d9323a5502d9612490ba9830b7d3581b39fed2571d1",
+    "v3_persistent.py": "14857640d40cb86546c5441f1a43275b5d674a9d2fb8e0cb0671d68a2248c0f9",
+    "v3_reference.py": "0b019a5066b214583e4897d73a16ec2a24a13b361aca4f876f089acd837144a2",
+    "v3_reference_policy.py": "2f3da6886e78035da72addc8fd468eea3fb9d0c10b7c1b76421beac139f83684",
+    "v3_retention.py": "fd466d2e63dcc6ce93ba04f6e7a96a7af3353b8814feacdd1aebcb7cf70af15a",
+    "v3_retention_policy.py": "3dc86a11da5cc3edfa89e0884bb1b11d5c96e24d7fbc7fcbdfa16e773a495cae",
+    "v3_slice1_decisions.py": "8c768720340933586b1b3220c1591b8e25c50aaf622c0e8962b10d128b24482b",
+    "v3_slice1_learning.py": "000e4be3ddf729f5e403074634b1861061b496c01488b2de8f3f4aada6384648",
+    "v3_slice1_streams.py": "6d5a264013357468f5882e929236831e94d3ae0e19b5b4d4ba35e1e9b087932d"
+  },
+  "seeds": {
+    "development": [
+      120000,
+      120001,
+      120002,
+      120003,
+      120004,
+      120005,
+      120006,
+      120007
+    ],
+    "tuning": [
+      121000,
+      121001,
+      121002,
+      121003,
+      121004,
+      121005,
+      121006,
+      121007
+    ],
+    "confirmation": [
+      123000,
+      123001,
+      123002,
+      123003,
+      123004,
+      123005,
+      123006,
+      123007,
+      123008,
+      123009,
+      123010,
+      123011,
+      123012,
+      123013,
+      123014,
+      123015,
+      123016,
+      123017,
+      123018,
+      123019,
+      123020,
+      123021,
+      123022,
+      123023,
+      123024,
+      123025,
+      123026,
+      123027,
+      123028,
+      123029,
+      123030,
+      123031
+    ]
+  },
+  "grids": {
+    "window": [
+      {
+        "window": 1
+      },
+      {
+        "window": 2
+      },
+      {
+        "window": 4
+      },
+      {
+        "window": 8
+      },
+      {
+        "window": 16
+      },
+      {
+        "window": 32
+      },
+      {
+        "window": 64
+      },
+      {
+        "window": 128
+      },
+      {
+        "window": 256
+      },
+      {
+        "window": 512
+      },
+      {
+        "window": 1024
+      },
+      {
+        "window": 6000
+      }
+    ],
+    "sgd": [
+      {
+        "lr": 0.0001
+      },
+      {
+        "lr": 0.0004
+      },
+      {
+        "lr": 0.001
+      },
+      {
+        "lr": 0.004
+      },
+      {
+        "lr": 0.008
+      },
+      {
+        "lr": 0.016
+      },
+      {
+        "lr": 0.035743040182210514
+      },
+      {
+        "lr": 0.064
+      },
+      {
+        "lr": 0.128
+      },
+      {
+        "lr": 0.256
+      },
+      {
+        "lr": 0.512
+      },
+      {
+        "lr": 1.0
+      }
+    ],
+    "adwin": [
+      {
+        "delta": 0.0001,
+        "clock": 1
+      },
+      {
+        "delta": 0.0001,
+        "clock": 8
+      },
+      {
+        "delta": 0.0001,
+        "clock": 32
+      },
+      {
+        "delta": 0.001,
+        "clock": 1
+      },
+      {
+        "delta": 0.001,
+        "clock": 8
+      },
+      {
+        "delta": 0.001,
+        "clock": 32
+      },
+      {
+        "delta": 0.01,
+        "clock": 1
+      },
+      {
+        "delta": 0.01,
+        "clock": 8
+      },
+      {
+        "delta": 0.01,
+        "clock": 32
+      },
+      {
+        "delta": 0.1,
+        "clock": 1
+      },
+      {
+        "delta": 0.1,
+        "clock": 8
+      },
+      {
+        "delta": 0.1,
+        "clock": 32
+      }
+    ]
+  },
+  "screen": {
+    "status": "eligible",
+    "reasons": [],
+    "selected": {
+      "window": {
+        "window": 8
+      },
+      "sgd": {
+        "lr": 0.128
+      },
+      "adwin": {
+        "delta": 0.1,
+        "clock": 1
+      },
+      "oracle_nofallback": {
+        "keep": 4,
+        "window": 32
+      },
+      "retain_drift": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "random_drift": {
+        "delta": 0.1,
+        "H": 32
+      }
+    },
+    "indices": {
+      "window": 3,
+      "sgd": 8,
+      "adwin": 9
+    },
+    "objectives": {
+      "window": [
+        0.4647025126168467,
+        0.24233907884859643,
+        0.13917072014457088,
+        0.10139557863961976,
+        0.10349087197700965,
+        0.15675478500982784,
+        0.2840621624536914,
+        0.553595306135443,
+        1.0891669794548107,
+        1.7068545555440848,
+        2.1361005745313335,
+        1.6098620112648492
+      ],
+      "sgd": [
+        0.9972319381439133,
+        1.3429385389077328,
+        1.7936120503496418,
+        1.2870877748019598,
+        0.7718069397029024,
+        0.4037608785332384,
+        0.18866909829333578,
+        0.11763644356893316,
+        0.08529305438438117,
+        0.0971322990926476,
+        0.17370180422837767,
+        0.4647025126168467
+      ],
+      "adwin": [
+        0.3223166802713134,
+        0.3529900588955541,
+        0.4652864067806933,
+        0.25638052818070917,
+        0.2882712454264321,
+        0.4046805523505172,
+        0.19056226216368088,
+        0.22132542927350726,
+        0.34984346856157233,
+        0.12730529941096835,
+        0.1636854495715598,
+        0.29865844107840744
+      ]
+    },
+    "random_frequency": {
+      "starts": 80,
+      "coordinate_time": 432000,
+      "probability": 0.00018573551263001485
+    }
+  },
+  "tuning_digest": "d4a53555a2a3edf679c5fafe1d1e6e8ef77572639376eb36a080781319c1bd6b",
+  "expected_counts": {
+    "tuning": 288,
+    "confirmation": 192
+  }
+}
