@@ -124,6 +124,12 @@ See
 [V3-SLOPE-RESULTS.md](V3-SLOPE-RESULTS.md), or reproduce all 576 rows
 with `python check_v3_slope.py --evidence results/v3-slope --reproduce`.
 
+Gating that trend regime by observed ADWIN alarms instead closes
+learning-negative: false alarms on noise destroy stability and the primary
+win misses its 10% rule. See
+[V3-SLOPETIME-RESULTS.md](V3-SLOPETIME-RESULTS.md), or reproduce all 608 rows
+with `python check_v3_slopetime.py --evidence results/v3-slopetime --reproduce`.
+
 ## Architecture
 
 ```

@@ -62,6 +62,14 @@ The separately authorized slope-state study then added a trend regime gated
 on granted drift boundaries and closed the first full V3 positive (75/75),
 beating SGD on the ramp with everything else preserved. See
 `V3-SLOPE-RESULTS.md`. No default change or agent integration follows.
+The separately authorized slope-timing study then gated that trend regime by
+observed ADWIN alarms instead: false alarms on noise destroyed stability and
+the primary win missed its 10% rule. See `V3-SLOPETIME-RESULTS.md`. No
+further experiment or integration is activated.
+The separately authorized slope-state study then added a trend regime gated
+on granted drift boundaries and closed the first full V3 positive (75/75),
+beating SGD on the ramp with everything else preserved. See
+`V3-SLOPE-RESULTS.md`. No default change or agent integration follows.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.
