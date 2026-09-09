@@ -117,6 +117,13 @@ fully engaged, so the wall is the mechanism, not the schedule ontology. See
 [V3-DRIFT-RESULTS.md](V3-DRIFT-RESULTS.md), or reproduce all 480 rows
 with `python check_v3_drift.py --evidence results/v3-drift --reproduce`.
 
+The slope-state follow-up is the first full V3 positive (75/75): a trend
+regime gated on granted drift boundaries beats every control including SGD
+on the ramp, while preserving everything else. Granted timing still applies.
+See
+[V3-SLOPE-RESULTS.md](V3-SLOPE-RESULTS.md), or reproduce all 576 rows
+with `python check_v3_slope.py --evidence results/v3-slope --reproduce`.
+
 ## Architecture
 
 ```
