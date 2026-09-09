@@ -1,4 +1,5 @@
-import numpy as np, sys; sys.path.insert(0,'/home/gust/code/brainsim')
+import numpy as np, sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from brainsim import BrainSim
 # The gate reads trm (decay 0.90 => ~10-tick memory) but the DECISION is
 # argmax(votes) over all 30 ticks. Different windows, so the gate often tags a

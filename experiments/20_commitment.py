@@ -1,4 +1,5 @@
-import numpy as np, sys; sys.path.insert(0,'/home/gust/code/brainsim')
+import numpy as np, sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from brainsim import BrainSim
 # Motor k-WTA picks a winner PER TICK; the decision is an aggregate over 30 ticks.
 # Credit therefore smears across whichever cells won individual ticks. The

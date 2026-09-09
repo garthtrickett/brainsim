@@ -1,4 +1,5 @@
-import numpy as np, sys; sys.path.insert(0,'/home/gust/code/brainsim')
+import numpy as np, sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import tasks
 from brainsim import BrainSim
 # The decomposition says the LOCAL REPLAY loop in sleep() costs nway-8 (+0.129 to

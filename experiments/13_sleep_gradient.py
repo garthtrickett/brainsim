@@ -1,4 +1,5 @@
-import numpy as np, sys; sys.path.insert(0,'/tmp/brainsim')
+import numpy as np, sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 # H showed +sleep-grad beating local-only on all 3 seeds. But the sleep-grad arm
 # also got 60 EXTRA updates every 50 trials that local-only never got. So the win

@@ -1,4 +1,5 @@
-import numpy as np, sys; sys.path.insert(0,'/home/gust/code/brainsim')
+import numpy as np, sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import tasks
 from brainsim import BrainSim
 # V(s) costs 0.125 on volatile because a state-dependent value must RELEARN every
