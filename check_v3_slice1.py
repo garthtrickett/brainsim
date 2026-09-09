@@ -56,5 +56,59 @@ def instrument_checks():
     print('PASS slice1 instruments: RNG isolation, event labels, causal scoring, censoring and noise directions', flush=True)
 
 
+
+def learning_checks():
+    from v3_gate import adam_step, variance_step
+    from v3_slice1_learning import ARMS, GRIDS, IDS, run, signal
+    assert all(len(grid) == 24 for grid in GRIDS.values())
+    # Explicit two-step Adam reference independent of the runner.
+    m, v, direction = adam_step(0., 0., 2., 1, .999)
+    np.testing.assert_allclose((m, v, direction), (.2, .004, 2. / (2. + 1e-8)))
+    m, v, direction = adam_step(m, v, -1., 2, .999)
+    np.testing.assert_allclose((m, v, direction),
+                              (.08, .004996, (.08 / .19) / (np.sqrt(.004996 / .001999) + 1e-8)))
+    xs = np.array([3., -2., 5., 1.])
+    for rate in (.1, .01):
+        mean, variance, weights = xs[0], 0., np.array([1.])
+        for i, x in enumerate(xs[1:], 1):
+            mean, variance = variance_step(mean, variance, x, rate)
+            weights = np.append(weights * (1. - rate), rate)
+            expected = weights @ xs[:i + 1]
+            np.testing.assert_allclose(mean, expected)
+            np.testing.assert_allclose(variance, weights @ (xs[:i + 1] - expected) ** 2)
+    assert signal(1., 1., 2., 3., 4) == 0.
+    assert 0. <= signal(2., 1., 0., 0., 4) <= 1.
+    y = rng(30001, 1).normal(size=(250, 4))
+    config = {'lr': .016, 'gain': 4.}
+    plain = run(y, 'adam', config)[0]
+    for arm in ('single', 'historical', 'candidate'):
+        np.testing.assert_array_equal(plain, run(y, arm, {'lr': .016, 'gain': 0.})[0])
+    for arm in IDS:
+        pred, gates, norms = run(y, arm, config)
+        assert np.isfinite(pred).all() and np.isfinite(gates).all() and np.isfinite(norms).all()
+        later = y.copy(); later[90:] += 100.
+        other, other_gates, _ = run(later, arm, config)
+        np.testing.assert_array_equal(pred[:91], other[:91])
+        np.testing.assert_array_equal(gates[:90], other_gates[:90])
+        changed = y.copy(); changed[:, 0] += 100.
+        other, other_gates, _ = run(changed, arm, config)
+        np.testing.assert_array_equal(pred[:, 1:], other[:, 1:])
+        np.testing.assert_array_equal(gates[:, 1:], other_gates[:, 1:])
+        # A standalone coordinate and the same coordinate in a joint run agree.
+        isolated = run(y[:, 2:3], arm, config)[0]
+        np.testing.assert_array_equal(pred[:, 2], isolated[:, 0])
+        np.testing.assert_array_equal(pred, run(y, arm, config)[0])
+    q = run(y, 'candidate', config, observer=True)[1]
+    np.testing.assert_array_equal(q, run(-y, 'candidate', config, observer=True)[1])
+    np.testing.assert_allclose(q, run(y + 7., 'candidate', config, observer=True)[1], atol=1e-13)
+    assert np.all((q >= 0.) & (q <= 1.))
+    for arm in ARMS:
+        assert all(np.isfinite(x).all() for x in run(np.ones((200, 1)), arm, config))
+    scalar = np.array([[2.], [10.], [99.]])
+    np.testing.assert_array_equal(run(scalar, 'sgd', {'lr': .5})[0][:, 0], [0., 1., 5.5])
+    print('PASS slice1 updates: equations, invariances, pre-update causality, no coordinate/arm state leakage', flush=True)
+
+
 if __name__ == '__main__':
     instrument_checks()
+    learning_checks()
