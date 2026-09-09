@@ -53,6 +53,13 @@ tie on a 0-vs-0 noiseless cell. See
 [V3-RETENTION-RESULTS.md](V3-RETENTION-RESULTS.md). All 576 reached rows are
 archived; the finite-menu experiment is closed without integration.
 
+The timing-tolerance follow-up is now complete: the primary win survives ±2
+steps of schedule jitter and is dead by ±8 — far tighter than ADWIN's own
+error profile — and the deployable ADWIN-scheduled arm failed retention on
+noise-driven false alarms while holding primary. See
+[V3-TOLERANCE-RESULTS.md](V3-TOLERANCE-RESULTS.md). All 736 reached rows are
+archived; the detector line closes with that number, without integration.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
