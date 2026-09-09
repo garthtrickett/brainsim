@@ -34,6 +34,9 @@ stages are complete, with no default change or subsequent item activated.
 The separately authorized bounded-burst experiment is also complete: learning-negative
 against the strong controls, including a failed full SGD comparison for the tuned
 perfect-timing oracle. See `V3-BURST-RESULTS.md`; no subsequent item is activated.
+The separately authorized forgetting study is also closed: learning-negative despite
+matched-control gains and improved oracle adaptation. Stable/noise tradeoffs remain;
+see `V3-FORGETTING-RESULTS.md`. No further experiment or integration is activated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.

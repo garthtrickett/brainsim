@@ -74,6 +74,12 @@ changes, but detected bursts and even the tuned perfect-timing diagnostic failed
 the full learning criteria against SGD. See [V3-BURST-RESULTS.md](V3-BURST-RESULTS.md).
 Reproduce all 704 rows with `python check_v3_burst.py --evidence results/v3-burst --reproduce`.
 
+The change-triggered forgetting follow-up closed learning-negative: resets beat
+matched controls, but failed the full fast-tracker and stable-noise comparisons.
+Perfect timing improved adaptation while still failing full retention requirements.
+See [V3-FORGETTING-RESULTS.md](V3-FORGETTING-RESULTS.md), or reproduce all 736 rows
+with `python check_v3_forgetting.py --evidence results/v3-forgetting --reproduce`.
+
 ## Architecture
 
 ```

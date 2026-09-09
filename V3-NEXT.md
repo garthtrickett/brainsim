@@ -32,6 +32,11 @@ failed independent learning advancement, and even the tuned perfect-timing oracl
 failed the full comparison against SGD. See [V3-BURST-RESULTS.md](V3-BURST-RESULTS.md).
 Its 704 reached rows are archived; this finite-menu experiment is closed.
 
+The change-triggered forgetting follow-up is now complete: matched-control gains
+and a strong oracle adaptation benefit did not satisfy the full learning/retention
+criteria. See [V3-FORGETTING-RESULTS.md](V3-FORGETTING-RESULTS.md). All 736 reached
+rows are archived; the finite-menu experiment is closed without integration.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
