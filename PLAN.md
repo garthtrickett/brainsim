@@ -70,6 +70,10 @@ The separately authorized slope broader benchmark then tested steep, shallow
 and noisy ramps: steep and noisy pass, but the shallow ramp loses strictly to
 the fast window, narrowing the mechanism to non-weak signals. See
 `V3-SLOPEBENCH-RESULTS.md`. No further experiment or integration is activated.
+The separately authorized kink-guarded slope study then forced fast means
+near boundaries: the shallow gap narrowed threefold but the same strict cell
+still fails. See `V3-SLOPEGUARD-RESULTS.md`. No further experiment or
+integration is activated.
 The separately authorized slope-state study then added a trend regime gated
 on granted drift boundaries and closed the first full V3 positive (75/75),
 beating SGD on the ramp with everything else preserved. See

@@ -86,6 +86,12 @@ beats trend signal where it is weakest — closing 74/75 learning-negative. See
 [V3-SLOPEBENCH-RESULTS.md](V3-SLOPEBENCH-RESULTS.md). All 480 reached rows are
 archived; the finite-menu experiment is closed without integration.
 
+The kink-guarded slope follow-up is now complete: guard horizon J=96 narrows
+the shallow-ramp gap threefold (0.000960 to 0.000313) without closing it —
+the same strict cell fails, everything else passes. See
+[V3-SLOPEGUARD-RESULTS.md](V3-SLOPEGUARD-RESULTS.md). All 608 reached rows are
+archived; the finite-menu experiment is closed without integration.
+
 The slope-state follow-up is now complete: a trend regime gated on granted
 drift boundaries passed all 75 comparisons, beating SGD on the ramp with
 everything else preserved — the first full V3 positive. See

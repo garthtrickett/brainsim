@@ -137,6 +137,12 @@ weakest), closing 74/75 learning-negative. See
 [V3-SLOPEBENCH-RESULTS.md](V3-SLOPEBENCH-RESULTS.md), or reproduce all 480 rows
 with `python check_v3_slopebench.py --evidence results/v3-slopebench --reproduce`.
 
+A kink guard (fast means near boundaries, trend beyond) narrows that gap
+threefold but does not close it: the same shallow cell still fails strictly.
+See
+[V3-SLOPEGUARD-RESULTS.md](V3-SLOPEGUARD-RESULTS.md), or reproduce all 608 rows
+with `python check_v3_slopeguard.py --evidence results/v3-slopeguard --reproduce`.
+
 ## Architecture
 
 ```
