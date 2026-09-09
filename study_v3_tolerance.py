@@ -144,7 +144,8 @@ def measure_row(seed, arm, config, alarm=None, manifest=None):
                     'status': 'nonfinite', 'reason': name+' metrics'}
         row['fixtures'][name] = metrics
         row['memory'][name] = memory_metrics(data, result, arm,
-            'none' if arm in FAMILIES else 'observed' if arm == 'adwin_schedule' else arm)
+            'none' if arm in FAMILIES else 'observed' if arm == 'adwin_schedule'
+            else 'true' if arm == 'reference' else arm)
     if not finite(row):
         raise ValueError('non-finite explanatory record')
     return row
