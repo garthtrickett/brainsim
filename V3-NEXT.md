@@ -5,6 +5,11 @@ candidate fails its registered detection, control-comparison and retention
 criteria. Do not integrate it into brainsim; see [V3-RESULTS.md](V3-RESULTS.md).
 The text below records the experiment-order decision that preceded the result.
 
+A refined, unimplemented successor plan is now in
+[V3-SLICE-1-PLAN.md](V3-SLICE-1-PLAN.md). It proposes one new mean-disagreement
+hypothesis, with separate detector and learning gates; it does not reopen the
+original result or activate agent integration.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
