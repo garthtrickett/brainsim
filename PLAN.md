@@ -22,6 +22,9 @@ advancement. See `V3-RESULTS.md`. No agent integration follows, and the further
 v3 queue and v2 rewrite remain unactivated. The separately registered
 mean-disagreement successor also reached closure: tuning-inconclusive at the
 gain search boundary, with confirmation unrun. See `V3-SLICE-1-RESULTS.md`.
+The new bounded gain follow-up resolved the search boundary but failed independent
+detection when noise increased; performance remains unrun. See
+`V3-GAIN-FOLLOWUP-RESULTS.md`. This follow-up is closed; no further item is activated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.

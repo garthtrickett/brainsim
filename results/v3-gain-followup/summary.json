@@ -1,14 +1,537 @@
 {
   "calibration_status": "ok",
-  "closed": false,
+  "closed": true,
   "counts": {
     "calibration": 48,
-    "diagnostics": 0,
+    "diagnostics": 96,
     "performance": 0,
     "tuning": 3840
   },
-  "decisions": {},
-  "descriptive_diagnostics": {},
+  "decisions": {
+    "diagnostics": {
+      "cells": {
+        "closed/noise_jump/noise_decrease": {
+          "count": 0,
+          "interval95": [
+            0.0,
+            0.0
+          ],
+          "latency": 100.0,
+          "latency_interval95": [
+            100.0,
+            100.0
+          ],
+          "pass": true,
+          "rate": 0.0,
+          "total": 32
+        },
+        "closed/noise_jump/noise_increase": {
+          "count": 11,
+          "interval95": [
+            0.1875,
+            0.5
+          ],
+          "latency": 71.90625,
+          "latency_interval95": [
+            57.34375,
+            85.4375
+          ],
+          "pass": false,
+          "rate": 0.34375,
+          "total": 32
+        },
+        "closed/noisy/blocks": {
+          "count": 35,
+          "interval95": [
+            0.014374999999999999,
+            0.030000000000000002
+          ],
+          "pass": true,
+          "rate": 0.021875,
+          "total": 1600
+        },
+        "closed/quiet/blocks": {
+          "count": 2,
+          "interval95": [
+            0.0,
+            0.003125
+          ],
+          "pass": true,
+          "rate": 0.00125,
+          "total": 1600
+        },
+        "closed/switch_noisy/target_down": {
+          "count": 32,
+          "interval95": [
+            1.0,
+            1.0
+          ],
+          "latency": 5.65625,
+          "latency_interval95": [
+            4.9375,
+            6.375
+          ],
+          "pass": true,
+          "rate": 1.0,
+          "total": 32
+        },
+        "closed/switch_noisy/target_up": {
+          "count": 32,
+          "interval95": [
+            1.0,
+            1.0
+          ],
+          "latency": 6.78125,
+          "latency_interval95": [
+            5.84375,
+            7.75
+          ],
+          "pass": true,
+          "rate": 1.0,
+          "total": 32
+        },
+        "closed/switch_quiet/target_down": {
+          "count": 32,
+          "interval95": [
+            1.0,
+            1.0
+          ],
+          "latency": 2.0625,
+          "latency_interval95": [
+            2.0,
+            2.15625
+          ],
+          "pass": true,
+          "rate": 1.0,
+          "total": 32
+        },
+        "closed/switch_quiet/target_up": {
+          "count": 32,
+          "interval95": [
+            1.0,
+            1.0
+          ],
+          "latency": 2.15625,
+          "latency_interval95": [
+            2.03125,
+            2.28125
+          ],
+          "pass": true,
+          "rate": 1.0,
+          "total": 32
+        },
+        "fixed/noise_jump/noise_decrease": {
+          "count": 0,
+          "interval95": [
+            0.0,
+            0.0
+          ],
+          "latency": 100.0,
+          "latency_interval95": [
+            100.0,
+            100.0
+          ],
+          "pass": true,
+          "rate": 0.0,
+          "total": 32
+        },
+        "fixed/noise_jump/noise_increase": {
+          "count": 8,
+          "interval95": [
+            0.125,
+            0.40625
+          ],
+          "latency": 78.59375,
+          "latency_interval95": [
+            64.37421875,
+            91.03125
+          ],
+          "pass": false,
+          "rate": 0.25,
+          "total": 32
+        },
+        "fixed/noisy/blocks": {
+          "count": 17,
+          "interval95": [
+            0.0062499999999999995,
+            0.015625
+          ],
+          "pass": true,
+          "rate": 0.010624999999999999,
+          "total": 1600
+        },
+        "fixed/quiet/blocks": {
+          "count": 18,
+          "interval95": [
+            0.006875,
+            0.015640624999999773
+          ],
+          "pass": true,
+          "rate": 0.01125,
+          "total": 1600
+        },
+        "fixed/switch_noisy/target_down": {
+          "count": 32,
+          "interval95": [
+            1.0,
+            1.0
+          ],
+          "latency": 6.125,
+          "latency_interval95": [
+            5.40625,
+            6.875
+          ],
+          "pass": true,
+          "rate": 1.0,
+          "total": 32
+        },
+        "fixed/switch_noisy/target_up": {
+          "count": 32,
+          "interval95": [
+            1.0,
+            1.0
+          ],
+          "latency": 7.03125,
+          "latency_interval95": [
+            6.15625,
+            7.9375
+          ],
+          "pass": true,
+          "rate": 1.0,
+          "total": 32
+        },
+        "fixed/switch_quiet/target_down": {
+          "count": 32,
+          "interval95": [
+            1.0,
+            1.0
+          ],
+          "latency": 2.8125,
+          "latency_interval95": [
+            2.65625,
+            2.9375
+          ],
+          "pass": true,
+          "rate": 1.0,
+          "total": 32
+        },
+        "fixed/switch_quiet/target_up": {
+          "count": 32,
+          "interval95": [
+            1.0,
+            1.0
+          ],
+          "latency": 2.78125,
+          "latency_interval95": [
+            2.625,
+            2.90625
+          ],
+          "pass": true,
+          "rate": 1.0,
+          "total": 32
+        }
+      },
+      "evidence_digest": "5e641a522eff47b13fa6ebaf6087f6da8f27ff2c6ef7f7e494ab594fec91774b",
+      "manifest_digest": "3deab2c81c2a194d8bedf779d90617b96df333d55562b1c5336ef41ade3d915b",
+      "status": "detector_negative"
+    }
+  },
+  "descriptive_diagnostics": {
+    "candidate/closed/core/noisy": {
+      "block_alarm_rate": 0.021875,
+      "gate_initial": 0.041076506441699974,
+      "gate_mean": 0.019916067837602858,
+      "n": 32,
+      "point_alarm_rate": 0.00034375
+    },
+    "candidate/closed/core/quiet": {
+      "block_alarm_rate": 0.00125,
+      "gate_initial": 0.09256914198194055,
+      "gate_mean": 0.01841042553746977,
+      "n": 32,
+      "point_alarm_rate": 1.8750000000000002e-05
+    },
+    "candidate/closed/core/switch_noisy": {
+      "block_alarm_rate": 0.064375,
+      "gate_initial": 0.03943457719989424,
+      "gate_mean": 0.021995894586320106,
+      "n": 32,
+      "point_alarm_rate": 0.0063124999999999995
+    },
+    "candidate/closed/core/switch_quiet": {
+      "block_alarm_rate": 0.0425,
+      "gate_initial": 0.09248558029458276,
+      "gate_mean": 0.018115191800686384,
+      "n": 32,
+      "point_alarm_rate": 0.00275
+    },
+    "candidate/closed/drift/drift": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.09208393066369777,
+      "gate_mean": 0.01855990770191519,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "candidate/closed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.08648790591055028,
+      "gate_mean": 8.811973843875252e-07,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "candidate/closed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.019375,
+      "gate_initial": 0.09281409749496398,
+      "gate_mean": 0.01849106681088428,
+      "n": 32,
+      "point_alarm_rate": 0.0003625
+    },
+    "candidate/fixed/core/noisy": {
+      "block_alarm_rate": 0.010624999999999999,
+      "gate_initial": 0.03309993078101529,
+      "gate_mean": 0.01938803370978457,
+      "n": 32,
+      "point_alarm_rate": 0.000125
+    },
+    "candidate/fixed/core/quiet": {
+      "block_alarm_rate": 0.01125,
+      "gate_initial": 0.033097837008369234,
+      "gate_mean": 0.019358411440561107,
+      "n": 32,
+      "point_alarm_rate": 0.00015625
+    },
+    "candidate/fixed/core/switch_noisy": {
+      "block_alarm_rate": 0.0975,
+      "gate_initial": 0.03210609054200115,
+      "gate_mean": 0.03300164114348919,
+      "n": 32,
+      "point_alarm_rate": 0.03148125
+    },
+    "candidate/fixed/core/switch_quiet": {
+      "block_alarm_rate": 0.10625000000000001,
+      "gate_initial": 0.03560277733495473,
+      "gate_mean": 0.04887780676608401,
+      "n": 32,
+      "point_alarm_rate": 0.0607875
+    },
+    "candidate/fixed/drift/drift": {
+      "block_alarm_rate": 0.42625,
+      "gate_initial": 0.03454397264816071,
+      "gate_mean": 0.15335661172977721,
+      "n": 32,
+      "point_alarm_rate": 0.3902125
+    },
+    "candidate/fixed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0,
+      "gate_mean": 0.0,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "candidate/fixed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.014375,
+      "gate_initial": 0.03216814973764835,
+      "gate_mean": 0.01798281272817273,
+      "n": 32,
+      "point_alarm_rate": 0.0003625
+    },
+    "historical/closed/core/noisy": {
+      "block_alarm_rate": 0.0025,
+      "gate_initial": 0.05489567027215364,
+      "gate_mean": 0.03421512486043727,
+      "n": 32,
+      "point_alarm_rate": 7.500000000000001e-05
+    },
+    "historical/closed/core/quiet": {
+      "block_alarm_rate": 0.013750000000000002,
+      "gate_initial": 0.01870497916903919,
+      "gate_mean": 0.038345990184500925,
+      "n": 32,
+      "point_alarm_rate": 0.0003625
+    },
+    "historical/closed/core/switch_noisy": {
+      "block_alarm_rate": 0.006875,
+      "gate_initial": 0.05705224622334827,
+      "gate_mean": 0.031954550135853244,
+      "n": 32,
+      "point_alarm_rate": 8.750000000000001e-05
+    },
+    "historical/closed/core/switch_quiet": {
+      "block_alarm_rate": 0.05812500000000001,
+      "gate_initial": 0.018776776681706256,
+      "gate_mean": 0.033975557632413896,
+      "n": 32,
+      "point_alarm_rate": 0.00905625
+    },
+    "historical/closed/drift/drift": {
+      "block_alarm_rate": 0.01625,
+      "gate_initial": 0.018987415714741128,
+      "gate_mean": 0.037992723129996006,
+      "n": 32,
+      "point_alarm_rate": 0.0005062500000000001
+    },
+    "historical/closed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.011358701547628136,
+      "gate_mean": 0.0,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "historical/closed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.039375,
+      "gate_initial": 0.017788269530764463,
+      "gate_mean": 0.038127521569350176,
+      "n": 32,
+      "point_alarm_rate": 0.0101
+    },
+    "historical/fixed/core/noisy": {
+      "block_alarm_rate": 0.01,
+      "gate_initial": 0.067041590225727,
+      "gate_mean": 0.03459449646565743,
+      "n": 32,
+      "point_alarm_rate": 0.00016875
+    },
+    "historical/fixed/core/quiet": {
+      "block_alarm_rate": 0.01,
+      "gate_initial": 0.06817795295792099,
+      "gate_mean": 0.034797806037163356,
+      "n": 32,
+      "point_alarm_rate": 0.00013125000000000002
+    },
+    "historical/fixed/core/switch_noisy": {
+      "block_alarm_rate": 0.015,
+      "gate_initial": 0.0684681331297846,
+      "gate_mean": 0.03053059400724975,
+      "n": 32,
+      "point_alarm_rate": 0.0002625
+    },
+    "historical/fixed/core/switch_quiet": {
+      "block_alarm_rate": 0.051875000000000004,
+      "gate_initial": 0.0648179246214698,
+      "gate_mean": 0.024678714279724845,
+      "n": 32,
+      "point_alarm_rate": 0.00448125
+    },
+    "historical/fixed/drift/drift": {
+      "block_alarm_rate": 0.003125,
+      "gate_initial": 0.06470806845695196,
+      "gate_mean": 0.01863136820875553,
+      "n": 32,
+      "point_alarm_rate": 4.375e-05
+    },
+    "historical/fixed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0,
+      "gate_mean": 0.0,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "historical/fixed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.045,
+      "gate_initial": 0.0698864348220185,
+      "gate_mean": 0.038272735960003974,
+      "n": 32,
+      "point_alarm_rate": 0.011206250000000001
+    },
+    "single/closed/core/noisy": {
+      "block_alarm_rate": 0.016875,
+      "gate_initial": 0.4735861467341552,
+      "gate_mean": 0.4780868732844139,
+      "n": 32,
+      "point_alarm_rate": 0.00034375
+    },
+    "single/closed/core/quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0033951786600126574,
+      "gate_mean": 0.0026725491705680386,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "single/closed/core/switch_noisy": {
+      "block_alarm_rate": 0.022500000000000003,
+      "gate_initial": 0.4789211100980477,
+      "gate_mean": 0.4771816296435426,
+      "n": 32,
+      "point_alarm_rate": 0.00060625
+    },
+    "single/closed/core/switch_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0034159861287092544,
+      "gate_mean": 0.007199376280585023,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "single/closed/drift/drift": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0033599155991056937,
+      "gate_mean": 0.0026823908662430033,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "single/closed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0009255336761622913,
+      "gate_mean": 3.1985226744536334e-34,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "single/closed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.005625,
+      "gate_initial": 0.00340022258787292,
+      "gate_mean": 0.1903988304941144,
+      "n": 32,
+      "point_alarm_rate": 8.125e-05
+    },
+    "single/fixed/core/noisy": {
+      "block_alarm_rate": 0.0175,
+      "gate_initial": 0.4704659286951446,
+      "gate_mean": 0.47505552694852815,
+      "n": 32,
+      "point_alarm_rate": 0.00035625
+    },
+    "single/fixed/core/quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0023637858263392576,
+      "gate_mean": 0.002364391475221629,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "single/fixed/core/switch_noisy": {
+      "block_alarm_rate": 0.023125000000000003,
+      "gate_initial": 0.4758168315403023,
+      "gate_mean": 0.4741695065920866,
+      "n": 32,
+      "point_alarm_rate": 0.0007062500000000001
+    },
+    "single/fixed/core/switch_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0024017597534902015,
+      "gate_mean": 0.007055154819748432,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "single/fixed/drift/drift": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.002350889653858446,
+      "gate_mean": 0.002407598064632825,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "single/fixed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0,
+      "gate_mean": 0.0,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "single/fixed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.005625,
+      "gate_initial": 0.0023532638573024074,
+      "gate_mean": 0.18850952971293258,
+      "n": 32,
+      "point_alarm_rate": 8.125e-05
+    }
+  },
   "manifest_digest": "3deab2c81c2a194d8bedf779d90617b96df333d55562b1c5336ef41ade3d915b",
   "protocol": {
     "id": "v3-gain-followup-20260909-v1",
@@ -17,7 +540,8 @@
   },
   "reached": [
     "tuning",
-    "calibration"
+    "calibration",
+    "diagnostics"
   ],
   "search": {
     "added_step_amplitude": {
@@ -302,5 +826,5 @@
     },
     "status": "eligible"
   },
-  "status": "awaiting_diagnostics"
+  "status": "detector_negative"
 }

@@ -1,0 +1,227 @@
+{
+  "manifest_digest": "3deab2c81c2a194d8bedf779d90617b96df333d55562b1c5336ef41ade3d915b",
+  "evidence_digest": "5e641a522eff47b13fa6ebaf6087f6da8f27ff2c6ef7f7e494ab594fec91774b",
+  "status": "detector_negative",
+  "cells": {
+    "fixed/quiet/blocks": {
+      "count": 18,
+      "total": 1600,
+      "rate": 0.01125,
+      "interval95": [
+        0.006875,
+        0.015640624999999773
+      ],
+      "pass": true
+    },
+    "fixed/noisy/blocks": {
+      "count": 17,
+      "total": 1600,
+      "rate": 0.010624999999999999,
+      "interval95": [
+        0.0062499999999999995,
+        0.015625
+      ],
+      "pass": true
+    },
+    "fixed/switch_quiet/target_down": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 2.8125,
+      "latency_interval95": [
+        2.65625,
+        2.9375
+      ]
+    },
+    "fixed/switch_quiet/target_up": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 2.78125,
+      "latency_interval95": [
+        2.625,
+        2.90625
+      ]
+    },
+    "fixed/switch_noisy/target_down": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 6.125,
+      "latency_interval95": [
+        5.40625,
+        6.875
+      ]
+    },
+    "fixed/switch_noisy/target_up": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 7.03125,
+      "latency_interval95": [
+        6.15625,
+        7.9375
+      ]
+    },
+    "fixed/noise_jump/noise_increase": {
+      "count": 8,
+      "total": 32,
+      "rate": 0.25,
+      "interval95": [
+        0.125,
+        0.40625
+      ],
+      "pass": false,
+      "latency": 78.59375,
+      "latency_interval95": [
+        64.37421875,
+        91.03125
+      ]
+    },
+    "fixed/noise_jump/noise_decrease": {
+      "count": 0,
+      "total": 32,
+      "rate": 0.0,
+      "interval95": [
+        0.0,
+        0.0
+      ],
+      "pass": true,
+      "latency": 100.0,
+      "latency_interval95": [
+        100.0,
+        100.0
+      ]
+    },
+    "closed/quiet/blocks": {
+      "count": 2,
+      "total": 1600,
+      "rate": 0.00125,
+      "interval95": [
+        0.0,
+        0.003125
+      ],
+      "pass": true
+    },
+    "closed/noisy/blocks": {
+      "count": 35,
+      "total": 1600,
+      "rate": 0.021875,
+      "interval95": [
+        0.014374999999999999,
+        0.030000000000000002
+      ],
+      "pass": true
+    },
+    "closed/switch_quiet/target_down": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 2.0625,
+      "latency_interval95": [
+        2.0,
+        2.15625
+      ]
+    },
+    "closed/switch_quiet/target_up": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 2.15625,
+      "latency_interval95": [
+        2.03125,
+        2.28125
+      ]
+    },
+    "closed/switch_noisy/target_down": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 5.65625,
+      "latency_interval95": [
+        4.9375,
+        6.375
+      ]
+    },
+    "closed/switch_noisy/target_up": {
+      "count": 32,
+      "total": 32,
+      "rate": 1.0,
+      "interval95": [
+        1.0,
+        1.0
+      ],
+      "pass": true,
+      "latency": 6.78125,
+      "latency_interval95": [
+        5.84375,
+        7.75
+      ]
+    },
+    "closed/noise_jump/noise_increase": {
+      "count": 11,
+      "total": 32,
+      "rate": 0.34375,
+      "interval95": [
+        0.1875,
+        0.5
+      ],
+      "pass": false,
+      "latency": 71.90625,
+      "latency_interval95": [
+        57.34375,
+        85.4375
+      ]
+    },
+    "closed/noise_jump/noise_decrease": {
+      "count": 0,
+      "total": 32,
+      "rate": 0.0,
+      "interval95": [
+        0.0,
+        0.0
+      ],
+      "pass": true,
+      "latency": 100.0,
+      "latency_interval95": [
+        100.0,
+        100.0
+      ]
+    }
+  }
+}

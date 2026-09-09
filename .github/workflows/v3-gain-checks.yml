@@ -1,0 +1,28 @@
+name: V3 gain follow-up validation
+on:
+  push:
+    branches: ['codex/**']
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: v3-gain-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  follow-up:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - run: python check_v3_gain.py --evidence results/v3-gain-followup --reproduce
+      - run: python report_v3_gain.py --check
