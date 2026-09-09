@@ -1,0 +1,1965 @@
+{
+  "closed": true,
+  "configs": {
+    "adam": {
+      "beta2": 0.9999,
+      "lr": 0.032
+    },
+    "candidate": {
+      "beta2": 0.999,
+      "gain": 64.0,
+      "lr": 0.004
+    },
+    "constant": {
+      "beta2": 0.999,
+      "gain": 64.0,
+      "lr": 0.004
+    },
+    "current": {
+      "beta2": 0.999,
+      "gain": 64.0,
+      "lr": 0.004
+    },
+    "cusum": {
+      "beta2": 0.999,
+      "gain": 64.0,
+      "lr": 0.004
+    },
+    "persistence": {
+      "beta2": 0.999,
+      "gain": 64.0,
+      "lr": 0.004
+    },
+    "sgd": {
+      "lr": 0.035743040182210514
+    },
+    "single": {
+      "gain": 1.0,
+      "lr": 0.016
+    }
+  },
+  "counts": {
+    "calibration": 64,
+    "diagnostics": 128,
+    "performance": 0
+  },
+  "decisions": {
+    "diagnostics": {
+      "candidate": {
+        "cells": {
+          "closed/decrease_first/target_down": {
+            "count": 22,
+            "interval95": [
+              0.53125,
+              0.84375
+            ],
+            "latency": 42.78125,
+            "latency_interval95": [
+              29.8125,
+              55.875
+            ],
+            "pass": false,
+            "rate": 0.6875,
+            "total": 32
+          },
+          "closed/decrease_first/target_up": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": false,
+            "rate": 0.0,
+            "total": 32
+          },
+          "closed/increase_first/target_down": {
+            "count": 1,
+            "interval95": [
+              0.0,
+              0.09375
+            ],
+            "latency": 96.90625,
+            "latency_interval95": [
+              90.71875,
+              100.0
+            ],
+            "pass": false,
+            "rate": 0.03125,
+            "total": 32
+          },
+          "closed/increase_first/target_up": {
+            "count": 16,
+            "interval95": [
+              0.3125,
+              0.65625
+            ],
+            "latency": 58.78125,
+            "latency_interval95": [
+              44.9375,
+              73.68828124999999
+            ],
+            "pass": false,
+            "rate": 0.5,
+            "total": 32
+          },
+          "closed/noise_jump/noise_decrease": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 32
+          },
+          "closed/noise_jump/noise_increase": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 32
+          },
+          "closed/noisy/blocks": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 1600
+          },
+          "closed/quiet/blocks": {
+            "count": 21,
+            "interval95": [
+              0.008125,
+              0.018125000000000002
+            ],
+            "pass": true,
+            "rate": 0.013125000000000001,
+            "total": 1600
+          },
+          "closed/switch_noisy/target_down": {
+            "count": 1,
+            "interval95": [
+              0.0,
+              0.09375
+            ],
+            "latency": 97.40625,
+            "latency_interval95": [
+              92.21875,
+              100.0
+            ],
+            "pass": false,
+            "rate": 0.03125,
+            "total": 32
+          },
+          "closed/switch_noisy/target_up": {
+            "count": 1,
+            "interval95": [
+              0.0,
+              0.09375
+            ],
+            "latency": 97.34375,
+            "latency_interval95": [
+              92.03125,
+              100.0
+            ],
+            "pass": false,
+            "rate": 0.03125,
+            "total": 32
+          },
+          "closed/switch_quiet/target_down": {
+            "count": 30,
+            "interval95": [
+              0.84375,
+              1.0
+            ],
+            "latency": 34.125,
+            "latency_interval95": [
+              28.84375,
+              41.0
+            ],
+            "pass": true,
+            "rate": 0.9375,
+            "total": 32
+          },
+          "closed/switch_quiet/target_up": {
+            "count": 30,
+            "interval95": [
+              0.84375,
+              1.0
+            ],
+            "latency": 33.0,
+            "latency_interval95": [
+              27.90625,
+              39.90625
+            ],
+            "pass": true,
+            "rate": 0.9375,
+            "total": 32
+          },
+          "fixed/decrease_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 11.5625,
+            "latency_interval95": [
+              10.8125,
+              12.25
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/decrease_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 12.09375,
+            "latency_interval95": [
+              11.65625,
+              12.59375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/increase_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 12.0625,
+            "latency_interval95": [
+              11.71875,
+              12.40625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/increase_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 11.6875,
+            "latency_interval95": [
+              11.1875,
+              12.1875
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/noise_jump/noise_decrease": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 32
+          },
+          "fixed/noise_jump/noise_increase": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 32
+          },
+          "fixed/noisy/blocks": {
+            "count": 14,
+            "interval95": [
+              0.004375,
+              0.01375
+            ],
+            "pass": true,
+            "rate": 0.00875,
+            "total": 1600
+          },
+          "fixed/quiet/blocks": {
+            "count": 8,
+            "interval95": [
+              0.00125,
+              0.01
+            ],
+            "pass": true,
+            "rate": 0.005,
+            "total": 1600
+          },
+          "fixed/switch_noisy/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 12.75,
+            "latency_interval95": [
+              11.90625,
+              13.5625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_noisy/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 13.40625,
+            "latency_interval95": [
+              12.8125,
+              14.0
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_quiet/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 10.0625,
+            "latency_interval95": [
+              10.0,
+              10.15625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_quiet/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 10.09375,
+            "latency_interval95": [
+              10.0,
+              10.21875
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          }
+        },
+        "status": "detector_negative"
+      },
+      "current": {
+        "cells": {
+          "closed/decrease_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.25,
+            "latency_interval95": [
+              4.78125,
+              5.6875
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/decrease_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 3.40625,
+            "latency_interval95": [
+              3.09375,
+              3.7507812499999886
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/increase_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 3.21875,
+            "latency_interval95": [
+              2.90625,
+              3.5625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/increase_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.34375,
+            "latency_interval95": [
+              4.9375,
+              5.75
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/noise_jump/noise_decrease": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 32
+          },
+          "closed/noise_jump/noise_increase": {
+            "count": 5,
+            "interval95": [
+              0.03125,
+              0.28125
+            ],
+            "latency": 89.4375,
+            "latency_interval95": [
+              78.875,
+              97.5625
+            ],
+            "pass": false,
+            "rate": 0.15625,
+            "total": 32
+          },
+          "closed/noisy/blocks": {
+            "count": 22,
+            "interval95": [
+              0.007500000000000001,
+              0.020625
+            ],
+            "pass": true,
+            "rate": 0.013750000000000002,
+            "total": 1600
+          },
+          "closed/quiet/blocks": {
+            "count": 1,
+            "interval95": [
+              0.0,
+              0.001875
+            ],
+            "pass": true,
+            "rate": 0.000625,
+            "total": 1600
+          },
+          "closed/switch_noisy/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.84375,
+            "latency_interval95": [
+              5.125,
+              6.59375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/switch_noisy/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 6.5,
+            "latency_interval95": [
+              5.84375,
+              7.15625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/switch_quiet/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 2.21875,
+            "latency_interval95": [
+              2.09375,
+              2.375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/switch_quiet/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 2.125,
+            "latency_interval95": [
+              2.03125,
+              2.25
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/decrease_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.5625,
+            "latency_interval95": [
+              5.09375,
+              6.0
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/decrease_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 3.71875,
+            "latency_interval95": [
+              3.40625,
+              4.0625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/increase_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 3.34375,
+            "latency_interval95": [
+              3.15625,
+              3.5625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/increase_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.71875,
+            "latency_interval95": [
+              5.3125,
+              6.125
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/noise_jump/noise_decrease": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 32
+          },
+          "fixed/noise_jump/noise_increase": {
+            "count": 5,
+            "interval95": [
+              0.03125,
+              0.28125
+            ],
+            "latency": 86.125,
+            "latency_interval95": [
+              74.15625,
+              96.96875
+            ],
+            "pass": false,
+            "rate": 0.15625,
+            "total": 32
+          },
+          "fixed/noisy/blocks": {
+            "count": 13,
+            "interval95": [
+              0.004375,
+              0.011875
+            ],
+            "pass": true,
+            "rate": 0.008125,
+            "total": 1600
+          },
+          "fixed/quiet/blocks": {
+            "count": 16,
+            "interval95": [
+              0.005,
+              0.01625
+            ],
+            "pass": true,
+            "rate": 0.01,
+            "total": 1600
+          },
+          "fixed/switch_noisy/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 6.375,
+            "latency_interval95": [
+              5.53125,
+              7.21875
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_noisy/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 6.78125,
+            "latency_interval95": [
+              6.125,
+              7.4375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_quiet/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 2.96875,
+            "latency_interval95": [
+              2.90625,
+              3.0
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_quiet/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 2.90625,
+            "latency_interval95": [
+              2.78125,
+              3.0
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          }
+        },
+        "status": "detector_negative"
+      },
+      "cusum": {
+        "cells": {
+          "closed/decrease_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.03125,
+            "latency_interval95": [
+              4.59375,
+              5.4375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/decrease_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 2.71875,
+            "latency_interval95": [
+              2.21875,
+              3.3125
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/increase_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 2.21875,
+            "latency_interval95": [
+              1.8125,
+              2.6875
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/increase_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.25,
+            "latency_interval95": [
+              4.78125,
+              5.6875
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/noise_jump/noise_decrease": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 32
+          },
+          "closed/noise_jump/noise_increase": {
+            "count": 8,
+            "interval95": [
+              0.125,
+              0.40625
+            ],
+            "latency": 75.75,
+            "latency_interval95": [
+              60.4375,
+              88.0625
+            ],
+            "pass": false,
+            "rate": 0.25,
+            "total": 32
+          },
+          "closed/noisy/blocks": {
+            "count": 30,
+            "interval95": [
+              0.013125,
+              0.025
+            ],
+            "pass": true,
+            "rate": 0.018750000000000003,
+            "total": 1600
+          },
+          "closed/quiet/blocks": {
+            "count": 4,
+            "interval95": [
+              0.000625,
+              0.005
+            ],
+            "pass": true,
+            "rate": 0.0025,
+            "total": 1600
+          },
+          "closed/switch_noisy/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 6.09375,
+            "latency_interval95": [
+              5.375,
+              6.875
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/switch_noisy/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 6.375,
+            "latency_interval95": [
+              5.71875,
+              7.0625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/switch_quiet/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 1.90625,
+            "latency_interval95": [
+              1.78125,
+              2.0
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/switch_quiet/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 1.59375,
+            "latency_interval95": [
+              1.40625,
+              1.78125
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/decrease_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.5625,
+            "latency_interval95": [
+              5.125,
+              6.0
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/decrease_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 3.03125,
+            "latency_interval95": [
+              2.5625,
+              3.53125
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/increase_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 2.53125,
+            "latency_interval95": [
+              2.15625,
+              2.90625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/increase_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 6.1875,
+            "latency_interval95": [
+              5.78125,
+              6.625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/noise_jump/noise_decrease": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 32
+          },
+          "fixed/noise_jump/noise_increase": {
+            "count": 9,
+            "interval95": [
+              0.125,
+              0.4375
+            ],
+            "latency": 73.15625,
+            "latency_interval95": [
+              57.96875,
+              87.84375
+            ],
+            "pass": false,
+            "rate": 0.28125,
+            "total": 32
+          },
+          "fixed/noisy/blocks": {
+            "count": 19,
+            "interval95": [
+              0.006875,
+              0.017499999999999998
+            ],
+            "pass": true,
+            "rate": 0.011875,
+            "total": 1600
+          },
+          "fixed/quiet/blocks": {
+            "count": 15,
+            "interval95": [
+              0.004375,
+              0.015
+            ],
+            "pass": true,
+            "rate": 0.009375000000000001,
+            "total": 1600
+          },
+          "fixed/switch_noisy/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 6.5625,
+            "latency_interval95": [
+              5.780468750000001,
+              7.375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_noisy/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 7.0625,
+            "latency_interval95": [
+              6.375,
+              7.75
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_quiet/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 2.1875,
+            "latency_interval95": [
+              2.03125,
+              2.34375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_quiet/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 2.15625,
+            "latency_interval95": [
+              1.96875,
+              2.34375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          }
+        },
+        "status": "detector_negative"
+      },
+      "persistence": {
+        "cells": {
+          "closed/decrease_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 7.1875,
+            "latency_interval95": [
+              6.78125,
+              7.59375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/decrease_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.375,
+            "latency_interval95": [
+              5.0625,
+              5.75
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/increase_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.28125,
+            "latency_interval95": [
+              5.09375,
+              5.5
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/increase_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 7.1875,
+            "latency_interval95": [
+              6.78125,
+              7.59375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/noise_jump/noise_decrease": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 32
+          },
+          "closed/noise_jump/noise_increase": {
+            "count": 4,
+            "interval95": [
+              0.03125,
+              0.25
+            ],
+            "latency": 89.09375,
+            "latency_interval95": [
+              77.9375,
+              97.6875
+            ],
+            "pass": false,
+            "rate": 0.125,
+            "total": 32
+          },
+          "closed/noisy/blocks": {
+            "count": 21,
+            "interval95": [
+              0.007500000000000001,
+              0.018750000000000003
+            ],
+            "pass": true,
+            "rate": 0.013125000000000001,
+            "total": 1600
+          },
+          "closed/quiet/blocks": {
+            "count": 13,
+            "interval95": [
+              0.004375,
+              0.0125
+            ],
+            "pass": true,
+            "rate": 0.008125,
+            "total": 1600
+          },
+          "closed/switch_noisy/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 7.6875,
+            "latency_interval95": [
+              6.9375,
+              8.4375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/switch_noisy/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 8.03125,
+            "latency_interval95": [
+              7.4375,
+              8.625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/switch_quiet/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 4.9375,
+            "latency_interval95": [
+              4.84375,
+              5.0
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "closed/switch_quiet/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 4.84375,
+            "latency_interval95": [
+              4.71875,
+              4.96875
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/decrease_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 7.21875,
+            "latency_interval95": [
+              6.8125,
+              7.625
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/decrease_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.46875,
+            "latency_interval95": [
+              5.1875,
+              5.8125
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/increase_first/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.3125,
+            "latency_interval95": [
+              5.125,
+              5.53125
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/increase_first/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 7.34375,
+            "latency_interval95": [
+              6.9375,
+              7.75
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/noise_jump/noise_decrease": {
+            "count": 0,
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "latency": 100.0,
+            "latency_interval95": [
+              100.0,
+              100.0
+            ],
+            "pass": true,
+            "rate": 0.0,
+            "total": 32
+          },
+          "fixed/noise_jump/noise_increase": {
+            "count": 4,
+            "interval95": [
+              0.03125,
+              0.25
+            ],
+            "latency": 89.09375,
+            "latency_interval95": [
+              77.90625,
+              97.71875
+            ],
+            "pass": false,
+            "rate": 0.125,
+            "total": 32
+          },
+          "fixed/noisy/blocks": {
+            "count": 18,
+            "interval95": [
+              0.00625,
+              0.016875
+            ],
+            "pass": true,
+            "rate": 0.01125,
+            "total": 1600
+          },
+          "fixed/quiet/blocks": {
+            "count": 13,
+            "interval95": [
+              0.004375,
+              0.0125
+            ],
+            "pass": true,
+            "rate": 0.008125,
+            "total": 1600
+          },
+          "fixed/switch_noisy/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 7.53125,
+            "latency_interval95": [
+              6.780468750000001,
+              8.3125
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_noisy/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 8.03125,
+            "latency_interval95": [
+              7.5,
+              8.59375
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_quiet/target_down": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.0,
+            "latency_interval95": [
+              5.0,
+              5.0
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          },
+          "fixed/switch_quiet/target_up": {
+            "count": 32,
+            "interval95": [
+              1.0,
+              1.0
+            ],
+            "latency": 5.0,
+            "latency_interval95": [
+              5.0,
+              5.0
+            ],
+            "pass": true,
+            "rate": 1.0,
+            "total": 32
+          }
+        },
+        "status": "detector_negative"
+      }
+    }
+  },
+  "descriptive_diagnostics": {
+    "candidate/closed/core/noisy": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.035232026693362783,
+      "gate_mean": 0.03438142648802303,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "candidate/closed/core/quiet": {
+      "block_alarm_rate": 0.013125000000000001,
+      "gate_initial": 0.12452646400703118,
+      "gate_mean": 0.08470896240076725,
+      "n": 32,
+      "point_alarm_rate": 0.00015000000000000001
+    },
+    "candidate/closed/core/switch_noisy": {
+      "block_alarm_rate": 0.00125,
+      "gate_initial": 0.03262412800219128,
+      "gate_mean": 0.03810327261912788,
+      "n": 32,
+      "point_alarm_rate": 1.8750000000000002e-05
+    },
+    "candidate/closed/core/switch_quiet": {
+      "block_alarm_rate": 0.051250000000000004,
+      "gate_initial": 0.12434021286940147,
+      "gate_mean": 0.07476872923930261,
+      "n": 32,
+      "point_alarm_rate": 0.00113125
+    },
+    "candidate/closed/drift/drift": {
+      "block_alarm_rate": 0.016875,
+      "gate_initial": 0.12448894491127692,
+      "gate_mean": 0.0909019849634145,
+      "n": 32,
+      "point_alarm_rate": 0.0001875
+    },
+    "candidate/closed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.10941851679600133,
+      "gate_mean": 2.771943388007908e-16,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "candidate/closed/mixed/decrease_first": {
+      "block_alarm_rate": 0.01375,
+      "gate_initial": 0.035614788454690585,
+      "gate_mean": 0.04554318292816867,
+      "n": 32,
+      "point_alarm_rate": 0.0002375
+    },
+    "candidate/closed/mixed/increase_first": {
+      "block_alarm_rate": 0.015,
+      "gate_initial": 0.12493050638080457,
+      "gate_mean": 0.05803952306966767,
+      "n": 32,
+      "point_alarm_rate": 0.000225
+    },
+    "candidate/closed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.12278828270423596,
+      "gate_mean": 0.047392371473208836,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "candidate/fixed/core/noisy": {
+      "block_alarm_rate": 0.00875,
+      "gate_initial": 0.02670763928611713,
+      "gate_mean": 0.03139041594285142,
+      "n": 32,
+      "point_alarm_rate": 0.00021250000000000002
+    },
+    "candidate/fixed/core/quiet": {
+      "block_alarm_rate": 0.005,
+      "gate_initial": 0.026604042318071515,
+      "gate_mean": 0.03148884284068121,
+      "n": 32,
+      "point_alarm_rate": 0.00010625
+    },
+    "candidate/fixed/core/switch_noisy": {
+      "block_alarm_rate": 0.07375000000000001,
+      "gate_initial": 0.025305107716521898,
+      "gate_mean": 0.05075319398124503,
+      "n": 32,
+      "point_alarm_rate": 0.024606249999999996
+    },
+    "candidate/fixed/core/switch_quiet": {
+      "block_alarm_rate": 0.091875,
+      "gate_initial": 0.02731043075580384,
+      "gate_mean": 0.07192317226229358,
+      "n": 32,
+      "point_alarm_rate": 0.04820000000000001
+    },
+    "candidate/fixed/drift/drift": {
+      "block_alarm_rate": 0.43062500000000004,
+      "gate_initial": 0.026287101553627363,
+      "gate_mean": 0.25588498292116363,
+      "n": 32,
+      "point_alarm_rate": 0.33215625000000004
+    },
+    "candidate/fixed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0,
+      "gate_mean": 0.0,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "candidate/fixed/mixed/decrease_first": {
+      "block_alarm_rate": 0.083125,
+      "gate_initial": 0.026395971375663626,
+      "gate_mean": 0.06038897622700658,
+      "n": 32,
+      "point_alarm_rate": 0.03539375
+    },
+    "candidate/fixed/mixed/increase_first": {
+      "block_alarm_rate": 0.08250000000000002,
+      "gate_initial": 0.026732403649087782,
+      "gate_mean": 0.06092991567301172,
+      "n": 32,
+      "point_alarm_rate": 0.0356375
+    },
+    "candidate/fixed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.008125,
+      "gate_initial": 0.024623849219817598,
+      "gate_mean": 0.03180220689032921,
+      "n": 32,
+      "point_alarm_rate": 0.00025
+    },
+    "current/closed/core/noisy": {
+      "block_alarm_rate": 0.013750000000000002,
+      "gate_initial": 0.03539502113690146,
+      "gate_mean": 0.01954328416103676,
+      "n": 32,
+      "point_alarm_rate": 0.000225
+    },
+    "current/closed/core/quiet": {
+      "block_alarm_rate": 0.000625,
+      "gate_initial": 0.09227121179764282,
+      "gate_mean": 0.018350396752850908,
+      "n": 32,
+      "point_alarm_rate": 6.25e-06
+    },
+    "current/closed/core/switch_noisy": {
+      "block_alarm_rate": 0.05625,
+      "gate_initial": 0.04003107001625551,
+      "gate_mean": 0.021646261156983954,
+      "n": 32,
+      "point_alarm_rate": 0.00575
+    },
+    "current/closed/core/switch_quiet": {
+      "block_alarm_rate": 0.04375,
+      "gate_initial": 0.09204004995434825,
+      "gate_mean": 0.0182390568179535,
+      "n": 32,
+      "point_alarm_rate": 0.0027375
+    },
+    "current/closed/drift/drift": {
+      "block_alarm_rate": 0.000625,
+      "gate_initial": 0.092671990786099,
+      "gate_mean": 0.018365535318528046,
+      "n": 32,
+      "point_alarm_rate": 6.25e-06
+    },
+    "current/closed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.08648790591055028,
+      "gate_mean": 8.811973843875252e-07,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "current/closed/mixed/decrease_first": {
+      "block_alarm_rate": 0.053750000000000006,
+      "gate_initial": 0.036337432249003966,
+      "gate_mean": 0.020796194848498116,
+      "n": 32,
+      "point_alarm_rate": 0.00585625
+    },
+    "current/closed/mixed/increase_first": {
+      "block_alarm_rate": 0.050625,
+      "gate_initial": 0.09197769623529453,
+      "gate_mean": 0.020462845193740205,
+      "n": 32,
+      "point_alarm_rate": 0.004581249999999999
+    },
+    "current/closed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.014375,
+      "gate_initial": 0.09207669639380361,
+      "gate_mean": 0.018132087367326525,
+      "n": 32,
+      "point_alarm_rate": 0.00026875
+    },
+    "current/fixed/core/noisy": {
+      "block_alarm_rate": 0.008125,
+      "gate_initial": 0.03327661422207356,
+      "gate_mean": 0.019097603307587405,
+      "n": 32,
+      "point_alarm_rate": 0.00015625
+    },
+    "current/fixed/core/quiet": {
+      "block_alarm_rate": 0.01,
+      "gate_initial": 0.034969638042742265,
+      "gate_mean": 0.019242214751660484,
+      "n": 32,
+      "point_alarm_rate": 0.00013125000000000002
+    },
+    "current/fixed/core/switch_noisy": {
+      "block_alarm_rate": 0.08625,
+      "gate_initial": 0.03595800874512089,
+      "gate_mean": 0.03279176732730541,
+      "n": 32,
+      "point_alarm_rate": 0.031481249999999995
+    },
+    "current/fixed/core/switch_quiet": {
+      "block_alarm_rate": 0.104375,
+      "gate_initial": 0.03400385427923579,
+      "gate_mean": 0.04897165647958819,
+      "n": 32,
+      "point_alarm_rate": 0.06016874999999999
+    },
+    "current/fixed/drift/drift": {
+      "block_alarm_rate": 0.440625,
+      "gate_initial": 0.032458146568219104,
+      "gate_mean": 0.15636713519962694,
+      "n": 32,
+      "point_alarm_rate": 0.40409375000000003
+    },
+    "current/fixed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0,
+      "gate_mean": 0.0,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "current/fixed/mixed/decrease_first": {
+      "block_alarm_rate": 0.090625,
+      "gate_initial": 0.02974485032046744,
+      "gate_mean": 0.03833762421561297,
+      "n": 32,
+      "point_alarm_rate": 0.0428625
+    },
+    "current/fixed/mixed/increase_first": {
+      "block_alarm_rate": 0.090625,
+      "gate_initial": 0.03323080787060481,
+      "gate_mean": 0.03857231134227626,
+      "n": 32,
+      "point_alarm_rate": 0.0431125
+    },
+    "current/fixed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.01375,
+      "gate_initial": 0.03761368738132252,
+      "gate_mean": 0.01756444497865657,
+      "n": 32,
+      "point_alarm_rate": 0.00032500000000000004
+    },
+    "cusum/closed/core/noisy": {
+      "block_alarm_rate": 0.018750000000000003,
+      "gate_initial": 0.05036824254747099,
+      "gate_mean": 0.050777506795362734,
+      "n": 32,
+      "point_alarm_rate": 0.00060625
+    },
+    "cusum/closed/core/quiet": {
+      "block_alarm_rate": 0.0025,
+      "gate_initial": 0.3332192610600302,
+      "gate_mean": 0.05015128123377591,
+      "n": 32,
+      "point_alarm_rate": 3.7500000000000003e-05
+    },
+    "cusum/closed/core/switch_noisy": {
+      "block_alarm_rate": 0.058750000000000004,
+      "gate_initial": 0.04984292378844698,
+      "gate_mean": 0.05475142037117312,
+      "n": 32,
+      "point_alarm_rate": 0.008875
+    },
+    "cusum/closed/core/switch_quiet": {
+      "block_alarm_rate": 0.045,
+      "gate_initial": 0.33385016184872446,
+      "gate_mean": 0.05113053935100069,
+      "n": 32,
+      "point_alarm_rate": 0.0037
+    },
+    "cusum/closed/drift/drift": {
+      "block_alarm_rate": 0.00125,
+      "gate_initial": 0.33394862662250485,
+      "gate_mean": 0.05038065825724178,
+      "n": 32,
+      "point_alarm_rate": 1.8750000000000002e-05
+    },
+    "cusum/closed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.3175776800436297,
+      "gate_mean": 0.0,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "cusum/closed/mixed/decrease_first": {
+      "block_alarm_rate": 0.141875,
+      "gate_initial": 0.05382050867467356,
+      "gate_mean": 0.10325021503335285,
+      "n": 32,
+      "point_alarm_rate": 0.0771
+    },
+    "cusum/closed/mixed/increase_first": {
+      "block_alarm_rate": 0.14125000000000001,
+      "gate_initial": 0.3327361883235783,
+      "gate_mean": 0.10142867372563724,
+      "n": 32,
+      "point_alarm_rate": 0.0728125
+    },
+    "cusum/closed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.059375,
+      "gate_initial": 0.3329945326543461,
+      "gate_mean": 0.06721744076658558,
+      "n": 32,
+      "point_alarm_rate": 0.02636875
+    },
+    "cusum/fixed/core/noisy": {
+      "block_alarm_rate": 0.011875,
+      "gate_initial": 0.04323020088100963,
+      "gate_mean": 0.05058971785760627,
+      "n": 32,
+      "point_alarm_rate": 0.0005
+    },
+    "cusum/fixed/core/quiet": {
+      "block_alarm_rate": 0.009375000000000001,
+      "gate_initial": 0.04244698961634549,
+      "gate_mean": 0.0504058937547819,
+      "n": 32,
+      "point_alarm_rate": 0.0002875
+    },
+    "cusum/fixed/core/switch_noisy": {
+      "block_alarm_rate": 0.13437500000000002,
+      "gate_initial": 0.04258468462532937,
+      "gate_mean": 0.11011095345883071,
+      "n": 32,
+      "point_alarm_rate": 0.09119374999999999
+    },
+    "cusum/fixed/core/switch_quiet": {
+      "block_alarm_rate": 0.244375,
+      "gate_initial": 0.04348768940513866,
+      "gate_mean": 0.20620592607590157,
+      "n": 32,
+      "point_alarm_rate": 0.2002
+    },
+    "cusum/fixed/drift/drift": {
+      "block_alarm_rate": 0.804375,
+      "gate_initial": 0.04304913328836951,
+      "gate_mean": 0.7773936966552311,
+      "n": 32,
+      "point_alarm_rate": 0.7916875000000001
+    },
+    "cusum/fixed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0,
+      "gate_mean": 0.0,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "cusum/fixed/mixed/decrease_first": {
+      "block_alarm_rate": 0.14875,
+      "gate_initial": 0.043407001994823766,
+      "gate_mean": 0.12423623238808422,
+      "n": 32,
+      "point_alarm_rate": 0.10814375
+    },
+    "cusum/fixed/mixed/increase_first": {
+      "block_alarm_rate": 0.153125,
+      "gate_initial": 0.0433836515226571,
+      "gate_mean": 0.12587486482373753,
+      "n": 32,
+      "point_alarm_rate": 0.11019999999999999
+    },
+    "cusum/fixed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.016875,
+      "gate_initial": 0.042111883665525165,
+      "gate_mean": 0.049631192223527895,
+      "n": 32,
+      "point_alarm_rate": 0.0007000000000000001
+    },
+    "persistence/closed/core/noisy": {
+      "block_alarm_rate": 0.013125000000000001,
+      "gate_initial": 0.02158427169152176,
+      "gate_mean": 0.008706876524093507,
+      "n": 32,
+      "point_alarm_rate": 0.0003125
+    },
+    "persistence/closed/core/quiet": {
+      "block_alarm_rate": 0.008125,
+      "gate_initial": 0.0847567382270384,
+      "gate_mean": 0.00923494535069206,
+      "n": 32,
+      "point_alarm_rate": 0.00011875000000000001
+    },
+    "persistence/closed/core/switch_noisy": {
+      "block_alarm_rate": 0.05437500000000001,
+      "gate_initial": 0.02638689765529914,
+      "gate_mean": 0.010706753535193897,
+      "n": 32,
+      "point_alarm_rate": 0.00664375
+    },
+    "persistence/closed/core/switch_quiet": {
+      "block_alarm_rate": 0.058124999999999996,
+      "gate_initial": 0.08463712547317115,
+      "gate_mean": 0.009750721220466267,
+      "n": 32,
+      "point_alarm_rate": 0.0053375
+    },
+    "persistence/closed/drift/drift": {
+      "block_alarm_rate": 0.005625,
+      "gate_initial": 0.0850259394097012,
+      "gate_mean": 0.009362496304918191,
+      "n": 32,
+      "point_alarm_rate": 6.875e-05
+    },
+    "persistence/closed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.08565795452879572,
+      "gate_mean": 9.08721321260514e-07,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "persistence/closed/mixed/decrease_first": {
+      "block_alarm_rate": 0.05437500000000001,
+      "gate_initial": 0.022124917922848188,
+      "gate_mean": 0.01085460878813103,
+      "n": 32,
+      "point_alarm_rate": 0.0061125
+    },
+    "persistence/closed/mixed/increase_first": {
+      "block_alarm_rate": 0.052500000000000005,
+      "gate_initial": 0.08452178896635246,
+      "gate_mean": 0.010775029730095377,
+      "n": 32,
+      "point_alarm_rate": 0.00535
+    },
+    "persistence/closed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.013750000000000002,
+      "gate_initial": 0.08442978316500917,
+      "gate_mean": 0.008300463292233638,
+      "n": 32,
+      "point_alarm_rate": 0.0003125
+    },
+    "persistence/fixed/core/noisy": {
+      "block_alarm_rate": 0.01125,
+      "gate_initial": 0.019660162446052197,
+      "gate_mean": 0.008343021801180267,
+      "n": 32,
+      "point_alarm_rate": 0.00023749999999999997
+    },
+    "persistence/fixed/core/quiet": {
+      "block_alarm_rate": 0.008125,
+      "gate_initial": 0.021389721667324463,
+      "gate_mean": 0.008437681567991514,
+      "n": 32,
+      "point_alarm_rate": 0.00018125
+    },
+    "persistence/fixed/core/switch_noisy": {
+      "block_alarm_rate": 0.09125,
+      "gate_initial": 0.02245997226625241,
+      "gate_mean": 0.02074928411628548,
+      "n": 32,
+      "point_alarm_rate": 0.0350125
+    },
+    "persistence/fixed/core/switch_quiet": {
+      "block_alarm_rate": 0.11374999999999999,
+      "gate_initial": 0.020450425059578052,
+      "gate_mean": 0.039888823008538916,
+      "n": 32,
+      "point_alarm_rate": 0.07125625000000001
+    },
+    "persistence/fixed/drift/drift": {
+      "block_alarm_rate": 0.44499999999999995,
+      "gate_initial": 0.019010690869756548,
+      "gate_mean": 0.14140171404574758,
+      "n": 32,
+      "point_alarm_rate": 0.41020625
+    },
+    "persistence/fixed/exactly_quiet/exactly_quiet": {
+      "block_alarm_rate": 0.0,
+      "gate_initial": 0.0,
+      "gate_mean": 0.0,
+      "n": 32,
+      "point_alarm_rate": 0.0
+    },
+    "persistence/fixed/mixed/decrease_first": {
+      "block_alarm_rate": 0.100625,
+      "gate_initial": 0.016930049507166096,
+      "gate_mean": 0.027830293775750796,
+      "n": 32,
+      "point_alarm_rate": 0.05046875
+    },
+    "persistence/fixed/mixed/increase_first": {
+      "block_alarm_rate": 0.099375,
+      "gate_initial": 0.01996110321729235,
+      "gate_mean": 0.02802556582512225,
+      "n": 32,
+      "point_alarm_rate": 0.0506875
+    },
+    "persistence/fixed/noise_jump/noise_jump": {
+      "block_alarm_rate": 0.013125000000000001,
+      "gate_initial": 0.02418910062764197,
+      "gate_mean": 0.007647362511091805,
+      "n": 32,
+      "point_alarm_rate": 0.0004875
+    }
+  },
+  "manifest_digest": "aaf91e440da487bd43ac31daef75c43c440b8611064879eb58d123973f363c6d",
+  "protocol": {
+    "id": "v3-persistent-20260909-v1",
+    "registration_commit": "fc78d253bd3101b5a8d804f111cf89fe1a423f79",
+    "registration_sha256": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa"
+  },
+  "reached": [
+    "calibration",
+    "diagnostics"
+  ],
+  "status": "detector_negative",
+  "thresholds": {
+    "candidate": {
+      "closed": 0.8161801210201912,
+      "fixed": 0.4682240285231746
+    },
+    "current": {
+      "closed": 0.19560052134623715,
+      "fixed": 0.21194271589472133
+    },
+    "cusum": {
+      "closed": 0.3014929352662185,
+      "fixed": 0.32808257365743465
+    },
+    "persistence": {
+      "closed": 0.1519824470480801,
+      "fixed": 0.15631722071536694
+    }
+  }
+}

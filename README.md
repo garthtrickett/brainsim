@@ -59,6 +59,11 @@ Performance confirmation was therefore not run. See
 [V3-GAIN-FOLLOWUP-RESULTS.md](V3-GAIN-FOLLOWUP-RESULTS.md), or reproduce all 3,984
 reached rows with `python check_v3_gain.py --evidence results/v3-gain-followup --reproduce`.
 
+The next persistent detector passed every passive-observer check but failed six
+checks when coupled to learning. Its independent performance stage remains unrun.
+See [V3-PERSISTENT-RESULTS.md](V3-PERSISTENT-RESULTS.md), or reproduce its 192
+reached rows with `python check_v3_persistent.py --evidence results/v3-persistent --reproduce`.
+
 ## Architecture
 
 ```
