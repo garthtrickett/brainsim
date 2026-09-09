@@ -1,4 +1,5 @@
-import numpy as np, sys; sys.path.insert(0,'/home/gust/code/brainsim')
+import numpy as np, sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from brainsim import BrainSim
 # Why 1.00 at 2 classes and 0.32 at 4? Stop guessing; instrument it.
 # Candidates: (a) all motor cells fire, so eligibility cannot identify the chosen

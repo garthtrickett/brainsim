@@ -1,4 +1,5 @@
-import numpy as np, sys; sys.path.insert(0,'/home/gust/code/brainsim')
+import numpy as np, sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import tasks
 from brainsim import BrainSim
 # Round 2 hinted the sleep gradient HURTS on sparse reward (2.67 vs 5.33) but

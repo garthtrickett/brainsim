@@ -1,4 +1,5 @@
-import numpy as np, sys; sys.path.insert(0,'/tmp/brainsim')
+import numpy as np, sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 # CLAIM #3: prioritised replay (by |NM|) preserves old learning better than
 # uniform replay or none. SANITY GATE: the no-replay control MUST forget task A,

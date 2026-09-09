@@ -1,4 +1,5 @@
-import numpy as np, sys; sys.path.insert(0,'/home/gust/code/brainsim')
+import numpy as np, sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from brainsim import BrainSim
 # Threshold homeostasis exists so nothing goes silent or saturates (01: without
 # it 90% of neurons went silent -- on a RECURRENT net). Before disabling it in

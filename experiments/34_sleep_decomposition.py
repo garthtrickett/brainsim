@@ -1,5 +1,5 @@
 import numpy as np, sys, os
-sys.path.insert(0,'/home/gust/code/brainsim')
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import tasks
 from brainsim import BrainSim
 # Two runs of this were killed at session boundaries with EMPTY logs -- python

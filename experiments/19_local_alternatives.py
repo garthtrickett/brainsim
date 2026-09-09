@@ -1,4 +1,5 @@
-import numpy as np, sys; sys.path.insert(0,'/home/gust/code/brainsim')
+import numpy as np, sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from brainsim import BrainSim
 # My previous motor-kWTA test was broken: I edited votes AFTER step() so the
 # eligibility never saw it, and picked the winner from vm AFTER step() had reset
