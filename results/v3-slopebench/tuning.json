@@ -18,7 +18,7 @@
     "report_v3_retention.py": "de6e58181111615a58b1e31bea7df1c01d7377a4d0b789893f73b09a77b1fbdd",
     "report_v3_slice1.py": "b0eea587ada00c7a3dffd39a8050001a8cee4254bb822f92369c46f0f6b8ea20",
     "report_v3_slope.py": "df02f9298a12f7eb85d3a47e73bc449c7bd2816ace60d3d7ef36d8c61ca0731d",
-    "report_v3_slopebench.py": "0b9566509bd5d4dfb9022454b9a4162eb004fbce41f5a6ebfb9ba4eb800380b4",
+    "report_v3_slopebench.py": "9e7e35e63c8e0c17a432990fa86525fa4b68e095e2b214a5e9bc70631ecc554c",
     "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
     "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
     "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
@@ -401,7 +401,7 @@
           }
         }
       },
-      "seconds": 0.25
+      "seconds": 0.28
     },
     "window/0/151001": {
       "status": "ok",
@@ -3578,7 +3578,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/1/151002": {
       "status": "ok",
@@ -4284,7 +4284,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "window/1/151004": {
       "status": "ok",
@@ -5696,7 +5696,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/2/151000": {
       "status": "ok",
@@ -6049,7 +6049,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "window/2/151001": {
       "status": "ok",
@@ -9226,7 +9226,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "window/3/151002": {
       "status": "ok",
@@ -12403,7 +12403,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "window/4/151003": {
       "status": "ok",
@@ -19816,7 +19816,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/7/151000": {
       "status": "ok",
@@ -20169,7 +20169,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/7/151001": {
       "status": "ok",
@@ -20522,7 +20522,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/7/151002": {
       "status": "ok",
@@ -21228,7 +21228,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "window/7/151004": {
       "status": "ok",
@@ -21581,7 +21581,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "window/7/151005": {
       "status": "ok",
@@ -23346,7 +23346,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "window/8/151002": {
       "status": "ok",
@@ -24758,7 +24758,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "window/8/151006": {
       "status": "ok",
@@ -28641,7 +28641,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "window/10/151001": {
       "status": "ok",
@@ -38878,7 +38878,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/1/151006": {
       "status": "ok",
@@ -39231,7 +39231,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/1/151007": {
       "status": "ok",
@@ -39584,7 +39584,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/2/151000": {
       "status": "ok",
@@ -39937,7 +39937,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/2/151001": {
       "status": "ok",
@@ -40290,7 +40290,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/2/151002": {
       "status": "ok",
@@ -40643,7 +40643,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/2/151003": {
       "status": "ok",
@@ -45585,7 +45585,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/4/151001": {
       "status": "ok",
@@ -60058,7 +60058,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/9/151002": {
       "status": "ok",
@@ -63588,7 +63588,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/10/151004": {
       "status": "ok",
@@ -64294,7 +64294,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/10/151006": {
       "status": "ok",
@@ -65706,7 +65706,7 @@
           }
         }
       },
-      "seconds": 0.01
+      "seconds": 0.0
     },
     "sgd/11/151002": {
       "status": "ok",
@@ -66412,7 +66412,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "sgd/11/151004": {
       "status": "ok",
@@ -67824,7 +67824,7 @@
           }
         }
       },
-      "seconds": 0.0
+      "seconds": 0.01
     },
     "adwin/0/151000": {
       "status": "ok",
@@ -69583,7 +69583,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.05
     },
     "adwin/0/151001": {
       "status": "ok",
@@ -71252,7 +71252,7 @@
           }
         }
       },
-      "seconds": 0.06
+      "seconds": 0.04
     },
     "adwin/0/151002": {
       "status": "ok",
@@ -72939,7 +72939,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.04
     },
     "adwin/0/151003": {
       "status": "ok",
@@ -79699,7 +79699,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.04
     },
     "adwin/0/151007": {
       "status": "ok",
@@ -93600,7 +93600,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/2/151002": {
       "status": "ok",
@@ -96603,7 +96603,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/2/151005": {
       "status": "ok",
@@ -97570,7 +97570,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/2/151006": {
       "status": "ok",
@@ -98555,7 +98555,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/2/151007": {
       "status": "ok",
@@ -99558,7 +99558,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/3/151000": {
       "status": "ok",
@@ -103034,7 +103034,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.06
     },
     "adwin/3/151002": {
       "status": "ok",
@@ -106456,7 +106456,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.03
     },
     "adwin/3/151004": {
       "status": "ok",
@@ -114723,7 +114723,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/4/151001": {
       "status": "ok",
@@ -118710,7 +118710,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.02
     },
     "adwin/4/151004": {
       "status": "ok",
@@ -121352,7 +121352,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/4/151006": {
       "status": "ok",
@@ -124012,7 +124012,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/5/151000": {
       "status": "ok",
@@ -127369,7 +127369,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/5/151003": {
       "status": "ok",
@@ -134413,7 +134413,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.05
     },
     "adwin/6/151001": {
       "status": "ok",
@@ -141053,7 +141053,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.07
     },
     "adwin/6/151005": {
       "status": "ok",
@@ -144355,7 +144355,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.06
     },
     "adwin/6/151007": {
       "status": "ok",
@@ -148696,7 +148696,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/7/151002": {
       "status": "ok",
@@ -150041,7 +150041,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/7/151003": {
       "status": "ok",
@@ -153908,7 +153908,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.03
     },
     "adwin/7/151006": {
       "status": "ok",
@@ -155193,7 +155193,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/7/151007": {
       "status": "ok",
@@ -156460,7 +156460,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/8/151000": {
       "status": "ok",
@@ -159751,7 +159751,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/8/151003": {
       "status": "ok",
@@ -160808,7 +160808,7 @@
           }
         }
       },
-      "seconds": 0.07
+      "seconds": 0.03
     },
     "adwin/8/151004": {
       "status": "ok",
@@ -163973,7 +163973,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/8/151007": {
       "status": "ok",
@@ -165012,7 +165012,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/9/151000": {
       "status": "ok",
@@ -168255,7 +168255,7 @@
           }
         }
       },
-      "seconds": 0.04
+      "seconds": 0.08
     },
     "adwin/9/151002": {
       "status": "ok",
@@ -177913,7 +177913,7 @@
           }
         }
       },
-      "seconds": 0.05
+      "seconds": 0.04
     },
     "adwin/10/151000": {
       "status": "ok",
@@ -180567,7 +180567,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/10/151002": {
       "status": "ok",
@@ -183089,7 +183089,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/10/151004": {
       "status": "ok",
@@ -185696,7 +185696,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/10/151006": {
       "status": "ok",
@@ -186981,7 +186981,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/10/151007": {
       "status": "ok",
@@ -188303,7 +188303,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/11/151000": {
       "status": "ok",
@@ -189396,7 +189396,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/11/151001": {
       "status": "ok",
@@ -190489,7 +190489,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.03
     },
     "adwin/11/151002": {
       "status": "ok",
@@ -191534,7 +191534,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.04
     },
     "adwin/11/151003": {
       "status": "ok",
@@ -192585,7 +192585,7 @@
           }
         }
       },
-      "seconds": 0.02
+      "seconds": 0.06
     },
     "adwin/11/151004": {
       "status": "ok",
@@ -195763,7 +195763,7 @@
           }
         }
       },
-      "seconds": 0.03
+      "seconds": 0.02
     },
     "adwin/11/151007": {
       "status": "ok",
