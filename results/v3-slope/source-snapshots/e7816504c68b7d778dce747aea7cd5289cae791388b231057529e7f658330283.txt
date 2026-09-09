@@ -62,7 +62,7 @@ def memory_metrics(data, result, arm):
                 'total_discarded': None, 'events': request_events(result[1][:, j], data.events[j])}
             continue
         flags = result[1][:, j]
-        if arm in FAMILIES:
+        if arm in ('window', 'adwin'):
             record = window_record(flags, result[3][:, j], result[4][:, j], data.events[j])
             record['kind'] = 'window'
         else:

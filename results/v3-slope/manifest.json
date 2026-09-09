@@ -26,7 +26,7 @@
     "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
     "study_v3_retention.py": "ce6c09b41b6427203f610b882b2db0d7680ddc2c232aa592c743ce98786a261a",
     "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
-    "study_v3_slope.py": "be2956fd05068e602ad08a253272b301e1cf28d4ea6e3f50d000fb1a2d110b0b",
+    "study_v3_slope.py": "e7816504c68b7d778dce747aea7cd5289cae791388b231057529e7f658330283",
     "v3_adwin.py": "994d32ad2ae9f160af83aff2c043da92fb439f659316f4e4de5ffeee30855e97",
     "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
     "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
@@ -382,7 +382,7 @@
       "probability": 0.00018573551263001485
     }
   },
-  "tuning_digest": "1bb5f5b64ad50facd08a6c0d67df8a1935a8b15565b32bbd88286a00b70c15dd",
+  "tuning_digest": "4748152494584989bd599f1fbbbbb914d52d7df7cca83d1f31e0ea4955175c39",
   "expected_counts": {
     "tuning": 384,
     "confirmation": 192
