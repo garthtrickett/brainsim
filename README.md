@@ -80,6 +80,14 @@ Perfect timing improved adaptation while still failing full retention requiremen
 See [V3-FORGETTING-RESULTS.md](V3-FORGETTING-RESULTS.md), or reproduce all 736 rows
 with `python check_v3_forgetting.py --evidence results/v3-forgetting --reproduce`.
 
+The interference-as-discovery follow-up closed discovery-negative: the cue
+unit reached AUC* 0.626, identical to the shuffled-cue control, so contested
+weights did not localize the hidden context; conditioning added nothing over
+random splits and lost to pooled prediction. True-context oracles adapted far
+better but still failed full retention. See
+[V3-DISCOVERY-RESULTS.md](V3-DISCOVERY-RESULTS.md), or reproduce all 768 rows
+with `python check_v3_discovery.py --evidence results/v3-discovery --reproduce`.
+
 ## Architecture
 
 ```

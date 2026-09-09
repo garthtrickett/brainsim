@@ -37,6 +37,11 @@ perfect-timing oracle. See `V3-BURST-RESULTS.md`; no subsequent item is activate
 The separately authorized forgetting study is also closed: learning-negative despite
 matched-control gains and improved oracle adaptation. Stable/noise tradeoffs remain;
 see `V3-FORGETTING-RESULTS.md`. No further experiment or integration is activated.
+The separately authorized interference-as-discovery study then tested §11.1
+against a hidden-context ground truth and closed discovery-negative: no
+localisation beyond the shuffled control, no conditioning benefit over random
+splits or pooled prediction. See `V3-DISCOVERY-RESULTS.md`; no subsequent
+item is activated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.

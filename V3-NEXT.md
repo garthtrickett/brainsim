@@ -37,6 +37,14 @@ and a strong oracle adaptation benefit did not satisfy the full learning/retenti
 criteria. See [V3-FORGETTING-RESULTS.md](V3-FORGETTING-RESULTS.md). All 736 reached
 rows are archived; the finite-menu experiment is closed without integration.
 
+The interference-as-discovery follow-up is now complete: the §11.1 candidate
+failed its ground-truth localisation gate (candidate AUC* 0.626, shuffled
+0.626) and the full learning gate (57/90; conditioning loses to pooled
+prediction). True-context oracles adapted far better but still failed full
+retention. See [V3-DISCOVERY-RESULTS.md](V3-DISCOVERY-RESULTS.md). All 768
+reached rows are archived; the finite-menu experiment is closed without
+integration.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
