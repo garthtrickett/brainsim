@@ -111,6 +111,12 @@ See
 [V3-TOLERANCE-RESULTS.md](V3-TOLERANCE-RESULTS.md), or reproduce all 736 rows
 with `python check_v3_tolerance.py --evidence results/v3-tolerance --reproduce`.
 
+The drift-boundary follow-up tested whether granting ramp times fixes drift:
+it does not — drift failed at unchanged values with the enriched schedule
+fully engaged, so the wall is the mechanism, not the schedule ontology. See
+[V3-DRIFT-RESULTS.md](V3-DRIFT-RESULTS.md), or reproduce all 480 rows
+with `python check_v3_drift.py --evidence results/v3-drift --reproduce`.
+
 ## Architecture
 
 ```
