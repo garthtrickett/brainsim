@@ -71,7 +71,7 @@ def absolute_summary(rows):
                             if not np.isfinite(record['slope_mean']):
                                 raise ValueError('invalid slope magnitude')
                 fields = ('excess_mse', 'post_mse', 'stable_mse', 'adaptation_latency', 'ramp_mse')
-                c = {f: None if values[0]['coordinates'][coord][f] is None else float(np.mean([
+                c = {f: None if values[0]['coordinates'][coord].get(f) is None else float(np.mean([
                     v['coordinates'][coord][f] for v in values])) for f in fields}
                 c.update(resets_total=sum(v['reset_count'] for v in memory), events={})
                 for field in ('width_mean', 'width_final', 'total_discarded'):
