@@ -66,6 +66,10 @@ The separately authorized slope-timing study then gated that trend regime by
 observed ADWIN alarms instead: false alarms on noise destroyed stability and
 the primary win missed its 10% rule. See `V3-SLOPETIME-RESULTS.md`. No
 further experiment or integration is activated.
+The separately authorized slope broader benchmark then tested steep, shallow
+and noisy ramps: steep and noisy pass, but the shallow ramp loses strictly to
+the fast window, narrowing the mechanism to non-weak signals. See
+`V3-SLOPEBENCH-RESULTS.md`. No further experiment or integration is activated.
 The separately authorized slope-state study then added a trend regime gated
 on granted drift boundaries and closed the first full V3 positive (75/75),
 beating SGD on the ramp with everything else preserved. See
