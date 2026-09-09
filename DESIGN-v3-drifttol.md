@@ -96,12 +96,12 @@ committed manifest BEFORE independent confirmation.
 | --- | --- | --- |
 | Development only | 170000–170007 | unit/synthetic only |
 | Tuning | 171000–171007 | 3×12×8 = 288 |
-| Independent confirmation | 173000–173031 | 8×32 = 256 |
+| Independent confirmation | 173000–173031 | 9×32 = 288 |
 | Bootstrap RNG only | 175000 | 10000 whole-seed resamples |
 
 All seed ranges and the 176000+ RNG domains are fresh, including unused
 reservations of previous studies. Do not reopen old studies or substitute
-seeds. Run all 256 confirmation rows if tuning permits: window, sgd, adwin,
+seeds. Run all 288 confirmation rows if tuning permits: window, sgd, adwin,
 reference, jitter_32/256/1024, drop_50, oracle_nofallback — the fast base on
 the enriched schedule, carried as the diagnostic floor showing what losing
 the regime entirely costs. Do not stop measuring any arm based on another
@@ -128,7 +128,7 @@ states and regime at each prediction. Always expose finite-seed counts and
 expected versus realized schedule activity.
 
 Phases: (1) register/refine; (2) implement/test and commit all scientific
-sources; (3) tune all 288/freeze manifest; (4) confirm all 256; (5) reproduce
+sources; (3) tune all 288/freeze manifest; (4) confirm all 288; (5) reproduce
 every reached row, manifest, selection and report; (6) publish a draft
 codex/** PR, monitor all seventeen workflows at exact HEAD, mark ready and
 merge when green and reviews resolved. Use separate v3_drifttol
