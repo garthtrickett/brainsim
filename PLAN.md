@@ -42,6 +42,12 @@ against a hidden-context ground truth and closed discovery-negative: no
 localisation beyond the shuffled control, no conditioning benefit over random
 splits or pooled prediction. See `V3-DISCOVERY-RESULTS.md`; no subsequent
 item is activated.
+The separately authorized oracle-schedule retention study then granted true
+change times and composed a fast window with ADWIN2: the tradeoff held
+(primary 0.083 against every control, every stable/noise cell against ADWIN
+passed) but the experiment closed learning-negative on drift, which neither
+component tracks. See `V3-RETENTION-RESULTS.md`. No further experiment or
+integration is activated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.

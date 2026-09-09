@@ -95,6 +95,14 @@ better but still failed full retention. See
 [V3-DISCOVERY-RESULTS.md](V3-DISCOVERY-RESULTS.md), or reproduce all 768 rows
 with `python check_v3_discovery.py --evidence results/v3-discovery --reproduce`.
 
+The oracle-schedule retention follow-up closed learning-negative on drift, not
+on the adaptation/stability tradeoff: primary 0.083 beat every control while
+every stable/noise cell against ADWIN passed, but drift tracking failed
+against SGD and the fixed window, plus a strict-veto tie on a 0-vs-0
+noiseless cell. See
+[V3-RETENTION-RESULTS.md](V3-RETENTION-RESULTS.md), or reproduce all 576 rows
+with `python check_v3_retention.py --evidence results/v3-retention --reproduce`.
+
 ## Architecture
 
 ```
