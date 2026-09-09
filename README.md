@@ -64,6 +64,11 @@ checks when coupled to learning. Its independent performance stage remains unrun
 See [V3-PERSISTENT-RESULTS.md](V3-PERSISTENT-RESULTS.md), or reproduce its 192
 reached rows with `python check_v3_persistent.py --evidence results/v3-persistent --reproduce`.
 
+The separate-reference follow-up passed detection and reached independent learning
+tests. It failed advancement against tuned Adam/SGD and on retention; see
+[V3-REFERENCE-RESULTS.md](V3-REFERENCE-RESULTS.md). Reproduce all 368 reached rows
+with `python check_v3_reference.py --evidence results/v3-reference --reproduce`.
+
 ## Architecture
 
 ```

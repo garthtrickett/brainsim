@@ -28,6 +28,9 @@ detection when noise increased; performance remains unrun. See
 A separately authorized persistent-detector test then passed passive observation
 but failed six learning-coupled detection cells. It is closed before performance;
 see `V3-PERSISTENT-RESULTS.md`. No subsequent item is activated.
+The separately authorized reference-detector experiment passed detection but
+failed independent learning advancement; see `V3-REFERENCE-RESULTS.md`. All its
+stages are complete, with no default change or subsequent item activated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.

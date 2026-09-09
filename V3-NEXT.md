@@ -21,6 +21,12 @@ observer cells pass, but six learning-coupled detector cells fail. Performance w
 not opened. See [V3-PERSISTENT-RESULTS.md](V3-PERSISTENT-RESULTS.md). This experiment
 is closed; its observer result does not establish a learning rule.
 
+The separately authorized reference-detector test now separates detection from
+learning: detection passed, but independent learning did not beat the strong
+controls while preserving retention. See [V3-REFERENCE-RESULTS.md](V3-REFERENCE-RESULTS.md).
+It also showed that missed alarms can coexist with timely prediction recovery.
+This experiment is closed; no automatic follow-up is activated.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
