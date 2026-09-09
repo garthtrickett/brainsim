@@ -37,7 +37,8 @@ same first/second schedule draws (uniform 1800–2200 and 3800–4200):
 - **steep:** target linspace(1,-1) over [first,first+500), flat -1 after;
   σ=0.05. Events (first,'drift_start'), (first+500,'drift_end').
 - **shallow:** target linspace(0.5,-0.5) over [first,first+4000), flat after;
-  σ=0.05. Same event kinds.
+  σ=0.05. Same event kinds. The end clips to 5999 when first+4000 exceeds the
+  fixture length; events carry the actual end.
 - **noisy:** target linspace(1,-1) over [first,second) (the trained shape);
   σ=0.5, ten times the training noise. Same event kinds.
 
@@ -80,11 +81,10 @@ family.
 
 The advancement gate is the slope 75-structure verbatim: primary ≥10% over
 window/SGD/ADWIN/random with preservation against no-fallback, every
-retention bound, strict improvement on the 8 stable/noise cells against
-no-fallback with the both-perfect repair — where "stable/noise" now reads
-the adapted cell set (core quiet/noisy excess, noise-free stationary
-excesses, transition windows, mixed stable, and the three ramp excess cells
-against no-fallback). All **75 comparisons** must pass for
+retention bound, strict improvement against no-fallback on the 7 adapted
+stable cells (core quiet/noisy excess, mixed stable per coordinate, and the
+three ramp excess cells) with the both-perfect repair — where a both-perfect
+cell passes as preservation instead. All **75 comparisons** must pass for
 learning_positive; otherwise learning_negative. Non-finite required
 trajectories fail; missing/malformed evidence remains incomplete. Controls
 cannot be dropped. Every final disposition closes this registration with no
