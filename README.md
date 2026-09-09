@@ -143,6 +143,12 @@ See
 [V3-SLOPEGUARD-RESULTS.md](V3-SLOPEGUARD-RESULTS.md), or reproduce all 608 rows
 with `python check_v3_slopeguard.py --evidence results/v3-slopeguard --reproduce`.
 
+Drift-boundary jitter leaves the slope win intact through ±256 steps and
+kills it by ±1024 — ramps forgive what steps do not — landing in the
+pre-stated middle band that authorizes nothing further. See
+[V3-DRIFTTOL-RESULTS.md](V3-DRIFTTOL-RESULTS.md), or reproduce all 576 rows
+with `python check_v3_drifttol.py --evidence results/v3-drifttol --reproduce`.
+
 ## Architecture
 
 ```
