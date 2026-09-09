@@ -17,8 +17,9 @@ does not claim every proposed mechanism was implemented. Dispositions:
 | 13a | Context retrieval does not beat shuffled queries |
 | 13c | Failure does not beat appropriate controls without regressions |
 
-Next: `V3-NEXT.md` recommends testing §9 directly before a v2 rewrite. V3 is
-unbuilt; its further queue has not been activated by these v1 investigations.
+V3 §9's first standalone test is now complete: the registered candidate fails
+advancement. See `V3-RESULTS.md`. No agent integration follows, and the further
+v3 queue and v2 rewrite remain unactivated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.
