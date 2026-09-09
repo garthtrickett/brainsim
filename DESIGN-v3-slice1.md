@@ -1,10 +1,11 @@
-# V3 slice 1: a falsifiable noise-aware plasticity experiment
+# Registered protocol: V3 slice 1 mean-disagreement successor
 
-Status: activated by the operator on 2026-09-09; phases are in progress. Written
-2026-09-09 after the first §9 experiment. This file plans one successor
-experiment, not the whole v3 queue. A negative or inconclusive result is a valid
-completion. The operator has now explicitly authorized autonomous execution, including
-closure when a registered prerequisite fails.
+Protocol ID: `v3-slice1-mean-20260909-v1`. Registered before successor calibration,
+tuning, or confirmation. The operator activated the refined plan on 2026-09-09.
+The accepted plan is commit `b05a41d6a898a2f87a9161d5f45aa94eb85c619d`.
+The registration publication commit will be recorded in the instrument and every
+evidence envelope after Phase 0 merges, so no self-referential commit hash is
+needed in this document. This protocol is immutable once published.
 
 ## Outcome and boundary
 
@@ -38,7 +39,7 @@ prerequisite for a separately registered noisy-volatile agent experiment.
 | 6. Close and publish | Report, source archive, CI reproduction and disposition | Evidence complete; published checks green | Fix reproduction defects, not acceptance thresholds |
 
 Each phase depends on the previous one. Evidence of failure advances to Phase 6,
-not to the next capability phase. No implementation phase is marked complete yet.
+not to the next capability phase. Phase completion is tracked outside this immutable registration.
 
 ## Phase 0 — preserve the result and register the successor
 
@@ -362,54 +363,76 @@ exploration interventions, matched simpler controls, fresh seeds, and v1
 regression checks. Its implementation and acceptance thresholds belong to that
 next slice, not this one.
 
-## Refinement record
 
-This section records changes to the plan, not completed implementation work.
+## Operational definitions fixed before implementation
 
-### Pass 1 — scope and hypothesis audit
+- Stream RNGs use NumPy PCG64 via `default_rng(SeedSequence([seed, domain]))`.
+  Domain 0 generates the two shared event indices using inclusive endpoints;
+  domains 1..4 generate the four core coordinate noises independently. Extra
+  fixtures use domains 11 (noise jump), 12 (drift) and 13 (exactly quiet).
+  All fixtures use the same schedule for a seed. Each extra fixture is scalar.
+- Coordinate order is `quiet`, `noisy`, `switch_quiet`, `switch_noisy`.
+  Target is -1 from the first event inclusive to the second exclusive in the
+  switching coordinates. Drift uses equally spaced values +1 to -1 with the
+  endpoint excluded over that interval, and stays -1 afterwards.
+- Every stationary block starts at burn-in + 100*k. Event windows include the
+  event observation and exclude event + window_length. Full-stream metrics start
+  at burn-in. Stable-region error excludes each true target switch's first 200
+  predictions. Noise changes are not target switches.
+- Gate means and gate multipliers are measured per coordinate. Update norm is
+  the Euclidean norm across that observation's coordinate updates; retain its
+  mean and sum. Timings are high-resolution seconds, separate from science;
+  the inherited Evidence envelope's rounded `seconds` field is also retained.
+- Configuration order is ascending rate, then listed beta2/gain. Arm order is
+  `sgd`, `adam`, `single`, `historical`, `candidate`; the derived `constant`
+  ablation is never included in hyperparameter selection. SGD uses exactly
+  `np.geomspace(.0001, 1., 24)`; there is no rounding of generated rates.
+- Finish all 1,920 tuning rows before applying the screening rule. First classify
+  absent valid configurations or required rate/gain boundary winners as
+  tuning-inconclusive; only if none exist classify candidate gain=0 as a
+  tuning-only negative. Do not call it independent confirmation. An ineligible
+  configuration has an explicit failure record, never NaN/Infinity in JSON.
+- Calibration is reached only if that tuning screen passes. Its expected rows
+  are 16 seeds for each of the three gated arms. Each row records both observer
+  modes' core statistics and block maxima. Candidate rows also provide the
+  per-coordinate gate means for the constant ablation. All 48 rows are required.
+- Detector confirmation has 32 seeds for each of the three gated arms, each row
+  containing fixed and closed-loop results on core plus all three extra fixtures.
+  Learning scores from those closed-loop runs cannot be used for retuning or as
+  Phase 5 evidence. Phase 5, if reached, has 32 seeds for each of six arms,
+  with core plus the three extra fixtures in every row.
+- Required detector cells: 4 true-switch cells, 2 stationary block cells and
+  2 noise-change cells per observer mode; 16 candidate cells total. Each switch
+  direction and noise-change direction has denominator 32; stationary blocks
+  have denominator 32*50. Compute each seed's fraction before seed resampling.
+  Descriptive bootstrap intervals use 10,000 resamples and seed 35000.
+- Decision code must reject missing, wrong-denominator or non-finite required
+  metrics. Point screening comparisons are inclusive (>=.80, <=.05). Performance
+  improvement is <=.90 times each control and bootstrap upper difference <0;
+  retention comparisons use <= the specified allowance. Resample paired seeds,
+  never individual events/coordinates as independent samples.
+- Evidence lives only under `results/v3-slice1/` (or isolated reproduction temp
+  directories). All learning/stream/metric/decision/runner source hashes plus
+  this protocol are captured before the first prepare. Reports have a separate
+  source fingerprint. Expected keys and reached-stage disposition are checked,
+  not inferred from whichever rows happen to exist.
+- A tuning stop produces a committed screening manifest and closure report;
+  calibration, detector and performance files are explicitly NOT EXPECTED.
+  A detector stop requires all calibration and detector rows and a matching
+  decision; only performance is not expected. Positive/learning-negative closure
+  requires all four stages. Unexpected files from a forbidden later stage fail
+  closure validation. An interrupted incomplete run is not a closed experiment.
+- Automated reproduction reads the committed manifest as the reference. It may
+  regenerate reached rows in temporary storage and recalculate decisions, but
+  has no option to execute a stage absent from the frozen reached-stage record.
+  Reports must display every observed failure and each not-run prerequisite.
 
-Found: treating the first failed variance gate as all of v3 would overstate the
-result; simply swapping in raw second moments would erase symmetric sign changes.
-Refined: preserve the original evidence, explicitly name the new mean-disagreement
-hypothesis, specify its recurrence, and end the slice before agent integration. A
-successor failure closes this candidate, not every v3 idea.
+## Baseline verification and diagnosis
 
-### Pass 2 — false-positive and comparison audit
-
-Found: noise-specific test thresholds leak evaluator knowledge into detection;
-averaging noise increases/decreases hides directional failure; separate tuning per
-regime can evade the coexistence problem; increased average learning rate can
-masquerade as useful modulation. Refined: one calibration threshold per observer
-mode across noise strata; per-direction criteria; simultaneous coordinates with
-one shared configuration; and a frozen constant-gate ablation alongside SGD, Adam
-and the stronger single control. Gains must survive per-regime and retention
-comparisons.
-
-### Pass 3 — execution and stopping audit
-
-Found: bounded-grid winners at an edge do not establish adequate baseline tuning;
-a plan can silently reopen held-out seeds; a failed early gate can look like
-missing later evidence; extra-stream retention windows were underspecified.
-Refined: explicit seed partitions and grids, search-inconclusive outcomes,
-committed manifests checked by the runner, separate detector/performance seeds,
-prerequisite enforcement, exact scoring windows, and evidence that distinguishes
-scientific failure from unexecuted phases. No automatic retry or formula search.
-
-### Pass 4 — adversarial final read
-
-Found: an optional historical comparator could unnecessarily block advancement; a
-non-finite trial lacked selection semantics; confirmation reproduction could
-conflict with the committed-manifest rule; and a tuning rejection could be
-mistaken for a confirmed null. Refined: distinguish required controls from
-historical context, make incomplete configurations ineligible, specify read-only
-manifest reproduction, classify instrument errors separately, and label
-tuning-only rejection explicitly.
-
-### Final review criterion
-
-The plan is ready when every phase has an input, concrete file/output, measurable
-exit and failure route; every scored metric has an observation boundary and
-window; the candidate cannot earn advancement by beating only Adam; old evidence
-and new confirmation remain separate; and completing the plan can honestly end in
-a null. Readiness is about implementability and falsifiability, not confidence
-that this candidate will win.
+The unchanged first study is reproduced before publication with
+`python check_v3_gate.py --evidence results/v3 --reproduce` and its generated
+report checked with `python report_v3_gate.py --check`. The measured misses and
+noise responses motivate the successor. The inference that mean disagreement
+will separate these cases remains untested. Shared samples, a constant-gate
+ablation, per-direction noise tests, and independent confirmation are intended
+to expose rather than assume that benefit.
