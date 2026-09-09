@@ -69,6 +69,11 @@ tests. It failed advancement against tuned Adam/SGD and on retention; see
 [V3-REFERENCE-RESULTS.md](V3-REFERENCE-RESULTS.md). Reproduce all 368 reached rows
 with `python check_v3_reference.py --evidence results/v3-reference --reproduce`.
 
+The bounded-burst follow-up also closed learning-negative: the detector caught
+changes, but detected bursts and even the tuned perfect-timing diagnostic failed
+the full learning criteria against SGD. See [V3-BURST-RESULTS.md](V3-BURST-RESULTS.md).
+Reproduce all 704 rows with `python check_v3_burst.py --evidence results/v3-burst --reproduce`.
+
 ## Architecture
 
 ```
