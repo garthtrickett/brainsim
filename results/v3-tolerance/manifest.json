@@ -1,0 +1,342 @@
+{
+  "protocol": {
+    "id": "v3-tolerance-20260909-v1",
+    "registration_commit": "9e203452af19caad4a173541e5d6888e4e6b2880",
+    "registration_sha256": "1f3229edb5a3ca1cd351c47bfee1bc95d70a8b924970e4796b80ae59a22b7e3f"
+  },
+  "sources": {
+    "DESIGN-v3-burst.md": "ef249ae9dcf9afe8822ee2c0f188f2e780596450b7fcc6881028191b3e8a4d5c",
+    "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
+    "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
+    "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
+    "DESIGN-v3-tolerance.md": "1f3229edb5a3ca1cd351c47bfee1bc95d70a8b924970e4796b80ae59a22b7e3f",
+    "check_v3_burst.py": "177659e8f2adadf81d310a788d8c2ee65a70d4fa2a09a2dc883b2d8e306eaae3",
+    "check_v3_tolerance.py": "ee697084b5348c3d898b0016f55c4ad063cb63e1e6e45a4a10ec2725e480c9d7",
+    "report_v3_burst.py": "fc54e016287bd6f1c368a02885f0f92f435b09879659da8dd30e0be393c0b50a",
+    "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
+    "report_v3_retention.py": "de6e58181111615a58b1e31bea7df1c01d7377a4d0b789893f73b09a77b1fbdd",
+    "report_v3_slice1.py": "b0eea587ada00c7a3dffd39a8050001a8cee4254bb822f92369c46f0f6b8ea20",
+    "report_v3_tolerance.py": "88eceb56809b7631a866228f182e6324082ccb72a3efd0e62006aa82a7998335",
+    "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
+    "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
+    "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
+    "study_v3_burst.py": "ab8be80d2a2b63f27653d07810afaf72ad805b18570378e4571e16f90808bdd5",
+    "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
+    "study_v3_retention.py": "ce6c09b41b6427203f610b882b2db0d7680ddc2c232aa592c743ce98786a261a",
+    "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
+    "study_v3_tolerance.py": "9bc50f3533be5423b2ce013fc1a7c543c4ac2c03a3db018130a52af5d43438cb",
+    "v3_adwin.py": "994d32ad2ae9f160af83aff2c043da92fb439f659316f4e4de5ffeee30855e97",
+    "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
+    "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
+    "v3_forgetting.py": "af006010aeb12ecb35083f97bf56674d127aa4c9f52db40cc85cf134efc3e189",
+    "v3_gate.py": "9875703dad1ef620dd3b8d9323a5502d9612490ba9830b7d3581b39fed2571d1",
+    "v3_persistent.py": "14857640d40cb86546c5441f1a43275b5d674a9d2fb8e0cb0671d68a2248c0f9",
+    "v3_reference.py": "0b019a5066b214583e4897d73a16ec2a24a13b361aca4f876f089acd837144a2",
+    "v3_reference_policy.py": "2f3da6886e78035da72addc8fd468eea3fb9d0c10b7c1b76421beac139f83684",
+    "v3_retention.py": "fd466d2e63dcc6ce93ba04f6e7a96a7af3353b8814feacdd1aebcb7cf70af15a",
+    "v3_retention_policy.py": "3dc86a11da5cc3edfa89e0884bb1b11d5c96e24d7fbc7fcbdfa16e773a495cae",
+    "v3_slice1_decisions.py": "8c768720340933586b1b3220c1591b8e25c50aaf622c0e8962b10d128b24482b",
+    "v3_slice1_learning.py": "000e4be3ddf729f5e403074634b1861061b496c01488b2de8f3f4aada6384648",
+    "v3_slice1_streams.py": "6d5a264013357468f5882e929236831e94d3ae0e19b5b4d4ba35e1e9b087932d",
+    "v3_tolerance.py": "4f0362e54f255ce677997d10294118e0a27a4bb6f34402d000b9cd728321485b",
+    "v3_tolerance_policy.py": "85be41a066e6c8a61095a7fa6ea24271844837263aeacf83e6aae8c1308e6dee"
+  },
+  "seeds": {
+    "development": [
+      110000,
+      110001,
+      110002,
+      110003,
+      110004,
+      110005,
+      110006,
+      110007
+    ],
+    "tuning": [
+      111000,
+      111001,
+      111002,
+      111003,
+      111004,
+      111005,
+      111006,
+      111007
+    ],
+    "confirmation": [
+      113000,
+      113001,
+      113002,
+      113003,
+      113004,
+      113005,
+      113006,
+      113007,
+      113008,
+      113009,
+      113010,
+      113011,
+      113012,
+      113013,
+      113014,
+      113015,
+      113016,
+      113017,
+      113018,
+      113019,
+      113020,
+      113021,
+      113022,
+      113023,
+      113024,
+      113025,
+      113026,
+      113027,
+      113028,
+      113029,
+      113030,
+      113031
+    ]
+  },
+  "grids": {
+    "window": [
+      {
+        "window": 1
+      },
+      {
+        "window": 2
+      },
+      {
+        "window": 4
+      },
+      {
+        "window": 8
+      },
+      {
+        "window": 16
+      },
+      {
+        "window": 32
+      },
+      {
+        "window": 64
+      },
+      {
+        "window": 128
+      },
+      {
+        "window": 256
+      },
+      {
+        "window": 512
+      },
+      {
+        "window": 1024
+      },
+      {
+        "window": 6000
+      }
+    ],
+    "sgd": [
+      {
+        "lr": 0.0001
+      },
+      {
+        "lr": 0.0004
+      },
+      {
+        "lr": 0.001
+      },
+      {
+        "lr": 0.004
+      },
+      {
+        "lr": 0.008
+      },
+      {
+        "lr": 0.016
+      },
+      {
+        "lr": 0.035743040182210514
+      },
+      {
+        "lr": 0.064
+      },
+      {
+        "lr": 0.128
+      },
+      {
+        "lr": 0.256
+      },
+      {
+        "lr": 0.512
+      },
+      {
+        "lr": 1.0
+      }
+    ],
+    "adwin": [
+      {
+        "delta": 0.0001,
+        "clock": 1
+      },
+      {
+        "delta": 0.0001,
+        "clock": 8
+      },
+      {
+        "delta": 0.0001,
+        "clock": 32
+      },
+      {
+        "delta": 0.001,
+        "clock": 1
+      },
+      {
+        "delta": 0.001,
+        "clock": 8
+      },
+      {
+        "delta": 0.001,
+        "clock": 32
+      },
+      {
+        "delta": 0.01,
+        "clock": 1
+      },
+      {
+        "delta": 0.01,
+        "clock": 8
+      },
+      {
+        "delta": 0.01,
+        "clock": 32
+      },
+      {
+        "delta": 0.1,
+        "clock": 1
+      },
+      {
+        "delta": 0.1,
+        "clock": 8
+      },
+      {
+        "delta": 0.1,
+        "clock": 32
+      }
+    ]
+  },
+  "screen": {
+    "status": "eligible",
+    "reasons": [],
+    "selected": {
+      "window": {
+        "window": 8
+      },
+      "sgd": {
+        "lr": 0.128
+      },
+      "adwin": {
+        "delta": 0.1,
+        "clock": 1
+      },
+      "reference": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "jitter_2": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "jitter_8": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "jitter_16": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "jitter_32": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "jitter_128": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "drop_10": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "drop_50": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "add_0005": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "add_0020": {
+        "delta": 0.1,
+        "H": 32
+      },
+      "adwin_schedule": {
+        "delta": 0.1,
+        "H": 32
+      }
+    },
+    "indices": {
+      "window": 3,
+      "sgd": 8,
+      "adwin": 9
+    },
+    "objectives": {
+      "window": [
+        0.4569241703195512,
+        0.23388387531027027,
+        0.13554251606660797,
+        0.09702619517774795,
+        0.10382835323580236,
+        0.15935848628540544,
+        0.28530826883980964,
+        0.5568734130357285,
+        1.0944198471158022,
+        1.70885274390319,
+        2.1287555399017117,
+        1.6268056685216863
+      ],
+      "sgd": [
+        1.0005939462103255,
+        1.3497532161967842,
+        1.79855892052983,
+        1.2909096536045372,
+        0.7771563763070807,
+        0.40837029752296794,
+        0.19134114899567253,
+        0.11880279648885539,
+        0.08468775660827096,
+        0.0945589058168433,
+        0.1689850931164411,
+        0.4569241703195511
+      ],
+      "adwin": [
+        0.32872813447218896,
+        0.35888373497077797,
+        0.4820640569404651,
+        0.26143898955288025,
+        0.2946144490881093,
+        0.42673312761016435,
+        0.19203122613683826,
+        0.22432115572395295,
+        0.3654254216768399,
+        0.12587002395484692,
+        0.16204776412709254,
+        0.30936559299392163
+      ]
+    }
+  },
+  "tuning_digest": "7c7b63eeaf95c6f70f343f0d65d6b564cac11c36d509d74c64252439d24f3162",
+  "expected_counts": {
+    "tuning": 288,
+    "confirmation": 448
+  }
+}
