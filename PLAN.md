@@ -78,6 +78,10 @@ The separately authorized drift-timing tolerance study then jittered granted
 drift boundaries: the win survives ±256 and dies by ±1024, landing in the
 pre-stated middle band that authorizes nothing. See `V3-DRIFTTOL-RESULTS.md`.
 No further experiment or integration is activated.
+The separately authorized V4 robustness study then tested graded response
+under frozen lies: adaptation holds everywhere including primary, with only
+stability failing to false alarms. See `V4-ROBUST-RESULTS.md`. No further
+experiment or integration is activated.
 The separately authorized slope-state study then added a trend regime gated
 on granted drift boundaries and closed the first full V3 positive (75/75),
 beating SGD on the ramp with everything else preserved. See
