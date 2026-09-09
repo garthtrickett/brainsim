@@ -1,6 +1,7 @@
 # V3 slice 1: a falsifiable noise-aware plasticity experiment
 
-Status: activated by the operator on 2026-09-09; phases are in progress. Written
+Status: executed and closed as tuning-inconclusive under the registered stop
+rule. See [V3-SLICE-1-RESULTS.md](V3-SLICE-1-RESULTS.md). Written
 2026-09-09 after the first §9 experiment. This file plans one successor
 experiment, not the whole v3 queue. A negative or inconclusive result is a valid
 completion. The operator has now explicitly authorized autonomous execution, including
@@ -38,7 +39,8 @@ prerequisite for a separately registered noisy-volatile agent experiment.
 | 6. Close and publish | Report, source archive, CI reproduction and disposition | Evidence complete; published checks green | Fix reproduction defects, not acceptance thresholds |
 
 Each phase depends on the previous one. Evidence of failure advances to Phase 6,
-not to the next capability phase. No implementation phase is marked complete yet.
+not to the next capability phase. The execution dispositions are in
+[V3-SLICE-1-STATUS.md](V3-SLICE-1-STATUS.md); Phases 4–5 were not reached.
 
 ## Phase 0 — preserve the result and register the successor
 
