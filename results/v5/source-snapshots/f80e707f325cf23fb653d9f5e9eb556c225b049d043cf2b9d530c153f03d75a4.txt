@@ -110,14 +110,12 @@ def archive_checks(directory, reproduce):
         envelope = json.loads((directory/'confirmation.json').read_text())
         archived = envelope['rows']
         recreated = {}
-        alarm_unused = None
-        del alarm_unused
         for key in archived:
             sigma, arm, seed = key.split('/')
             task = make_task(float(sigma), 110)
             agent = build_agent(arm, int(seed))
             out = run_agent(agent, task, DECISIONS, seed=int(seed), harvest=True)
-            recreated[key] = {'status': 'ok', 'config': ARMS[arm], 'arm': arm, 'sigma': float(sigma),
+            recreated[key] = {'status': 'ok', 'config': json.loads(json.dumps(ARMS[arm])), 'arm': arm, 'sigma': float(sigma),
                               'seed': int(seed), 'tail': tail_mean(out['rewards']),
                               'rewards': out['rewards'].tolist(), 'vol': out['vol'].tolist(),
                               'lr': out['lr'].tolist(), 'noise': out['noise'].tolist(),
