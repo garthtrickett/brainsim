@@ -247,6 +247,21 @@ class BrainSim:
     TRANSMISSION_GAIN = 1.0
     SURP_F, SURP_S = 0.10, 0.005   # fast/slow |RPE| averages
     LR_GAIN, NOISE_GAIN, VOL_CAP = 1.5, 1.5, 2.0
+    # V5: endogenous burst + dual value. All default off (None/False): the
+    # frozen reference passes bit-identical with these present but unset.
+    # VBURST = (tau, factor, dur): fire an LR burst of `factor` for `dur`
+    # decisions when the ADAPTIVE vol scalar crosses `tau` (edge-triggered,
+    # no extension while bursting). VBURST_ORACLE fires on true switch
+    # decisions instead. Bursts scale POLICY updates only (PGATE precedent).
+    VBURST = None
+    VBURST_ORACLE = False
+    # DUALV: second V(s) head at DUALV_LR with the same normalized rule;
+    # predict from the fast head within DUALV_WIN decisions of any burst
+    # trigger (endo threshold fixed at 1.0, or oracle switches), else slow.
+    DUALV = False
+    DUALV_ORACLE = False
+    DUALV_LR = 0.5
+    DUALV_WIN = 50
 
     def __init__(self, n_in=40, n_hidden=80, n_motor=2, k=6, seed=0):
         self.rng = np.random.default_rng(seed)
@@ -274,6 +289,11 @@ class BrainSim:
         self._prev_fh = np.zeros(n_hidden)
         self.w_v = np.zeros(n_hidden)     # striatal value weights V(s)
         self.surp_f = self.surp_s = 0.0   # fast / slow REWARD RATE averages
+        self.burst_left = 0               # V5: remaining burst decisions
+        self.w_vf = np.zeros(n_hidden)    # V5: fast value head (DUALV)
+        self.last_trig = -10 ** 9         # V5: decision of last burst trigger
+        self.burst_marks = []             # V5: (decision, provenance) fired
+        self.vol_hist, self.lr_hist, self.noise_hist = [], [], []
         self.noise_eff = self.NOISE       # NE-modulated exploration
         self.value = 0.0
         self.rate  = np.zeros(n_hidden)
@@ -483,15 +503,22 @@ class BrainSim:
             idx = int(self.rng.integers(len(self.episodes)))
         return idx
 
-    def reward(self, r, action=None, done=True, policy_bonus=0.0):
+    def reward(self, r, action=None, done=True, policy_bonus=0.0, switch=False):
         """Deliver reward. NM is reward MINUS what was expected (02: raw reward
         instead of RPE => chance, because it never stops reinforcing the known)."""
+        if self.DUALV and not self.VALUE_STATE:
+            raise ValueError('DUALV requires VALUE_STATE')
         zbar = self.trh_sum / max(self.trh_n, 1)
         _wbar = (self.wm_sum / max(self.wm_n, 1)) if self.WM else None
         if self.VALUE_STATE:
             # V(s) from cortical input, as striatum does -- not one global mean.
             # A scalar baseline is useless when reward arrives 2x in 25,000 acts.
-            v = float(self.w_v @ zbar)
+            v_slow = float(self.w_v @ zbar)
+            if self.DUALV:
+                v_fast = float(self.w_vf @ zbar)
+                v = v_fast if self.decisions-self.last_trig <= self.DUALV_WIN else v_slow
+            else:
+                v = v_slow
             nm = r - v
             # NORMALISED delta rule. A plain one diverges here: ||zbar||^2 ~ 100
             # (6 active units, trace ~5), so LR=0.05 predicts V~5 for r=1 after a
@@ -499,6 +526,10 @@ class BrainSim:
             # Dividing by ||z||^2 makes the step scale-free. Third magnitude bug
             # of this kind in the project -- see the eligibility sum and EMA.
             self.w_v += self.VALUE_W_LR * (r - v) * zbar / (zbar @ zbar + 1e-6)
+            if self.DUALV:
+                # Fast head, same normalized rule at 10x the rate. Updated on
+                # every reward regardless of which head currently predicts.
+                self.w_vf += self.DUALV_LR * (r - v) * zbar / (zbar @ zbar + 1e-6)
         else:
             self.value += self.VALUE_LR * (r - self.value)
             nm = r - self.value
@@ -519,7 +550,32 @@ class BrainSim:
             lr = self.LR * (1 + self.LR_GAIN * vol)
             self.noise_eff = self.NOISE * (1 + self.NOISE_GAIN * vol)
         else:
+            vol = 0.0
             lr = self.LR
+        if self.VBURST is not None or self.DUALV:
+            # V5 triggers. Oracle arms fire on true switch flags passed by the
+            # evaluator; endo arms fire on the ADAPTIVE vol scalar (tau 1.0 for
+            # the dualV head, the burst setting's own tau otherwise).
+            # Edge-triggered: triggers arriving mid-burst are ignored, and a
+            # burst never extends. Provenance recorded for the evidence.
+            oracle_mode = self.VBURST_ORACLE or self.DUALV_ORACLE
+            if oracle_mode:
+                fired = bool(switch)
+            elif self.VBURST is not None:
+                fired = vol > self.VBURST[0]
+            else:
+                fired = vol > 1.0
+            if fired:
+                if self.VBURST is not None and self.burst_left <= 0:
+                    self.burst_left = self.VBURST[2]
+                self.last_trig = self.decisions
+                self.burst_marks.append((self.decisions, 'oracle' if oracle_mode else 'endo'))
+        if self.VBURST is not None and self.burst_left > 0:
+            lr = lr * self.VBURST[1]
+            self.burst_left -= 1
+        self.vol_hist.append(vol if self.ADAPTIVE else 0.0)
+        self.lr_hist.append(lr)
+        self.noise_hist.append(self.noise_eff)
         if policy_bonus:
             nm += policy_bonus
         # Step 8 gate. Scales the POLICY update only. V(s), the traces, replay
