@@ -71,13 +71,13 @@ Protocol `v6-explore-20260910-v1`. Agent seeds 130–137, task seed 130,
 bootstrap RNG 215000. All ranges are fresh; no prior study's seeds are
 reused for measurement.
 
-New files: `study_v6.py`, `report_v6.py`, `check_v6.py`,
+New files: `v6_agent.py`, `study_v6.py`, `report_v6.py`, `check_v6.py`,
 `.github/workflows/v6-explore-checks.yml`, the registration, this results
-file and `results/v6/`. Modified: `brainsim.py` (additive default-off flags
-only; defaults-off output verified bit-identical against pre-change code).
-Earlier scientific sources, evidence, protocols, all twenty previous
-workflows, dependencies and agent defaults remain unchanged. No capability
-or registry row is promoted.
+file and `results/v6/`. The frozen agent is unmodified: exploration lives in
+an `ExploreAgent` subclass, and defaults-off subclass trajectories were
+verified identical to the frozen base. Earlier scientific sources, evidence,
+protocols, all twenty previous workflows, dependencies and agent defaults
+remain unchanged. No capability or registry row is promoted.
 
 The [generated report](results/v6/report.md) includes task usability,
 all paired contrasts with headroom checks, and per-seed evidence.

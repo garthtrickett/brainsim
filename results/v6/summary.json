@@ -111,7 +111,7 @@
   "counts": {
     "confirmation": 96
   },
-  "manifest_digest": "3d5b4105bee878ec96d190cc28fb43ca5a5a52da9e4e1fd53569d7cea35263ce",
+  "manifest_digest": "b103ca333e0a20fe0c9ab0bef1633d38b7dadcc2c20e09e7a09565301ee71c4c",
   "positions": {
     "lock": 0.3500567966679288,
     "noisy": 0.08854414517305921,
@@ -120,7 +120,7 @@
   "protocol": {
     "id": "v6-explore-20260910-v1",
     "registration_commit": "c3901e62ed734b64fe73ea96b05d42097ce124fd",
-    "registration_sha256": "ea3c0b8ffbb4493fe7e6b67c6f88919d1337678e447a410934afcfa13af52c9f"
+    "registration_sha256": "330f4a2741a38a6c8bd59ff9a1242d7c652677a47db9c481eed4214dac252c9b"
   },
   "status": "learning_negative",
   "usable": [
