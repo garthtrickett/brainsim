@@ -99,6 +99,13 @@ pre-stated middle band that authorizes nothing further. See
 [V3-DRIFTTOL-RESULTS.md](V3-DRIFTTOL-RESULTS.md). All 576 reached rows are
 archived; the finite-menu experiment is closed without integration.
 
+The adaptive-window slope follow-up is now complete: distance-dependent
+windows narrow the shallow-ramp gap to 0.000521 without closing it — fitting
+through the kink loses to not fitting at all, and the same strict cell fails
+with everything else passing. See
+[V3-SLOPEWIN-RESULTS.md](V3-SLOPEWIN-RESULTS.md). All 608 reached rows are
+archived; the finite-menu experiment is closed without integration.
+
 The V4 robustness follow-up is now complete: graded response under frozen
 lies holds adaptation everywhere including primary, failing only stability
 to false alarms — the first failure shape in program history that loses

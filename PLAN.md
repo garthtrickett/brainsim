@@ -74,6 +74,10 @@ The separately authorized kink-guarded slope study then forced fast means
 near boundaries: the shallow gap narrowed threefold but the same strict cell
 still fails. See `V3-SLOPEGUARD-RESULTS.md`. No further experiment or
 integration is activated.
+The separately authorized adaptive-window slope study then fit through the
+kink with distance-dependent windows: the shallow gap narrowed to 0.000521
+without closing, and local fitting stands structurally kink-blind. See
+`V3-SLOPEWIN-RESULTS.md`. No further experiment or integration is activated.
 The separately authorized drift-timing tolerance study then jittered granted
 drift boundaries: the win survives ±256 and dies by ±1024, landing in the
 pre-stated middle band that authorizes nothing. See `V3-DRIFTTOL-RESULTS.md`.

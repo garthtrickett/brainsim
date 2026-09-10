@@ -143,6 +143,12 @@ See
 [V3-SLOPEGUARD-RESULTS.md](V3-SLOPEGUARD-RESULTS.md), or reproduce all 608 rows
 with `python check_v3_slopeguard.py --evidence results/v3-slopeguard --reproduce`.
 
+Fitting through the kink with distance-adaptive windows narrows the shallow
+gap to 0.000521 without closing it: local fitting loses to not fitting at
+all where the signal is weakest. See
+[V3-SLOPEWIN-RESULTS.md](V3-SLOPEWIN-RESULTS.md), or reproduce all 608 rows
+with `python check_v3_slopewin.py --evidence results/v3-slopewin --reproduce`.
+
 V4 inverts the program: a graded-response learner under frozen sloppy
 schedules (delays, misses, false alarms at stated rates). Adaptation holds
 everywhere including primary; only stability fails, only to false alarms.
