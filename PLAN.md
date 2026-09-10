@@ -90,6 +90,10 @@ The separately authorized slope-state study then added a trend regime gated
 on granted drift boundaries and closed the first full V3 positive (75/75),
 beating SGD on the ramp with everything else preserved. See
 `V3-SLOPE-RESULTS.md`. No default change or agent integration follows.
+The separately authorized V5 embodied study then grafted bursts and dual
+value onto the frozen agent on noisy-volatile tasks: nothing beats the
+ADAPTIVE baseline, and even oracle timing mostly shows no headroom. See
+`V5-RESULTS.md`. No further experiment or integration is activated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.

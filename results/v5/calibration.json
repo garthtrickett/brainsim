@@ -1,0 +1,123 @@
+{
+  "protocol": {
+    "id": "v5-embodied-20260910-v1",
+    "registration_commit": "36616fcb8bbaf8bd38b899bf73ad9bf2473ca94f",
+    "registration_sha256": "74d193556a945d0853ac31634f6f5abe29d6015df88a60dce66d396fcb4bfb8a"
+  },
+  "sources": {
+    "DESIGN-v3-burst.md": "ef249ae9dcf9afe8822ee2c0f188f2e780596450b7fcc6881028191b3e8a4d5c",
+    "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
+    "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
+    "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
+    "DESIGN-v5-embodied.md": "74d193556a945d0853ac31634f6f5abe29d6015df88a60dce66d396fcb4bfb8a",
+    "brainsim.py": "c9017e36e589168764f91417b39830d7b366c98bf119590a7f244862d53fb313",
+    "check_v3_burst.py": "177659e8f2adadf81d310a788d8c2ee65a70d4fa2a09a2dc883b2d8e306eaae3",
+    "check_v5.py": "f80e707f325cf23fb653d9f5e9eb556c225b049d043cf2b9d530c153f03d75a4",
+    "report_v3_burst.py": "fc54e016287bd6f1c368a02885f0f92f435b09879659da8dd30e0be393c0b50a",
+    "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
+    "report_v3_slice1.py": "b0eea587ada00c7a3dffd39a8050001a8cee4254bb822f92369c46f0f6b8ea20",
+    "report_v5.py": "cbc9a407e0570b1d629225e24eb52f574da73adfad5be39370deeaa33a35004e",
+    "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
+    "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
+    "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
+    "study_v3_burst.py": "ab8be80d2a2b63f27653d07810afaf72ad805b18570378e4571e16f90808bdd5",
+    "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
+    "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
+    "study_v5.py": "c30f5f78e122df4ad1a8e4dc72b84fea7b676ba6e3268f33b958c655a844398c",
+    "tasks.py": "d3943af39a3e4467b1e79ac84e1e990b95fd01aa14adb6548a210ea153f72108",
+    "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
+    "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
+    "v3_gate.py": "9875703dad1ef620dd3b8d9323a5502d9612490ba9830b7d3581b39fed2571d1",
+    "v3_persistent.py": "14857640d40cb86546c5441f1a43275b5d674a9d2fb8e0cb0671d68a2248c0f9",
+    "v3_reference.py": "0b019a5066b214583e4897d73a16ec2a24a13b361aca4f876f089acd837144a2",
+    "v3_reference_policy.py": "2f3da6886e78035da72addc8fd468eea3fb9d0c10b7c1b76421beac139f83684",
+    "v3_slice1_decisions.py": "8c768720340933586b1b3220c1591b8e25c50aaf622c0e8962b10d128b24482b",
+    "v3_slice1_learning.py": "000e4be3ddf729f5e403074634b1861061b496c01488b2de8f3f4aada6384648",
+    "v3_slice1_streams.py": "6d5a264013357468f5882e929236831e94d3ae0e19b5b4d4ba35e1e9b087932d",
+    "v5_tasks.py": "64c2bcc26bf336ab5fed64c6a0c9be410974149a4a670bba02993707af66963a"
+  },
+  "rows": {
+    "0.25": {
+      "floor": [
+        0.25523809523809526,
+        0.23714285714285716,
+        0.2561904761904762
+      ],
+      "ceiling": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseline": [
+        0.44952380952380955,
+        0.4038095238095238,
+        0.3657142857142857
+      ],
+      "position": 0.20896785109983068,
+      "usable": true
+    },
+    "0.5": {
+      "floor": [
+        0.25523809523809526,
+        0.23714285714285716,
+        0.2561904761904762
+      ],
+      "ceiling": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseline": [
+        0.38285714285714284,
+        0.35619047619047617,
+        0.3523809523809524
+      ],
+      "position": 0.15228426395939082,
+      "usable": true
+    }
+  },
+  "manifest": {
+    "protocol": {
+      "id": "v5-embodied-20260910-v1",
+      "registration_commit": "36616fcb8bbaf8bd38b899bf73ad9bf2473ca94f",
+      "registration_sha256": "74d193556a945d0853ac31634f6f5abe29d6015df88a60dce66d396fcb4bfb8a"
+    },
+    "sources": {
+      "DESIGN-v3-burst.md": "ef249ae9dcf9afe8822ee2c0f188f2e780596450b7fcc6881028191b3e8a4d5c",
+      "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
+      "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
+      "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
+      "DESIGN-v5-embodied.md": "74d193556a945d0853ac31634f6f5abe29d6015df88a60dce66d396fcb4bfb8a",
+      "brainsim.py": "c9017e36e589168764f91417b39830d7b366c98bf119590a7f244862d53fb313",
+      "check_v3_burst.py": "177659e8f2adadf81d310a788d8c2ee65a70d4fa2a09a2dc883b2d8e306eaae3",
+      "check_v5.py": "f80e707f325cf23fb653d9f5e9eb556c225b049d043cf2b9d530c153f03d75a4",
+      "report_v3_burst.py": "fc54e016287bd6f1c368a02885f0f92f435b09879659da8dd30e0be393c0b50a",
+      "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
+      "report_v3_slice1.py": "b0eea587ada00c7a3dffd39a8050001a8cee4254bb822f92369c46f0f6b8ea20",
+      "report_v5.py": "cbc9a407e0570b1d629225e24eb52f574da73adfad5be39370deeaa33a35004e",
+      "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
+      "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
+      "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
+      "study_v3_burst.py": "ab8be80d2a2b63f27653d07810afaf72ad805b18570378e4571e16f90808bdd5",
+      "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
+      "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
+      "study_v5.py": "c30f5f78e122df4ad1a8e4dc72b84fea7b676ba6e3268f33b958c655a844398c",
+      "tasks.py": "d3943af39a3e4467b1e79ac84e1e990b95fd01aa14adb6548a210ea153f72108",
+      "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
+      "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
+      "v3_gate.py": "9875703dad1ef620dd3b8d9323a5502d9612490ba9830b7d3581b39fed2571d1",
+      "v3_persistent.py": "14857640d40cb86546c5441f1a43275b5d674a9d2fb8e0cb0671d68a2248c0f9",
+      "v3_reference.py": "0b019a5066b214583e4897d73a16ec2a24a13b361aca4f876f089acd837144a2",
+      "v3_reference_policy.py": "2f3da6886e78035da72addc8fd468eea3fb9d0c10b7c1b76421beac139f83684",
+      "v3_slice1_decisions.py": "8c768720340933586b1b3220c1591b8e25c50aaf622c0e8962b10d128b24482b",
+      "v3_slice1_learning.py": "000e4be3ddf729f5e403074634b1861061b496c01488b2de8f3f4aada6384648",
+      "v3_slice1_streams.py": "6d5a264013357468f5882e929236831e94d3ae0e19b5b4d4ba35e1e9b087932d",
+      "v5_tasks.py": "64c2bcc26bf336ab5fed64c6a0c9be410974149a4a670bba02993707af66963a"
+    },
+    "usable": [
+      0.25,
+      0.5
+    ],
+    "status": "eligible"
+  }
+}

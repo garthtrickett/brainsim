@@ -149,6 +149,12 @@ all where the signal is weakest. See
 [V3-SLOPEWIN-RESULTS.md](V3-SLOPEWIN-RESULTS.md), or reproduce all 608 rows
 with `python check_v3_slopewin.py --evidence results/v3-slopewin --reproduce`.
 
+V5 puts the toolkit inside the agent on noisy-volatile tasks: no burst or
+dual-value arm beats the frozen ADAPTIVE baseline, and even oracle timing
+mostly shows no headroom. Embodiment does not redeem the toolkit. See
+[V5-RESULTS.md](V5-RESULTS.md), or reproduce with
+`python check_v5.py --evidence results/v5 --reproduce`.
+
 V4 inverts the program: a graded-response learner under frozen sloppy
 schedules (delays, misses, false alarms at stated rates). Adaptation holds
 everywhere including primary; only stability fails, only to false alarms.

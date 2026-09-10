@@ -119,6 +119,12 @@ everything else preserved — the first full V3 positive. See
 [V3-SLOPE-RESULTS.md](V3-SLOPE-RESULTS.md). All 576 reached rows are
 archived; no default change or agent integration follows.
 
+The V5 embodied follow-up is now complete: bursts and dual value grafted
+onto the frozen agent on noisy-volatile tasks beat nothing — the ADAPTIVE
+baseline stands, and even oracle timing mostly shows no headroom. See
+[V5-RESULTS.md](V5-RESULTS.md). All rows are archived; the finite-menu
+experiment is closed without integration.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.
