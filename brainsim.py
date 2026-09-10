@@ -262,6 +262,15 @@ class BrainSim:
     DUALV_ORACLE = False
     DUALV_LR = 0.5
     DUALV_WIN = 50
+    # V6: margin-directed exploration. All default off (0.0): the frozen
+    # reference passes bit-identical with these present but unset.
+    # EXPLORE_K > 0 deviates from argmax with probability k*closeness, where
+    # closeness = 1-(v1-v2)/(v1+v2) on pre-reset votes (0/0 reads as 1).
+    # EXPLORE_ORACLE > 0 returns the correct action with that probability;
+    # the label arrives as a decide() keyword the study passes only to the
+    # oracle arm. Draws come from the agent RNG: flags off means zero draws.
+    EXPLORE_K = 0.0
+    EXPLORE_ORACLE = 0.0
 
     def __init__(self, n_in=40, n_hidden=80, n_motor=2, k=6, seed=0):
         self.rng = np.random.default_rng(seed)
@@ -294,6 +303,8 @@ class BrainSim:
         self.last_trig = -10 ** 9         # V5: decision of last burst trigger
         self.burst_marks = []             # V5: (decision, provenance) fired
         self.vol_hist, self.lr_hist, self.noise_hist = [], [], []
+        self.margin_hist = []             # V6: pre-decision closeness trace
+        self.dev_hist = []                # V6: (action, deviated) per decision
         self.noise_eff = self.NOISE       # NE-modulated exploration
         self.value = 0.0
         self.rate  = np.zeros(n_hidden)
@@ -424,7 +435,7 @@ class BrainSim:
                 or self.k % self.POOLS or not 1 <= self.k <= self.n_hidden):
             raise ValueError("POOLS must be a positive divisor of k, with 1 <= k <= n_hidden")
 
-    def decide(self):
+    def decide(self, correct=None):
         """Argmax over votes, ties broken uniformly among ALL joint winners.
 
         BUG (fixed 30): this compared only v[0] and v[1] and, on a tie between
@@ -434,12 +445,33 @@ class BrainSim:
         counts are small integers so ties are common: at TRM_D=1.0, where trm and
         votes are the SAME array, tagged-equals-chosen measured 38.8% instead of
         100%. Every n>2 result in the project was depressed by this.
+
+        V6: EXPLORE_ORACLE returns the correct label with that probability
+        (correct arrives only on the oracle arm; otherwise None).
+        EXPLORE_K deviates uniformly with probability k*closeness, where
+        closeness is measured on pre-reset votes. Flags off: argmax path
+        exactly, with zero RNG draws.
         """
         v = self.votes.copy(); self.votes[:] = 0
+        ordered = np.sort(v)[::-1]
+        total = ordered[0]+ordered[1] if len(ordered) > 1 else ordered[0]
+        closeness = 1.0 if total <= 0 else 1.0-(ordered[0]-ordered[1])/total
+        self.margin_hist.append(float(closeness))
         winners = np.flatnonzero(v == v.max())
-        if len(winners) == 1:
-            return int(winners[0])
-        return int(winners[self.rng.integers(len(winners))])
+        deviated, action = False, None
+        if self.EXPLORE_ORACLE > 0:
+            if correct is None or not 0 <= correct < self.n_motor:
+                raise ValueError('oracle exploration needs a valid label')
+            if self.rng.random() < self.EXPLORE_ORACLE:
+                action, deviated = int(correct), correct not in winners
+        if action is None and self.EXPLORE_K > 0:
+            if self.rng.random() < min(1.0, self.EXPLORE_K*closeness):
+                action = int(self.rng.integers(self.n_motor))
+                deviated = action not in winners
+        if action is None:
+            action = int(winners[0]) if len(winners) == 1 else int(winners[self.rng.integers(len(winners))])
+        self.dev_hist.append((action, bool(deviated)))
+        return action
 
     # ---- 6/7: feel, then learn ---------------------------------------------
     def store_and_replay(self, z, action, r, done, w=None):
