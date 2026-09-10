@@ -74,12 +74,9 @@ def archive_checks(directory, reproduce):
     archived = envelope['rows']
     assert len(archived) == 36 and set(archived) == {
         f'{c}/{a}/{s}' for c in CLASSES for a in ('pertick', 'aggregate', 'shipped') for s in SEEDS}
-    with tempfile.TemporaryDirectory() as tmp:
-        from study_v2_m0 import write_manifest
-        manifest = write_manifest(Path(tmp))
     for key in sorted(archived):
         ncls, arm, seed = key.split('/')
-        fresh = measure(int(ncls), arm, int(seed), manifest)
+        fresh = measure(int(ncls), arm, int(seed))
         compare(dict(fresh), dict(scientific(archived[key])), key, ignore=('manifest_digest',))
     print('PASS full v2-m0 reproduction; only reached partitions sampled', flush=True)
 
