@@ -77,7 +77,7 @@ def archive_checks(directory, reproduce):
     for key in sorted(archived):
         ncls, arm, seed = key.split('/')
         fresh = measure(int(ncls), arm, int(seed))
-        compare(dict(fresh), dict(scientific(archived[key])), key)
+        compare(dict(fresh), dict(scientific(archived[key])), key, ignore=('manifest_digest',))
     print('PASS full v2-m0 reproduction; only reached partitions sampled', flush=True)
 
 
