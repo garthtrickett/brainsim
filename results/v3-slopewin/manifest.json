@@ -1,0 +1,410 @@
+{
+  "protocol": {
+    "id": "v3-slopewin-20260910-v1",
+    "registration_commit": "12bf88c20bad71e14716afa4de5ef063ac3713d1",
+    "registration_sha256": "4e674926a745a71073c3c3109fd05cc0eb128fce0e501c3c1cd2e1fe50494b83"
+  },
+  "sources": {
+    "DESIGN-v3-burst.md": "ef249ae9dcf9afe8822ee2c0f188f2e780596450b7fcc6881028191b3e8a4d5c",
+    "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
+    "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
+    "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
+    "DESIGN-v3-slopewin.md": "4e674926a745a71073c3c3109fd05cc0eb128fce0e501c3c1cd2e1fe50494b83",
+    "check_v3_burst.py": "177659e8f2adadf81d310a788d8c2ee65a70d4fa2a09a2dc883b2d8e306eaae3",
+    "check_v3_slopewin.py": "40536dd602c4fdaf899cef6a7ddaf8042852149ff850c45af686ad6babe7336e",
+    "report_v3_burst.py": "fc54e016287bd6f1c368a02885f0f92f435b09879659da8dd30e0be393c0b50a",
+    "report_v3_drift.py": "fe1495d85eda22b56f3b53a3450aa059e02d90839756b9e60ad782f5b03aa223",
+    "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
+    "report_v3_retention.py": "de6e58181111615a58b1e31bea7df1c01d7377a4d0b789893f73b09a77b1fbdd",
+    "report_v3_slice1.py": "b0eea587ada00c7a3dffd39a8050001a8cee4254bb822f92369c46f0f6b8ea20",
+    "report_v3_slope.py": "df02f9298a12f7eb85d3a47e73bc449c7bd2816ace60d3d7ef36d8c61ca0731d",
+    "report_v3_slopebench.py": "9e7e35e63c8e0c17a432990fa86525fa4b68e095e2b214a5e9bc70631ecc554c",
+    "report_v3_slopewin.py": "a03b12ace9262ab27ab17f4f30e9d179f361b1d8b544ca179c89699a43214c62",
+    "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
+    "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
+    "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
+    "study_v3_burst.py": "ab8be80d2a2b63f27653d07810afaf72ad805b18570378e4571e16f90808bdd5",
+    "study_v3_drift.py": "6108728f27bddffc2ea0e2d77185fcee4f41b6cfb9364f493369d3469a30a815",
+    "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
+    "study_v3_retention.py": "ce6c09b41b6427203f610b882b2db0d7680ddc2c232aa592c743ce98786a261a",
+    "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
+    "study_v3_slope.py": "e7816504c68b7d778dce747aea7cd5289cae791388b231057529e7f658330283",
+    "study_v3_slopebench.py": "ce97e24e26c3a34f18d7a82d2e0fa4511649136e6f0e09d7248beacafda55842",
+    "study_v3_slopewin.py": "8b6e7ae9043d45434c9093ca47bfe5e970e33aab351ab0f72cd34dd7f3f88fd8",
+    "v3_adwin.py": "994d32ad2ae9f160af83aff2c043da92fb439f659316f4e4de5ffeee30855e97",
+    "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
+    "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
+    "v3_drift.py": "f6893ab1db35ecbc1370573eb281410683d7244b1e35c5d06bb072563601ad38",
+    "v3_drift_policy.py": "3db06e919ac15b964c97eb15f586042c9f45f8d0af430053362bf0a02fa0d9ba",
+    "v3_forgetting.py": "af006010aeb12ecb35083f97bf56674d127aa4c9f52db40cc85cf134efc3e189",
+    "v3_gate.py": "9875703dad1ef620dd3b8d9323a5502d9612490ba9830b7d3581b39fed2571d1",
+    "v3_persistent.py": "14857640d40cb86546c5441f1a43275b5d674a9d2fb8e0cb0671d68a2248c0f9",
+    "v3_reference.py": "0b019a5066b214583e4897d73a16ec2a24a13b361aca4f876f089acd837144a2",
+    "v3_reference_policy.py": "2f3da6886e78035da72addc8fd468eea3fb9d0c10b7c1b76421beac139f83684",
+    "v3_retention.py": "fd466d2e63dcc6ce93ba04f6e7a96a7af3353b8814feacdd1aebcb7cf70af15a",
+    "v3_retention_policy.py": "3dc86a11da5cc3edfa89e0884bb1b11d5c96e24d7fbc7fcbdfa16e773a495cae",
+    "v3_slice1_decisions.py": "8c768720340933586b1b3220c1591b8e25c50aaf622c0e8962b10d128b24482b",
+    "v3_slice1_learning.py": "000e4be3ddf729f5e403074634b1861061b496c01488b2de8f3f4aada6384648",
+    "v3_slice1_streams.py": "6d5a264013357468f5882e929236831e94d3ae0e19b5b4d4ba35e1e9b087932d",
+    "v3_slope.py": "5854e7134ad912ef8ef7a618fd7f499c429ea88bbdc14350a9f8aefa098e683f",
+    "v3_slope_policy.py": "7f47d354105823beb34f992743b07defe21e3ccda71b83f77decd7ac7eac20c5",
+    "v3_slopebench.py": "33bf79d8f214b2122f7cac38144a7f37fa3026c5a001250471bfbd2141cb73f8",
+    "v3_slopebench_policy.py": "ac65bb6103b5c0aedb893af2c7e044d673ac8bf35e25c1bf2f511bf53cd1f2c0",
+    "v3_slopewin.py": "3f9a284cf726282980f712c4c1240189913ddfe1101afa4d16db489fc67217a4",
+    "v3_slopewin_policy.py": "ed571ae8330cd6945f2968b51b2019bca6b74d1dabe8acda341c86b8ef702983"
+  },
+  "seeds": {
+    "development": [
+      190000,
+      190001,
+      190002,
+      190003,
+      190004,
+      190005,
+      190006,
+      190007
+    ],
+    "tuning": [
+      191000,
+      191001,
+      191002,
+      191003,
+      191004,
+      191005,
+      191006,
+      191007
+    ],
+    "confirmation": [
+      193000,
+      193001,
+      193002,
+      193003,
+      193004,
+      193005,
+      193006,
+      193007,
+      193008,
+      193009,
+      193010,
+      193011,
+      193012,
+      193013,
+      193014,
+      193015,
+      193016,
+      193017,
+      193018,
+      193019,
+      193020,
+      193021,
+      193022,
+      193023,
+      193024,
+      193025,
+      193026,
+      193027,
+      193028,
+      193029,
+      193030,
+      193031
+    ]
+  },
+  "grids": {
+    "win": [
+      {
+        "W_near": 4,
+        "W_far": 64,
+        "S": 16
+      },
+      {
+        "W_near": 4,
+        "W_far": 64,
+        "S": 32
+      },
+      {
+        "W_near": 4,
+        "W_far": 128,
+        "S": 16
+      },
+      {
+        "W_near": 4,
+        "W_far": 128,
+        "S": 32
+      },
+      {
+        "W_near": 4,
+        "W_far": 256,
+        "S": 16
+      },
+      {
+        "W_near": 4,
+        "W_far": 256,
+        "S": 32
+      },
+      {
+        "W_near": 8,
+        "W_far": 64,
+        "S": 16
+      },
+      {
+        "W_near": 8,
+        "W_far": 64,
+        "S": 32
+      },
+      {
+        "W_near": 8,
+        "W_far": 128,
+        "S": 16
+      },
+      {
+        "W_near": 8,
+        "W_far": 128,
+        "S": 32
+      },
+      {
+        "W_near": 8,
+        "W_far": 256,
+        "S": 16
+      },
+      {
+        "W_near": 8,
+        "W_far": 256,
+        "S": 32
+      }
+    ],
+    "window": [
+      {
+        "window": 1
+      },
+      {
+        "window": 2
+      },
+      {
+        "window": 4
+      },
+      {
+        "window": 8
+      },
+      {
+        "window": 16
+      },
+      {
+        "window": 32
+      },
+      {
+        "window": 64
+      },
+      {
+        "window": 128
+      },
+      {
+        "window": 256
+      },
+      {
+        "window": 512
+      },
+      {
+        "window": 1024
+      },
+      {
+        "window": 6000
+      }
+    ],
+    "sgd": [
+      {
+        "lr": 0.0001
+      },
+      {
+        "lr": 0.0004
+      },
+      {
+        "lr": 0.001
+      },
+      {
+        "lr": 0.004
+      },
+      {
+        "lr": 0.008
+      },
+      {
+        "lr": 0.016
+      },
+      {
+        "lr": 0.035743040182210514
+      },
+      {
+        "lr": 0.064
+      },
+      {
+        "lr": 0.128
+      },
+      {
+        "lr": 0.256
+      },
+      {
+        "lr": 0.512
+      },
+      {
+        "lr": 1.0
+      }
+    ],
+    "adwin": [
+      {
+        "delta": 0.0001,
+        "clock": 1
+      },
+      {
+        "delta": 0.0001,
+        "clock": 8
+      },
+      {
+        "delta": 0.0001,
+        "clock": 32
+      },
+      {
+        "delta": 0.001,
+        "clock": 1
+      },
+      {
+        "delta": 0.001,
+        "clock": 8
+      },
+      {
+        "delta": 0.001,
+        "clock": 32
+      },
+      {
+        "delta": 0.01,
+        "clock": 1
+      },
+      {
+        "delta": 0.01,
+        "clock": 8
+      },
+      {
+        "delta": 0.01,
+        "clock": 32
+      },
+      {
+        "delta": 0.1,
+        "clock": 1
+      },
+      {
+        "delta": 0.1,
+        "clock": 8
+      },
+      {
+        "delta": 0.1,
+        "clock": 32
+      }
+    ]
+  },
+  "screen": {
+    "status": "eligible",
+    "reasons": [],
+    "selected": {
+      "win": {
+        "W_near": 8,
+        "W_far": 128,
+        "S": 16
+      },
+      "window": {
+        "window": 8
+      },
+      "sgd": {
+        "lr": 0.128
+      },
+      "adwin": {
+        "delta": 0.1,
+        "clock": 1
+      },
+      "oracle_nofallback": {
+        "keep": 4,
+        "window": 32
+      },
+      "reference": {
+        "method": "ols",
+        "W": 128
+      },
+      "random_win": {
+        "W_near": 8,
+        "W_far": 128,
+        "S": 16
+      }
+    },
+    "indices": {
+      "win": 8,
+      "window": 3,
+      "sgd": 8,
+      "adwin": 9
+    },
+    "objectives": {
+      "win": [
+        0.0533870436395469,
+        0.05355095179268968,
+        0.05304004807551212,
+        0.05319624299210153,
+        0.05308095105311714,
+        0.053216722646416297,
+        0.05330858274873847,
+        0.053356066624177065,
+        0.05296158718470369,
+        0.05300135782358893,
+        0.05300249016230872,
+        0.05302183747790369
+      ],
+      "window": [
+        0.42763531345068595,
+        0.22393638673900645,
+        0.12940886118760697,
+        0.09318770277504389,
+        0.10030359952175276,
+        0.15490243222287953,
+        0.2857125295687696,
+        0.5551558781655548,
+        1.096075671760881,
+        1.7332887803467987,
+        2.1780169114035575,
+        1.7145708607723757
+      ],
+      "sgd": [
+        0.9757298688050424,
+        1.3721903641493784,
+        1.8293648994461382,
+        1.3054522295917421,
+        0.7789404411414613,
+        0.4062871117454485,
+        0.18984986071589,
+        0.11719394478876337,
+        0.08199990053924176,
+        0.09007565424531931,
+        0.16036947038231808,
+        0.42763531345068584
+      ],
+      "adwin": [
+        0.33054091673535485,
+        0.3612360520871098,
+        0.46825430124722345,
+        0.2640658063876973,
+        0.2969160729493066,
+        0.41687325382817286,
+        0.19676431470109862,
+        0.2270964286461043,
+        0.37166153676583125,
+        0.12893381935276238,
+        0.16432180177152667,
+        0.3321944931347653
+      ]
+    },
+    "random_frequency": {
+      "starts": 112,
+      "coordinate_time": 432000,
+      "probability": 0.00026033918476643853
+    }
+  },
+  "tuning_digest": "5e813e3bc25fb2806eaad66feb4aab733972eff17a9bcb377039c7a7aff22002",
+  "expected_counts": {
+    "tuning": 384,
+    "confirmation": 224
+  }
+}
