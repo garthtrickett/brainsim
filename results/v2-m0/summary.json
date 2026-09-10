@@ -1,0 +1,115 @@
+{
+  "absolute": {
+    "4": {
+      "aggregate": {
+        "interval95": [
+          0.9778888888888889,
+          0.9805013888888889
+        ],
+        "mean": 0.9792777777777778,
+        "winner_rate": 1.0
+      },
+      "pertick": {
+        "interval95": [
+          0.26460185185185187,
+          0.2682981481481482
+        ],
+        "mean": 0.26633703703703704,
+        "winner_rate": 0.9999833333333333
+      },
+      "shipped": {
+        "interval95": [
+          0.9642222222222223,
+          0.9765
+        ],
+        "mean": 0.9712222222222221,
+        "winner_rate": 1.0
+      }
+    },
+    "8": {
+      "aggregate": {
+        "interval95": [
+          0.8863888888888889,
+          0.9002777777777777
+        ],
+        "mean": 0.8938333333333334,
+        "winner_rate": 1.0
+      },
+      "pertick": {
+        "interval95": [
+          0.1277111111111111,
+          0.1284666666666667
+        ],
+        "mean": 0.12811851851851852,
+        "winner_rate": 0.9999888888888889
+      },
+      "shipped": {
+        "interval95": [
+          0.8528333333333332,
+          0.8810555555555556
+        ],
+        "mean": 0.867,
+        "winner_rate": 1.0
+      }
+    }
+  },
+  "cells": {
+    "4": {
+      "beats_aggregate": {
+        "control": 0.9792777777777778,
+        "delta": -0.7129407407407408,
+        "interval95": [
+          -0.7152092592592593,
+          -0.7106722222222221
+        ],
+        "pass": false,
+        "treatment": 0.26633703703703704
+      },
+      "matches_shipped": {
+        "control": 0.9712222222222221,
+        "delta": -0.7048851851851851,
+        "interval95": [
+          -0.7109129629629628,
+          -0.6983462962962963
+        ],
+        "pass": false,
+        "treatment": 0.26633703703703704
+      },
+      "pass": false
+    },
+    "8": {
+      "beats_aggregate": {
+        "control": 0.8938333333333334,
+        "delta": -0.7657148148148148,
+        "interval95": [
+          -0.7720555555555556,
+          -0.7581611111111112
+        ],
+        "pass": false,
+        "treatment": 0.12811851851851852
+      },
+      "matches_shipped": {
+        "control": 0.867,
+        "delta": -0.7388814814814815,
+        "interval95": [
+          -0.7529537037037036,
+          -0.7250370370370369
+        ],
+        "pass": false,
+        "treatment": 0.12811851851851852
+      },
+      "pass": false
+    }
+  },
+  "closed": true,
+  "counts": {
+    "confirmation": 36
+  },
+  "manifest_digest": "38a1b07aee5a79b52dc71a843867ea12f9fd5bc7e1efeef2087acc93fdae6d8c",
+  "protocol": {
+    "id": "v2-m0-motor-20260910-v1",
+    "registration_commit": "ee68bcdda1f376904074316584e2a78bc67cdf64",
+    "registration_sha256": "8a744d5eaa5bafbcdd8535a291a0a6c8493123122e1d6e2808729ae7f61c3bba"
+  },
+  "status": "learning_negative"
+}
