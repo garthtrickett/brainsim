@@ -125,6 +125,13 @@ baseline stands, and even oracle timing mostly shows no headroom. See
 [V5-RESULTS.md](V5-RESULTS.md). All rows are archived; the finite-menu
 experiment is closed without integration.
 
+The V6 exploration follow-up is now complete: margin-directed deviation
+hurts on volatile tasks and devastates lock scores, while epsilon-correct
+exploration shows headroom in the hundreds of points — the gap is
+discrimination, not exploration volume. See
+[V6-RESULTS.md](V6-RESULTS.md). All rows are archived; the finite-menu
+experiment is closed without integration.
+
 **Defer the v2 rewrite and test v3's first hypothesis directly on the existing
 v1 infrastructure.** This is a decision about experiment order, not acceptance
 of v3's thesis or abandonment of continuous time.

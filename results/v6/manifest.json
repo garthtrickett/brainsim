@@ -1,0 +1,88 @@
+{
+  "protocol": {
+    "id": "v6-explore-20260910-v1",
+    "registration_commit": "c3901e62ed734b64fe73ea96b05d42097ce124fd",
+    "registration_sha256": "330f4a2741a38a6c8bd59ff9a1242d7c652677a47db9c481eed4214dac252c9b"
+  },
+  "sources": {
+    "DESIGN-v3-burst.md": "ef249ae9dcf9afe8822ee2c0f188f2e780596450b7fcc6881028191b3e8a4d5c",
+    "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
+    "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
+    "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
+    "DESIGN-v6-explore.md": "330f4a2741a38a6c8bd59ff9a1242d7c652677a47db9c481eed4214dac252c9b",
+    "brainsim.py": "c9017e36e589168764f91417b39830d7b366c98bf119590a7f244862d53fb313",
+    "check_v3_burst.py": "177659e8f2adadf81d310a788d8c2ee65a70d4fa2a09a2dc883b2d8e306eaae3",
+    "check_v6.py": "fbc3ebef64b0a23146e909c400d038e3f029a3911475d3488663e9374b8a5ba8",
+    "report_v3_burst.py": "fc54e016287bd6f1c368a02885f0f92f435b09879659da8dd30e0be393c0b50a",
+    "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
+    "report_v3_slice1.py": "b0eea587ada00c7a3dffd39a8050001a8cee4254bb822f92369c46f0f6b8ea20",
+    "report_v6.py": "128fe251d44da9b1d144c7dad57512b503387978e5e203a4753781e33c95aba2",
+    "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
+    "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
+    "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
+    "study_v3_burst.py": "ab8be80d2a2b63f27653d07810afaf72ad805b18570378e4571e16f90808bdd5",
+    "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
+    "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
+    "study_v6.py": "c28ae2892c3a9c05b1ef8355dcbba5fa95e5beeb79c7c0131b13286fcf878076",
+    "tasks.py": "d3943af39a3e4467b1e79ac84e1e990b95fd01aa14adb6548a210ea153f72108",
+    "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
+    "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
+    "v3_gate.py": "9875703dad1ef620dd3b8d9323a5502d9612490ba9830b7d3581b39fed2571d1",
+    "v3_persistent.py": "14857640d40cb86546c5441f1a43275b5d674a9d2fb8e0cb0671d68a2248c0f9",
+    "v3_reference.py": "0b019a5066b214583e4897d73a16ec2a24a13b361aca4f876f089acd837144a2",
+    "v3_reference_policy.py": "2f3da6886e78035da72addc8fd468eea3fb9d0c10b7c1b76421beac139f83684",
+    "v3_slice1_decisions.py": "8c768720340933586b1b3220c1591b8e25c50aaf622c0e8962b10d128b24482b",
+    "v3_slice1_learning.py": "000e4be3ddf729f5e403074634b1861061b496c01488b2de8f3f4aada6384648",
+    "v3_slice1_streams.py": "6d5a264013357468f5882e929236831e94d3ae0e19b5b4d4ba35e1e9b087932d",
+    "v5_tasks.py": "64c2bcc26bf336ab5fed64c6a0c9be410974149a4a670bba02993707af66963a",
+    "v6_agent.py": "31c3ec6eaf9af12eb818b2a01fe9dcbb61d6885addee84af2f04b947b87e1c8f"
+  },
+  "tasks": {
+    "volatile": 2100,
+    "noisy": 2100,
+    "lock": 12000
+  },
+  "arms": {
+    "baseline": {},
+    "exploreA": {
+      "EXPLORE_K": 0.5
+    },
+    "exploreB": {
+      "EXPLORE_K": 2.0
+    },
+    "exploreOracle": {
+      "EXPLORE_ORACLE": 0.1
+    }
+  },
+  "agent_seeds": [
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137
+  ],
+  "task_seed": 130,
+  "frozen_bounds": {
+    "volatile": [
+      0.251,
+      1.0
+    ],
+    "noisy": [
+      0.2495,
+      1.0
+    ],
+    "lock": [
+      12.5,
+      1333.0
+    ]
+  },
+  "usable": [
+    "volatile",
+    "noisy",
+    "lock"
+  ],
+  "status": "eligible"
+}
