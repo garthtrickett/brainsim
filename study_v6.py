@@ -136,14 +136,14 @@ def confirm(directory):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('stage', choices=('confirm', 'report'))
+    parser.add_argument('stage', choices=('calibrate', 'confirm', 'report'))
     parser.add_argument('--directory', type=Path, default=DIRECTORY)
     args = parser.parse_args()
     if args.stage == 'report':
         from report_v6 import publish_report
         publish_report(args.directory)
     else:
-        {'confirm': confirm}[args.stage](args.directory)
+        {'calibrate': calibrate, 'confirm': confirm}[args.stage](args.directory)
 
 
 if __name__ == '__main__':
