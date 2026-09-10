@@ -1,0 +1,131 @@
+{
+  "closed": true,
+  "contrasts": {
+    "lock": {
+      "contrasts": {
+        "exploreA": {
+          "gain": {
+            "control": 474.75,
+            "delta": -340.375,
+            "interval95": [
+              -405.628125,
+              -274.25
+            ],
+            "pass": false,
+            "treatment": 134.375
+          },
+          "headroom": {
+            "control": 134.375,
+            "delta": 449.125,
+            "interval95": [
+              375.246875,
+              514.375
+            ],
+            "pass": true,
+            "treatment": 583.5
+          },
+          "pass": false
+        },
+        "exploreB": {
+          "gain": {
+            "control": 474.75,
+            "delta": -462.875,
+            "interval95": [
+              -549.125,
+              -390.625
+            ],
+            "pass": false,
+            "treatment": 11.875
+          },
+          "headroom": {
+            "control": 11.875,
+            "delta": 571.625,
+            "interval95": [
+              499.0,
+              647.875
+            ],
+            "pass": true,
+            "treatment": 583.5
+          },
+          "pass": false
+        }
+      },
+      "status": "learning_negative"
+    },
+    "noisy": {
+      "contrasts": {},
+      "status": "no_verdict"
+    },
+    "volatile": {
+      "contrasts": {
+        "exploreA": {
+          "gain": {
+            "control": 0.33119047619047615,
+            "delta": -0.06261904761904762,
+            "interval95": [
+              -0.09857142857142856,
+              -0.023803571428571504
+            ],
+            "pass": false,
+            "treatment": 0.26857142857142857
+          },
+          "headroom": {
+            "control": 0.26857142857142857,
+            "delta": 0.15904761904761905,
+            "interval95": [
+              0.11284523809523808,
+              0.19952380952380955
+            ],
+            "pass": true,
+            "treatment": 0.4276190476190476
+          },
+          "pass": false
+        },
+        "exploreB": {
+          "gain": {
+            "control": 0.33119047619047615,
+            "delta": -0.0745238095238095,
+            "interval95": [
+              -0.11238095238095237,
+              -0.029285714285714276
+            ],
+            "pass": false,
+            "treatment": 0.2566666666666667
+          },
+          "headroom": {
+            "control": 0.2566666666666667,
+            "delta": 0.17095238095238097,
+            "interval95": [
+              0.12857142857142856,
+              0.21071428571428574
+            ],
+            "pass": true,
+            "treatment": 0.4276190476190476
+          },
+          "pass": false
+        }
+      },
+      "status": "learning_negative"
+    }
+  },
+  "counts": {
+    "confirmation": 96
+  },
+  "manifest_digest": "3d5b4105bee878ec96d190cc28fb43ca5a5a52da9e4e1fd53569d7cea35263ce",
+  "positions": {
+    "lock": 0.3500567966679288,
+    "noisy": 0.08854414517305921,
+    "volatile": 0.1070633861021044
+  },
+  "protocol": {
+    "id": "v6-explore-20260910-v1",
+    "registration_commit": "c3901e62ed734b64fe73ea96b05d42097ce124fd",
+    "registration_sha256": "ea3c0b8ffbb4493fe7e6b67c6f88919d1337678e447a410934afcfa13af52c9f"
+  },
+  "status": "learning_negative",
+  "usable": [
+    "volatile",
+    "noisy",
+    "lock"
+  ]
+}

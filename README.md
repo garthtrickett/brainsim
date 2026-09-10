@@ -155,6 +155,12 @@ mostly shows no headroom. Embodiment does not redeem the toolkit. See
 [V5-RESULTS.md](V5-RESULTS.md), or reproduce with
 `python check_v5.py --evidence results/v5 --reproduce`.
 
+V6 tests the one untouched axis — where to explore: margin-directed
+deviation hurts everywhere it is usable (catastrophically on lock), while
+epsilon-correct exploration shows headroom in the hundreds of points. See
+[V6-RESULTS.md](V6-RESULTS.md), or reproduce with
+`python check_v6.py --evidence results/v6 --reproduce`.
+
 V4 inverts the program: a graded-response learner under frozen sloppy
 schedules (delays, misses, false alarms at stated rates). Adaptation holds
 everywhere including primary; only stability fails, only to false alarms.

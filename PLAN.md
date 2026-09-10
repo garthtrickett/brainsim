@@ -94,6 +94,10 @@ The separately authorized V5 embodied study then grafted bursts and dual
 value onto the frozen agent on noisy-volatile tasks: nothing beats the
 ADAPTIVE baseline, and even oracle timing mostly shows no headroom. See
 `V5-RESULTS.md`. No further experiment or integration is activated.
+The separately authorized V6 exploration study then deviated from argmax on
+narrow vote margins: harmful everywhere usable, catastrophically on lock,
+with epsilon-correct headroom in the hundreds of points. See
+`V6-RESULTS.md`. No further experiment or integration is activated.
 
 `V1-RESULTS.md` records the current investigations and supersedes historical
 numbers below. `DESIGN-v1-completion.md` contains their preregistered gates.
