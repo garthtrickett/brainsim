@@ -83,6 +83,47 @@ def build_agent(arm, seed, n_motor):
     return agent
 
 
+CALIBRATION_AGENT_SEEDS = (120, 121, 122)
+CALIBRATION_TASK_SEED = 120
+
+
+def calibrate(directory):
+    registration_check()
+    for source in SOURCES:
+        require_committed(Path(source))
+    evidence = Evidence(directory/'calibration.json', SOURCES, PROTOCOL)
+    rows = {}
+    for name, decisions in TASKS.items():
+        floor = [float(tasks.random_policy(make_task(name, CALIBRATION_TASK_SEED), decisions, seed=s).mean())
+                 for s in CALIBRATION_AGENT_SEEDS]
+        ceiling = [float(tasks.oracle(make_task(name, CALIBRATION_TASK_SEED), decisions, seed=s).mean())
+                   for s in CALIBRATION_AGENT_SEEDS]
+        base = []
+        for s in CALIBRATION_AGENT_SEEDS:
+            task = make_task(name, CALIBRATION_TASK_SEED)
+            agent = build_agent('baseline', s, task.n_actions)
+            base.append(score(name, run_agent(agent, task, decisions, seed=s)['rewards']))
+        floor_mean, ceiling_mean, base_mean = float(np.mean(floor)), float(np.mean(ceiling)), float(np.mean(base))
+        span = ceiling_mean-floor_mean
+        position = (base_mean-floor_mean)/span if span > 1e-9 else 0.
+        rows[name] = {'floor': floor, 'ceiling': ceiling, 'baseline': base,
+                      'position': position, 'usable': bool(.1 <= position <= .9)}
+    manifest = {'protocol': PROTOCOL, 'sources': source_hashes(),
+                'usable': sorted(n for n, r in rows.items() if r['usable'])}
+    manifest['status'] = 'eligible' if manifest['usable'] else 'no_usable_task'
+    evidence.data['rows'] = rows
+    evidence.data['manifest'] = manifest
+    tmp = evidence.path.with_suffix('.tmp')
+    tmp.write_text(json.dumps(evidence.data, indent=2)+'\n')
+    tmp.replace(evidence.path)
+    path = directory/'manifest.json'
+    if path.exists() and json.loads(path.read_text()) != manifest:
+        raise ValueError('frozen manifest changed')
+    write(path, manifest)
+    print('CALIBRATION', manifest['status'], manifest['usable'], flush=True)
+    return manifest
+
+
 def verified_manifest(directory):
     registration_check()
     for source in SOURCES:
