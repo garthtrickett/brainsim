@@ -1,0 +1,765 @@
+"""
+brainsim -- the mainline design.
+
+Carries only what survived testing. Every non-obvious constant cites the
+experiment that set it. Components that were proposed and FAILED are absent,
+and named at the bottom so they don't get re-proposed.
+"""
+import numpy as np
+
+
+class BrainSim:
+    # ---- constants, each traceable to an experiment -------------------------
+    LEAK      = 0.85     # membrane, ~20ms
+    TRACE_D   = 0.80     # spike trace, ~50ms
+    ELIG_D    = 0.995    # 09: tau~200. A tau~10 trace collapses to chance as
+                         # soon as anything fills the action->reward gap.
+    VALUE_LR  = 0.02     # 02: RPE baseline. Raw reward instead => chance.
+    EBAR_LR   = 0.05     # 02: credit the deviation, not the habit (1.00 vs 0.82)
+    NOISE     = 0.35     # 02: exploration. Remove it => chance.
+    LR        = 0.05
+    WMAX      = 1.0
+    # 17/18: readout weights are clamped NON-NEGATIVE. Fine for 2 classes, where
+    # relative magnitude alone separates them. With N classes the readout cannot
+    # represent "this cell means NOT class 3", which may be why the design stalls
+    # near chance past 2 classes. Set WMIN=-WMAX to allow inhibitory readout.
+    WMIN      = 0.0
+    # 01 validated threshold homeostasis at a 1% target -- on a RECURRENT net
+    # with no k-WTA. Here competition forces exactly k/n cells to fire, so a 1%
+    # target is a rate competition structurally forbids: the controller ratchets
+    # thresholds up forever (1.00 -> 6.42) and accuracy sits at 0.58. The target
+    # is set from k/n in __init__. A constant is only valid in the architecture
+    # it was measured in.
+    # 15: OFF in this architecture. Validated in 01 on a RECURRENT net, where
+    # without it 90% of cells went silent. In the feedforward + k-WTA path it is
+    # counterproductive: it is per-cell, so winners get their thresholds pushed
+    # UP for firing often while k-WTA keeps selecting by rank -- penalising the
+    # informative cells. Measured over 3000 trials:
+    #     ETA_TH=0.02 -> fire_rate 0.0318, 23% cells silent, thresh drifts to 2.21
+    #     ETA_TH=0    -> fire_rate 0.0750 (= k/n, as k-WTA enforces), 15% silent
+    # It causes MORE silence than it prevents, and costs sample efficiency
+    # (0.90 vs 0.98 at 1200 trials; both reach ~1.00 by 3000).
+    # Re-enable for recurrent architectures, where 01's result applies.
+    ETA_TH    = 0.0
+    # 06: NOT 100 -- at 100 it fought the threshold controller (rate dipped to
+    # 0.0080 by 60k). 15: it is also load-bearing for LEARNING here, not just for
+    # saturation: removing it drops the local rule 0.90 -> 0.81.
+    SCALE_EVERY = 1000
+    SLEEP_EVERY = 50     # 13: sleep cadence, in decisions
+    # 33 (step 4): 0 by default. This loop ran BOTH the local replay and the
+    # gradient pass, and both are now harmful -- subsumed by hippocampal replay
+    # and then obstructing it. sleep() reduces to hippocampal replay alone.
+    #                        nway-8   xor-2   volatile   lock-10
+    #   shipped               0.882   0.756     0.419      282.4
+    #   -local replay         0.967   0.756     0.271      419.4
+    #   -local replay -down   0.988   0.722     0.450      433.2   <- SHIPPED
+    #   -ALL sleep            (kills hippocampal replay)    60.2   <- collapse
+    # Step 4 was planned as "name the sleep gradient as a third learning system".
+    # The answer is that it should be DELETED: validated in Part 3 at +0.06 over
+    # matched replay, four regime changes ago, and now net negative.
+    SLEEP_REPLAY = 0
+    SLEEP_ETA = 0.05     # 13: gradient step size inside sleep
+    # 33: 1.0 (off). Cost +0.106 on nway-8 and 151 rewards on lock-10 -- it was
+    # shrinking exactly the weights hippocampal replay had just strengthened.
+    DOWNSCALE = 1.0      # was 0.98: shrink all, preserve the order
+    # 15: a NO-OP as configured -- np.clip(W_out, 0, ...) already sets weights to
+    # exactly 0, so nothing is ever left below the threshold. Ablating it gives
+    # bit-identical results. Kept because pruning is real in the design; it just
+    # has nothing to do while the clip does the work.
+    PRUNE_BELOW = 1e-3
+    # 18: THE ONE NON-LOCAL ELEMENT IN THIS DESIGN. Credit the action that was
+    # SELECTED rather than every motor cell that happened to fire. Without it the
+    # design cannot exceed binary choice:
+    #        classes    local    action-gated
+    #           2       1.000       1.000
+    #           4       0.323       0.923
+    #           8       0.152       0.919
+    # Diagnosis: 3.37 of 4 motor cells fire per tick, so outer(fm, trh) credits
+    # nearly all of them, W_out never differentiates (spread 0.03 vs 0.58) and the
+    # vote margin stays at 0.6 spikes -- a coin flip. Hidden codes were separable
+    # all along (overlap 0.549), so this was credit assignment, not capacity.
+    # Two LOCAL alternatives were tried and both failed:
+    #   motor k-WTA (1-of-N per tick):  0.319 / 0.158 -- per-tick winners smear
+    #       credit across cells; the decision is a 30-tick aggregate.
+    #   commitment (lock in at a bound): 0.350 / 0.168 -- locks on noise, then
+    #       only the locked cell can fire, so it cannot escape. Bimodal seeds.
+    # 21 SUPERSEDES the decision to default this ON. A LOCAL mechanism (TAGGATE)
+    # recovers most of the benefit, so the design no longer has to give up
+    # locality to exceed binary choice:
+    #       classes   local   TAGGATE   persist+gate   ACTION_GATED
+    #          4      0.323    0.602       0.877          0.959
+    #          8      0.152    0.672       0.600          0.900
+    # TAGGATE recovers 70% of the gap at 8 classes and 87% at 4 (with persist).
+    # Enable ACTION_GATED for maximum accuracy, accepting one non-local signal.
+    ACTION_GATED = False   # 21: superseded as the default -- see TAGGATE below
+
+    # --- brain-plausible alternatives to ACTION_GATED (19/21). Default OFF. ---
+    # Added to BrainSim itself rather than a subclass: a subclass that
+    # reimplemented step() silently dropped synaptic scaling and degraded every
+    # row of its own experiment, reference included.
+    # 21: PERSIST is NOT reliably useful -- +0.28 at 4 classes, -0.07 at 8, and
+    # near-nothing alone. Off by default; try it if 4-way is your case.
+    PERSIST  = False     # recurrent self-excitation + pooled lateral inhibition:
+    SELF_EXC = 0.15      # amplifies an early (noise-driven) lead and sustains it
+    INHIB    = 0.10      # to reward, so credit and decision coincide in TIME
+    TAGGATE  = True      # tag only if this cell clears a threshold set by the
+    THETA    = 1.0       # pooled interneuron -> winner-take-all on CREDIT.
+                         # 21: measured motor traces are [9.53 9.48 9.53 9.48] --
+                         # 0.5% apart -- so any THETA below ~0.99 admits every
+                         # cell and gates nothing. Exact-max is the real WTA.
+    # 22: the gate window trades ALIGNMENT against EXPLORATION, and the optimum
+    # moves with the number of choices. A long trace matches the gate's winner to
+    # the decision (argmax over the whole trial); too long and an early lead locks
+    # in and cannot be overturned -- costly with more competitors, since the early
+    # leader is right only 1/N of the time.
+    #                 8 classes   4 classes
+    #   TRM_D=0.90      0.672       0.602
+    #   TRM_D=0.97      0.592       0.838     <- default: best average, no collapse
+    #   TRM_D=0.99      0.244       0.959     <- MATCHES non-local ACTION_GATED at 4
+    #   TRM_D=1.0       0.292       0.503     <- never forgets; early lead locks in
+    #   ACTION_GATED    0.900       0.959
+    # Tune to your N: 0.99 for 4-way (matches non-local exactly), 0.90 for 8-way.
+    TRM_D    = 0.97
+
+    # --- PFC working memory (36). Default OFF pending test.
+    # tmaze-within: cue VISIBLE scores 1.000, cue hidden 0.505 against a 0.504
+    # floor. A clean 0.50 gap that only memory can close.
+    # The GATE is the hard part -- write always and the cue is overwritten by the
+    # delay and choice patterns. Surprise was the planned gate and is REFUTED:
+    # the choice pattern is more surprising (0.173) than the cue (0.145), so a
+    # surprise gate would store the wrong thing.
+    # Gates to compare:
+    #   none      always write -- expected to fail, and it is the control
+    #   capacity  write strongly only while the store is EMPTY (self-gating:
+    #             a cell already in a persistent up-state resists new input)
+    #   change    write when the input differs from the previous tick
+    # 37: SHIPPED ON. Two tasks go from structurally impossible (at floor -- no
+    # state outlives a decision) to solved:
+    #   tmaze-within d30  0.529 -> 0.999      d60  0.505 -> 0.999
+    #   xor-2             0.761 -> 0.839
+    #   nway-4/8, volatile-4: within noise (-0.002, -0.009, -0.039)
+    #   lock-10           419.0 -> 339.8  (-19%, still 34x the no-replay 9.5)
+    # An unnormalised W_wm update trades the other way (lock +49, volatile BELOW
+    # its floor). Taking the variant that drives no task below chance.
+    WM        = True
+    WM_GATE   = "capacity"
+    WM_DECAY  = 0.999    # persistent within a decision
+    WM_LR     = 0.15
+    # 37: WM gets its OWN readout pathway, initialised to ZERO. Sharing W_out was
+    # catastrophic -- it injected W_out @ wm through weights trained for fh, and
+    # inflated the credit term, so every non-memory task collapsed:
+    #   nway-4 0.999->0.546, nway-8 0.988->0.285, lock 419->24.5.
+    # A separate zero-init pathway contributes NOTHING until it earns weight, so
+    # tasks that do not need memory never see it. PFC->motor is a distinct
+    # projection with its own synapses, which is also the biology.
+    WM_BETA   = 1.0      # how strongly WM drives the readout
+    WM_CAP    = 6.0      # capacity scale for the capacity gate
+
+    # --- hippocampus: episodic store + replay (29). Default OFF pending test.
+    # Two DIFFERENT mechanisms for backward credit, deliberately separable:
+    #  (a) an eligibility trace spanning the replayed episode -- needs COMPRESSION,
+    #      because 10 steps x 30 ticks leaves the trace at 0.222 but x3 leaves 0.860;
+    #  (b) TD bootstrapping through V(s) in reverse order -- propagates credit via
+    #      the value function and does NOT need compression.
+    # The design doc leaned on (a); (b) is the standard answer. The ablation must
+    # tell them apart or "hippocampus" is just a label on an oversampled buffer.
+    HIPPO           = True    # SHIPPED (29): lock-10 rewards 9.5 -> 333.5, 35x
+    HIPPO_REVERSE   = True    # ESSENTIAL: reverse 333.5 vs forward 4.2 (80x).
+                              # Updating backwards means each state's successor is
+                              # already fresh, so credit crosses the whole episode
+                              # in ONE pass. Forward moves it one step per pass.
+    HIPPO_TRACE     = False   # REFUTED. The design's headline claim was that time
+                              # compression lets an eligibility trace span an
+                              # episode. Both the trace and the compression are
+                              # HARMFUL: no trace 333.5, compressed trace 115.5,
+                              # uncompressed trace 133.0. Kept as a flag because
+                              # the refutation is worth preserving.
+    HIPPO_TICKS     = 3       # only used when HIPPO_TRACE is on
+    HIPPO_BOOTSTRAP = True    # ESSENTIAL: with TD 333.5, without 2.8
+    HIPPO_PRIORITY  = True    # sample episodes ~ reward; buffer is ~2000 junk runs
+    HIPPO_N         = 8       # episodes per sleep. N=24 scores higher on average
+                              # (377.5) but is bimodal -- 2 of 6 seeds collapse to
+                              # ~2. Robust beats peak, as with TRM_D.
+    HIPPO_GAMMA     = 0.9
+    HIPPO_LR        = 0.05
+    HIPPO_CAP       = 400     # episode store size
+    # The lock only signals done at the GOAL -- a wrong action resets the state
+    # but does not end the episode. Without a window the "episode" is the whole
+    # run from session start to reward: thousands of steps of mostly failure.
+    # A finite episodic window is also the biologically right answer: the
+    # hippocampus holds a recent trajectory, not a lifetime.
+    HIPPO_WINDOW    = 20      # steps retained before the outcome
+    # Replay only SEQUENCES. Reverse replay exists to move credit ACROSS steps;
+    # a 1-step episode has no sequence, so replaying it just duplicates the
+    # online update -- and on a volatile task it replays contingencies that have
+    # since changed. Measured cost of not gating this: nway-4 0.961 -> 0.890,
+    # xor-2 0.722 -> 0.518, volatile-4 0.472 -> 0.305.
+    HIPPO_MIN_LEN   = 2
+
+    # --- neuromodulators beyond dopamine (25). Default OFF pending validation.
+    # `volatile-4` sits at 0.276 vs a 0.250 floor on a task the design solves at
+    # 0.834 when stationary: a fixed LR and fixed exploration are a hard wall.
+    # 25: SHIPPED. Striatal V(s) -- a learned linear value readout from the
+    # hidden trace, replacing one global scalar baseline. Local: delta rule,
+    # post-error x pre-activity, normalised by ||z||^2 (a plain delta rule
+    # diverges: ||zbar||^2 ~ 100 predicts V~5 for r=1 in one step).
+    #   volatile-4  0.276 -> 0.472     nway-4  0.834 -> 0.961
+    # Does NOT help lock-10 (still ~0.000): sparse reward is the hippocampus.
+    VALUE_STATE = True
+    VALUE_W_LR  = 0.05
+    # 32: SHIPPED. Step 1 rejected this for "cancelling V(s)" -- measured under
+    # the broken decide(). In the corrected regime they are COMPLEMENTARY:
+    # V(s) must relearn every state when contingencies permute, and volatility-
+    # driven LR/noise is exactly the repair.
+    #                volatile   nway-4   nway-8   xor-2    lock-10
+    #   V(s)            0.278    0.999    0.924   0.707      330.8
+    #   V(s)+ADAPTIVE   0.419    0.999    0.882   0.756      282.4
+    # A real trade: +0.141 volatile, +0.049 xor, -0.042 nway-8, -15% lock.
+    # Shipped because volatile at 0.278 is 4% off its floor (near-failing) and
+    # 0.419 is 23%, while the lock stays at 30x baseline. Robust beats peak.
+    ADAPTIVE    = True   # NE/ACh: volatility from reward-rate change -> LR, noise
+    # Step 8: plasticity gating. "off" = current behaviour. "oracle" and
+    # "oracle_carry" are PRIVILEGED (they use `done` as a scored/unscored
+    # signal the agent could not know) and exist only to bound what any real
+    # relevance gate could achieve. If a PERFECT gate does not close the gap,
+    # there is no point building an imperfect one.
+    #   oracle       -- suppress the policy update on unscored decisions
+    #   oracle_carry -- also skip eligibility consumption, so credit carries
+    #                   forward to the decision that is actually scored
+    PGATE       = "off"
+    # Step 8 follow-up. WM is cleared at EVERY reward() call, so the cue cannot
+    # survive a decision boundary -- which is why tmaze delay>=2 sits at floor
+    # even with a PERFECT plasticity gate. WM_HOLD clears only on done, making
+    # working memory cross-decision. tmaze-within works (0.999) because its
+    # delay is in ticks WITHIN one decision, which hid this entirely.
+    WM_HOLD     = False
+    # Step 9: local competitive pools. One global k-WTA makes every stimulus
+    # compete with every other, which is the interference the step 7 reference
+    # table exposed -- xor-2 and volatile-4 both lose to tabular-Q, the ONE
+    # baseline with a separate entry per state and so zero interference.
+    # POOLS>1 splits the hidden layer into P blocks each running its own k-WTA
+    # at k/P. P must divide k; balanced pool sizes may differ by one unit.
+    # The original P=4/8 probe silently changed k=6 into 4/8 winners.
+    POOLS       = 1
+    # Step 13c instruments. Transmission failure and matched deterministic
+    # attenuation default off. Masks use their own RNG, preserving the baseline.
+    TRANSMISSION_FAILURE = 0.0
+    TRANSMISSION_GAIN = 1.0
+    SURP_F, SURP_S = 0.10, 0.005   # fast/slow |RPE| averages
+    LR_GAIN, NOISE_GAIN, VOL_CAP = 1.5, 1.5, 2.0
+    # V5: endogenous burst + dual value. All default off (None/False): the
+    # frozen reference passes bit-identical with these present but unset.
+    # VBURST = (tau, factor, dur): fire an LR burst of `factor` for `dur`
+    # decisions when the ADAPTIVE vol scalar crosses `tau` (edge-triggered,
+    # no extension while bursting). VBURST_ORACLE fires on true switch
+    # decisions instead. Bursts scale POLICY updates only (PGATE precedent).
+    VBURST = None
+    VBURST_ORACLE = False
+    # DUALV: second V(s) head at DUALV_LR with the same normalized rule;
+    # predict from the fast head within DUALV_WIN decisions of any burst
+    # trigger (endo threshold fixed at 1.0, or oracle switches), else slow.
+    DUALV = False
+    DUALV_ORACLE = False
+    DUALV_LR = 0.5
+    DUALV_WIN = 50
+    # V6: margin-directed exploration. All default off (0.0): the frozen
+    # reference passes bit-identical with these present but unset.
+    # EXPLORE_K > 0 deviates from argmax with probability k*closeness, where
+    # closeness = 1-(v1-v2)/(v1+v2) on pre-reset votes (0/0 reads as 1).
+    # EXPLORE_ORACLE > 0 returns the correct action with that probability;
+    # the label arrives as a decide() keyword the study passes only to the
+    # oracle arm. Draws come from the agent RNG: flags off means zero draws.
+    EXPLORE_K = 0.0
+    EXPLORE_ORACLE = 0.0
+
+    def __init__(self, n_in=40, n_hidden=80, n_motor=2, k=6, seed=0):
+        self.rng = np.random.default_rng(seed)
+        self.transmission_rng = np.random.default_rng([seed, 1303])
+        self.n_in, self.n_hidden, self.n_motor, self.k = n_in, n_hidden, n_motor, k
+        r = self.rng
+        self.W_in  = (r.random((n_hidden, n_in)) < 0.25) * r.random((n_hidden, n_in)) * 1.2
+        self.W_out = np.full((n_motor, n_hidden), 0.25)
+        self.thresh = np.ones(n_hidden)
+        self._reset_dynamics()
+        self.ebar  = np.zeros((n_motor, n_hidden))
+        self.elig  = np.zeros((n_motor, n_hidden))
+        self.elig_w = 0.0   # accumulated EMA weight; see reward()
+        # running mean of trh across the trial. NOT self.trh/30: that is the
+        # FINAL tick's trace, one noisy sample, and using it drops 8-class
+        # accuracy from 0.92 to 0.24.
+        self.trh_sum = np.zeros(n_hidden); self.trh_n = 0
+        self.trm = np.zeros(n_motor)      # motor activity trace
+        self.wm = np.zeros(n_hidden)      # PFC working memory
+        self.W_wm = np.zeros((n_motor, n_hidden))   # PFC->motor, zero-init
+        self.elig_wm = np.zeros((n_motor, n_hidden))
+        self.ebar_wm = np.zeros((n_motor, n_hidden))
+        self.wm_sum = np.zeros(n_hidden); self.wm_n = 0
+        self._wm_eff = np.zeros(n_hidden)
+        self._prev_fh = np.zeros(n_hidden)
+        self.w_v = np.zeros(n_hidden)     # striatal value weights V(s)
+        self.surp_f = self.surp_s = 0.0   # fast / slow REWARD RATE averages
+        self.burst_left = 0               # V5: remaining burst decisions
+        self.w_vf = np.zeros(n_hidden)    # V5: fast value head (DUALV)
+        self.last_trig = -10 ** 9         # V5: decision of last burst trigger
+        self.burst_marks = []             # V5: (decision, provenance) fired
+        self.vol_hist, self.lr_hist, self.noise_hist = [], [], []
+        self.margin_hist = []             # V6: pre-decision closeness trace
+        self.dev_hist = []                # V6: (action, deviated) per decision
+        self.noise_eff = self.NOISE       # NE-modulated exploration
+        self.value = 0.0
+        self.rate  = np.zeros(n_hidden)
+        self.TARGET_RATE = k / n_hidden   # NOT the 0.01 from 01; see above
+        self.buffer, self.ticks, self.decisions = [], 0, 0
+        self.episode, self.episodes = [], []   # current episode, episodic store
+        self._out_budget = np.abs(self.W_out).sum(axis=1).copy()
+
+    def _reset_dynamics(self):
+        self.vh = np.zeros(self.n_hidden); self.vm = np.zeros(self.n_motor)
+        self.trh = np.zeros(self.n_hidden); self.fh = np.zeros(self.n_hidden)
+        self.votes = np.zeros(self.n_motor)
+
+    # ---- 5: pretrained encoder. Off by default -- SUBSUMED, not harmful. ----
+    def pretrain_encoder(self, patterns, steps=6000, eta=0.02):
+        """Competitive learning: local, unsupervised, no labels.
+
+        Verdict revised twice; the earlier "it HURTS" was an artifact of a bad
+        default (ETA_TH=0.02, which 15 showed is itself counterproductive here).
+
+            with ETA_TH=0.02:  pretrained 0.85 vs random 0.98  (grad on)
+                               pretrained 0.72 vs random 0.85  (grad off)
+            with ETA_TH=0:     pretrained 0.95 vs random 0.97  (grad on, @400)
+                               pretrained 0.84 vs random 0.75  (grad off, @400)
+
+        So it HELPS the local rule (+0.09 sample efficiency), and is NEUTRAL once
+        the sleep gradient is on because the gradient reaches ceiling either way.
+        The mainline ships with the gradient on, so this is off by default as
+        redundant -- not because it does damage. Enable it if you disable
+        SLEEP_ETA. 11 also refuted decorrelation as the mechanism; still unknown.
+        """
+        for _ in range(steps):
+            x = patterns[self.rng.integers(len(patterns))]
+            si = (self.rng.random(self.n_in) < 0.6 * x).astype(float)
+            v = self.W_in @ si
+            win = v >= np.partition(v, -self.k)[-self.k]
+            self.W_in[win] += eta * (si - self.W_in[win])
+        np.clip(self.W_in, 0, None, out=self.W_in)
+
+    # ---- the loop -----------------------------------------------------------
+    def step(self, x):
+        """One tick. Returns motor spikes."""
+        self.ticks += 1
+        si = (self.rng.random(self.n_in) < 0.6 * x).astype(float)
+
+        # 4/5: motor integrates last tick's hidden spikes, plus exploration noise
+        if self.TRANSMISSION_FAILURE:
+            mask = self.transmission_rng.random(self.W_out.shape) >= self.TRANSMISSION_FAILURE
+            signal = (self.W_out * mask) @ self.fh
+        else:
+            signal = self.W_out @ self.fh
+        drive = self.TRANSMISSION_GAIN * signal + self.rng.normal(0, self.noise_eff, self.n_motor)
+        if self.WM:
+            # Feed the WM pathway only what the CURRENT input does not already
+            # explain. Where the observation is constant within a decision (lock,
+            # nway, volatile) wm is a scaled copy of trh, so the pathway merely
+            # duplicates W_out -- two controllers on one variable, and lock-10
+            # fell 419 -> 58. Removing the component parallel to trh makes the
+            # contribution ~0 exactly there, while leaving it intact when wm
+            # holds something the input does not (a cue from 40 ticks ago).
+            n2 = float(self.trh @ self.trh)
+            resid = self.wm - (float(self.wm @ self.trh) / n2) * self.trh if n2 > 1e-9 else self.wm
+            self._wm_eff = resid
+            drive = drive + self.WM_BETA * (self.W_wm @ resid)
+        if self.PERSIST:
+            drive += self.SELF_EXC * self.trm - self.INHIB * self.trm.mean()
+        self.vm = self.vm * self.LEAK + drive
+        fm = (self.vm > 1.0).astype(float); self.vm[fm > 0] = 0
+        self.trm = self.trm * self.TRM_D + fm
+
+        # 2: leaky integrate and fire
+        self.vh = self.vh * self.LEAK + self.W_in @ si
+
+        # 3: compete. Only the best-driven K survive. Without this, two different
+        #    inputs give near-identical patterns (02: cos .81 -> .93) and nothing
+        #    downstream can separate them -- accuracy 1.00 -> 0.52.
+        if self.POOLS != 1:
+            self._validate_pools()
+            self.fh = np.zeros(self.n_hidden)
+            kp = self.k // self.POOLS
+            for p in range(self.POOLS):
+                lo = p * self.n_hidden // self.POOLS
+                hi = (p + 1) * self.n_hidden // self.POOLS
+                v = self.vh[lo:hi]
+                thr = np.partition(v, -kp)[-kp]
+                self.fh[lo:hi] = (v >= thr) & (v > self.thresh[lo:hi])
+        else:
+            thr = np.partition(self.vh, -self.k)[-self.k]
+            self.fh = ((self.vh >= thr) & (self.vh > self.thresh)).astype(float)
+        self.vh[self.fh > 0] = 0
+
+        self.trh = self.trh * self.TRACE_D + self.fh
+        if self.WM:
+            if self.WM_GATE == "capacity":
+                g = max(0.0, 1.0 - float(np.linalg.norm(self.wm)) / self.WM_CAP)
+            elif self.WM_GATE == "change":
+                g = 1.0 if float(np.abs(self.fh - self._prev_fh).sum()) > 2 else 0.0
+            else:
+                g = 1.0
+            self.wm = self.wm * self.WM_DECAY + self.WM_LR * g * self.fh
+            self._prev_fh = self.fh.copy()
+            self.wm_sum += getattr(self, "_wm_eff", self.wm); self.wm_n += 1
+        self.trh_sum += self.trh; self.trh_n += 1
+        # EMA, not a running sum: keeps magnitude independent of the time
+        # constant. A plain sum at tau~200 accumulates ~200x a single outer
+        # product and saturates W_out -- the bug that invalidated experiment E.
+        if self.TAGGATE:
+            m = self.trm.max()
+            gate = (self.trm >= self.THETA * m).astype(float) if m > 0 else np.ones(self.n_motor)
+        else:
+            gate = 1.0
+        self.elig = self.elig * self.ELIG_D + (1 - self.ELIG_D) * np.outer(fm * gate, self.trh)
+        self.elig_w = self.elig_w * self.ELIG_D + (1 - self.ELIG_D)
+        self.votes += fm
+
+        # 8: homeostasis
+        self.rate += 0.001 * (self.fh - self.rate)
+        self.thresh += self.ETA_TH * (self.rate - self.TARGET_RATE)
+        np.clip(self.thresh, 0.05, 20.0, out=self.thresh)
+        if self.ticks % self.SCALE_EVERY == 0:
+            cur = np.abs(self.W_out).sum(axis=1)
+            scale = np.where(cur > 1e-9, self._out_budget / np.maximum(cur, 1e-9), 1.0)
+            self.W_out *= scale[:, None]
+        return fm
+
+    def _validate_pools(self):
+        if (not isinstance(self.POOLS, (int, np.integer)) or self.POOLS < 1
+                or self.k % self.POOLS or not 1 <= self.k <= self.n_hidden):
+            raise ValueError("POOLS must be a positive divisor of k, with 1 <= k <= n_hidden")
+
+    def decide(self, correct=None):
+        """Argmax over votes, ties broken uniformly among ALL joint winners.
+
+        BUG (fixed 30): this compared only v[0] and v[1] and, on a tie between
+        those two, returned 0 or 1 at random -- discarding the vote entirely and
+        ignoring actions 2..n-1 even when one of them won outright. Written when
+        n_motor was always 2, never updated when it became a parameter. Vote
+        counts are small integers so ties are common: at TRM_D=1.0, where trm and
+        votes are the SAME array, tagged-equals-chosen measured 38.8% instead of
+        100%. Every n>2 result in the project was depressed by this.
+
+        V6: EXPLORE_ORACLE returns the correct label with that probability
+        (correct arrives only on the oracle arm; otherwise None).
+        EXPLORE_K deviates uniformly with probability k*closeness, where
+        closeness is measured on pre-reset votes. Flags off: argmax path
+        exactly, with zero RNG draws.
+        """
+        v = self.votes.copy(); self.votes[:] = 0
+        ordered = np.sort(v)[::-1]
+        total = ordered[0]+ordered[1] if len(ordered) > 1 else ordered[0]
+        closeness = 1.0 if total <= 0 else 1.0-(ordered[0]-ordered[1])/total
+        self.margin_hist.append(float(closeness))
+        winners = np.flatnonzero(v == v.max())
+        deviated, action = False, None
+        if self.EXPLORE_ORACLE > 0:
+            if correct is None or not 0 <= correct < self.n_motor:
+                raise ValueError('oracle exploration needs a valid label')
+            if self.rng.random() < self.EXPLORE_ORACLE:
+                action, deviated = int(correct), correct not in winners
+        if action is None and self.EXPLORE_K > 0:
+            if self.rng.random() < min(1.0, self.EXPLORE_K*closeness):
+                action = int(self.rng.integers(self.n_motor))
+                deviated = action not in winners
+        if action is None:
+            action = int(winners[0]) if len(winners) == 1 else int(winners[self.rng.integers(len(winners))])
+        self.dev_hist.append((action, bool(deviated)))
+        return action
+
+    # ---- 6/7: feel, then learn ---------------------------------------------
+    def store_and_replay(self, z, action, r, done, w=None):
+        """Episodic memory: bind (state, action, outcome), replay on completion.
+
+        37: the episode records the WM state too. Replay corrected only W_out,
+        so on a replay-dependent task the WM pathway drifted uncorrected while
+        the main pathway was retrained -- lock-10 fell 419 -> 58.
+        """
+        self.episode.append((z.copy(), int(action), float(r),
+                             None if w is None else w.copy()))
+        if len(self.episode) > self.HIPPO_WINDOW:
+            self.episode = self.episode[-self.HIPPO_WINDOW:]
+        if not done:
+            return
+        total = sum(x[2] for x in self.episode)
+        if len(self.episode) >= self.HIPPO_MIN_LEN:
+            self.episodes.append((self.episode, total))
+        keep_len = len(self.episode)
+        self.episode = []
+        if keep_len < self.HIPPO_MIN_LEN:
+            return
+        if len(self.episodes) > self.HIPPO_CAP:
+            # evict the least valuable, not the oldest: the rewarded episodes are
+            # 1-3 in 4000 and must survive.
+            self.episodes.sort(key=lambda e: e[1])
+            self.episodes = self.episodes[1:]
+        if total <= 0:
+            return                      # replay is triggered BY reward
+        for _ in range(self.HIPPO_N):
+            self._replay_one()
+
+    def _replay_one(self):
+        if not self.episodes: return
+        idx = self._sample_episode()
+        ep = self.episodes[idx][0]
+        decay = (self.ELIG_D ** self.HIPPO_TICKS) if self.HIPPO_TRACE else 0.0
+        elig = np.zeros_like(self.W_out)
+        order = list(reversed(ep)) if self.HIPPO_REVERSE else list(ep)
+        vnext = 0.0                                  # terminal value
+        for item in order:
+            z, a, r = item[0], item[1], item[2]
+            w = item[3] if len(item) > 3 else None
+            v = float(self.w_v @ z)
+            nm = (r + self.HIPPO_GAMMA * vnext - v) if self.HIPPO_BOOTSTRAP else (r - v)
+            elig *= decay
+            elig[a] += z
+            self.W_out += self.HIPPO_LR * nm * elig
+            self.w_v += self.VALUE_W_LR * nm * z / (z @ z + 1e-6)
+            if self.WM and w is not None:
+                self.W_wm[a] += self.HIPPO_LR * nm * w      # correct BOTH pathways
+            vnext = float(self.w_v @ z)              # fresh, hence reverse order
+        np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
+
+    def _sample_episode(self):
+        """Selection seam: experiments can change retrieval without copying TD replay."""
+        if self.HIPPO_PRIORITY:
+            w = np.array([e[1] for e in self.episodes], dtype=float) + 1e-3
+            idx = int(self.rng.choice(len(self.episodes), p=w / w.sum()))
+        else:
+            idx = int(self.rng.integers(len(self.episodes)))
+        return idx
+
+    def reward(self, r, action=None, done=True, policy_bonus=0.0, switch=False):
+        """Deliver reward. NM is reward MINUS what was expected (02: raw reward
+        instead of RPE => chance, because it never stops reinforcing the known)."""
+        if self.DUALV and not self.VALUE_STATE:
+            raise ValueError('DUALV requires VALUE_STATE')
+        zbar = self.trh_sum / max(self.trh_n, 1)
+        _wbar = (self.wm_sum / max(self.wm_n, 1)) if self.WM else None
+        if self.VALUE_STATE:
+            # V(s) from cortical input, as striatum does -- not one global mean.
+            # A scalar baseline is useless when reward arrives 2x in 25,000 acts.
+            v_slow = float(self.w_v @ zbar)
+            if self.DUALV:
+                v_fast = float(self.w_vf @ zbar)
+                v = v_fast if self.decisions-self.last_trig <= self.DUALV_WIN else v_slow
+            else:
+                v = v_slow
+            nm = r - v
+            # NORMALISED delta rule. A plain one diverges here: ||zbar||^2 ~ 100
+            # (6 active units, trace ~5), so LR=0.05 predicts V~5 for r=1 after a
+            # single step and accuracy collapses to 0.04 against 0.25 chance.
+            # Dividing by ||z||^2 makes the step scale-free. Third magnitude bug
+            # of this kind in the project -- see the eligibility sum and EMA.
+            self.w_v += self.VALUE_W_LR * (r - v) * zbar / (zbar @ zbar + 1e-6)
+            if self.DUALV:
+                # Fast head, same normalized rule at 10x the rate. Updated on
+                # every reward regardless of which head currently predicts.
+                self.w_vf += self.DUALV_LR * (r - v) * zbar / (zbar @ zbar + 1e-6)
+        else:
+            self.value += self.VALUE_LR * (r - self.value)
+            nm = r - self.value
+        if self.ADAPTIVE:
+            # Volatility, not noise: learning should speed up when the world
+            # CHANGES, not merely when it is stochastic (Behrens 2007). Fast
+            # surprise above its own slow baseline is the change signal.
+            # Track REWARD RATE, not |RPE|. |RPE| is large simply because reward
+            # is binary -- that is EXPECTED uncertainty (noise), which should NOT
+            # raise the learning rate. Using it fired the signal permanently,
+            # doubling LR and noise forever and collapsing accuracy to 0.015.
+            # A contingency change shows up as a sustained gap between a fast and
+            # a slow average of r, which decays once the new rate is learned.
+            self.surp_f += self.SURP_F * (r - self.surp_f)
+            self.surp_s += self.SURP_S * (r - self.surp_s)
+            vol = float(np.clip(abs(self.surp_f - self.surp_s) / (self.surp_s + 0.05),
+                                0.0, self.VOL_CAP))
+            lr = self.LR * (1 + self.LR_GAIN * vol)
+            self.noise_eff = self.NOISE * (1 + self.NOISE_GAIN * vol)
+        else:
+            vol = 0.0
+            lr = self.LR
+        if self.VBURST is not None or self.DUALV:
+            # V5 triggers. Oracle arms fire on true switch flags passed by the
+            # evaluator; endo arms fire on the ADAPTIVE vol scalar (tau 1.0 for
+            # the dualV head, the burst setting's own tau otherwise).
+            # Edge-triggered: triggers arriving mid-burst are ignored, and a
+            # burst never extends. Provenance recorded for the evidence.
+            oracle_mode = self.VBURST_ORACLE or self.DUALV_ORACLE
+            if oracle_mode:
+                fired = bool(switch)
+            elif self.VBURST is not None:
+                fired = vol > self.VBURST[0]
+            else:
+                fired = vol > 1.0
+            if fired:
+                if self.VBURST is not None and self.burst_left <= 0:
+                    self.burst_left = self.VBURST[2]
+                self.last_trig = self.decisions
+                self.burst_marks.append((self.decisions, 'oracle' if oracle_mode else 'endo'))
+        if self.VBURST is not None and self.burst_left > 0:
+            lr = lr * self.VBURST[1]
+            self.burst_left -= 1
+        self.vol_hist.append(vol if self.ADAPTIVE else 0.0)
+        self.lr_hist.append(lr)
+        self.noise_hist.append(self.noise_eff)
+        if policy_bonus:
+            nm += policy_bonus
+        # Step 8 gate. Scales the POLICY update only. V(s), the traces, replay
+        # and every reset stay untouched -- skipping reward() wholesale is a bug
+        # this project has already made once (it skipped the state resets too).
+        gate = 1.0
+        if self.PGATE in ("oracle", "oracle_carry") and not done:
+            gate = 0.0
+        if self.ACTION_GATED and action is not None:
+            z = self.trh_sum / max(self.trh_n, 1)
+            de = np.zeros_like(self.W_out)
+            de[action] = z - self.ebar[action]
+            self.ebar[action] += self.EBAR_LR * (z - self.ebar[action])
+            self.W_out += lr * nm * de
+            np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
+            self.elig[:] = 0.0; self.elig_w = 0.0
+            self.buffer.append((z.copy(), de.copy(), nm, action, r))
+            self.trh_sum[:] = 0.0; self.trh_n = 0
+            if self.WM and not (self.WM_HOLD and not done):
+                self.wm[:] = 0.0; self._prev_fh[:] = 0.0
+            self.decisions += 1
+            if self.HIPPO: self.store_and_replay(zbar, action, r, done, _wbar)
+            if self.decisions % self.SLEEP_EVERY == 0: self.sleep()
+            return
+        # Normalise by accumulated weight -> a true weighted MEAN outer product,
+        # matching 02's e/TICKS at any decay. A raw EMA reaches only 1-d^T of
+        # steady state (14% over a 30-tick trial at d=.995), making every update
+        # ~7x too small: the local rule then tops out at 0.66 instead of 1.00,
+        # and the sleep gradient silently covers for it.
+        elig = self.elig / max(self.elig_w, 1e-9)
+        de = elig - self.ebar
+        self.trh_sum[:] = 0.0; self.trh_n = 0
+        if self.WM:
+            # Separate pathway, separate credit: same three-factor rule, with wm
+            # as the presynaptic signal instead of trh.
+            wbar = self.wm_sum / max(self.wm_n, 1)
+            dw = np.outer(np.eye(self.n_motor)[action], wbar) if action is not None \
+                 else np.zeros_like(self.W_wm)
+            dew = dw - self.ebar_wm
+            self.ebar_wm += self.EBAR_LR * (dw - self.ebar_wm)
+            # NORMALISE by input magnitude. Where the residual is near zero
+            # (constant observation within a decision) an unnormalised rule lets
+            # W_wm grow without bound until a tiny input still produces a large
+            # drive -- volatile-4 fell BELOW its floor, 0.411 -> 0.238. Same bug
+            # as the V(s) readout, which needed the same fix.
+            self.W_wm += gate * lr * nm * dew / (float(wbar @ wbar) + 1e-3)
+            np.clip(self.W_wm, -self.WMAX, self.WMAX, out=self.W_wm)
+            if not (self.WM_HOLD and not done):
+                self.wm[:] = 0.0; self._prev_fh[:] = 0.0
+            self.wm_sum[:] = 0.0; self.wm_n = 0
+        self.ebar += self.EBAR_LR * (elig - self.ebar)
+        self.W_out += gate * lr * nm * de
+        np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
+        # Consume the tag. Tag-and-capture: once the neuromodulator cashes the
+        # eligibility, it is spent. Without this the tau~200 trace bleeds across
+        # trials (200 ticks = 6.7 trials), averaging both classes together and
+        # contaminating the update direction -- accuracy 0.58 vs 0.97.
+        if not (self.PGATE == "oracle_carry" and gate == 0.0):
+            self.elig[:] = 0.0
+            self.elig_w = 0.0
+        if action is not None:
+            self.buffer.append((self.trh.copy(), elig.copy(), nm, action, r))
+        self.decisions += 1
+        if self.HIPPO and action is not None:
+            self.store_and_replay(zbar, action, r, done, _wbar)
+        if self.decisions % self.SLEEP_EVERY == 0:
+            self.sleep()
+
+    # ---- 9: sleep -----------------------------------------------------------
+    def sleep(self):
+        """Body offline. Hippocampal replay; everything else is off by default.
+
+        13: replay alone gives +0.05 (acc@400); the gradient adds +0.06 on top of
+        MATCHED replay, better in 5/5 seeds. Replay is uniform, NOT prioritised --
+        12 found prioritising buys +0.03 retention for -0.19 plasticity.
+        Scope: W_out is one linear layer, so this is a delta rule, not deep
+        backprop. Nothing here establishes that backprop helps a deep net.
+        """
+        # Hippocampal replay is OFFLINE: at every rest period, not only at the
+        # moment of reward. Reward-triggered replay alone gives 8-32 events in a
+        # whole run -- nowhere near turning 2 rewards into 2000 learning events.
+        # 240 sleeps x HIPPO_N is what actually delivers that.
+        if self.HIPPO and self.episodes:
+            for _ in range(self.HIPPO_N): self._replay_one()
+        if len(self.buffer) < self.SLEEP_REPLAY:
+            return
+        idx = self.rng.choice(len(self.buffer), size=self.SLEEP_REPLAY)
+        for j in idx:
+            trh, elig, nm, act, r = self.buffer[j]
+            de = elig - self.ebar
+            self.ebar += self.EBAR_LR * (elig - self.ebar)
+            self.W_out += self.LR * nm * de                      # local replay
+            z = trh / 30.0
+            tgt = act if r > 0.5 else 1 - act                    # what reward said
+            p = np.exp(self.W_out @ z - (self.W_out @ z).max()); p /= p.sum()
+            g = p.copy(); g[tgt] -= 1.0
+            self.W_out -= self.SLEEP_ETA * np.outer(g, z)        # gradient pass
+        np.clip(self.W_out, self.WMIN, self.WMAX, out=self.W_out)
+        self.W_out *= self.DOWNSCALE
+        if self.PRUNE_BELOW: self.W_out[self.W_out < self.PRUNE_BELOW] = 0.0
+        if len(self.buffer) > 2000:
+            self.buffer = self.buffer[-2000:]
+
+    # ---- 1: copy the weights. A brain cannot; a matrix can. -----------------
+    def save(self, path):
+        np.savez(path, W_in=self.W_in, W_out=self.W_out, thresh=self.thresh,
+                 ebar=self.ebar, value=self.value)
+
+    def load(self, path):
+        d = np.load(path)
+        self.W_in, self.W_out = d['W_in'], d['W_out']
+        self.thresh, self.ebar, self.value = d['thresh'], d['ebar'], float(d['value'])
+        self._reset_dynamics()
+
+    # ---- 2: merge. CLONES ONLY. --------------------------------------------
+    @staticmethod
+    def merge(models):
+        """Average W_out across agents that share an ancestor.
+
+        10: merging clones works (0.81 vs 0.75 solo); merging independently-grown
+        nets lands at CHANCE (0.53) because neuron 7 means something different in
+        each. Guarded below rather than documented and hoped for.
+
+        Measured IN THE MAINLINE (5 seeds, 8 agents x 300 trials):
+            solo 0.95  ->  merged 0.98  (ceiling 1.00), better in 4/5 seeds.
+        Still lossy -- in the simplified loop of 10, merging 8x250 gave 0.81
+        where ONE agent on those same 2000 trials gave 1.00. This buys
+        wall-clock, not sample efficiency.
+        """
+        ref = models[0].W_in
+        for m in models[1:]:
+            if not np.array_equal(m.W_in, ref):
+                raise ValueError(
+                    "merge() requires a shared encoder (common ancestor). "
+                    "Merging independently-initialised agents yields chance "
+                    "performance -- see experiments/10_clone_merge.py.")
+        out = BrainSim(models[0].n_in, models[0].n_hidden, models[0].n_motor,
+                       models[0].k, seed=0)
+        out.W_in = ref.copy()
+        out.W_out = np.mean([m.W_out for m in models], axis=0)
+        # thresh is averaged too: each clone's controller settled at its own
+        # operating point, and the mean of two working controllers is not
+        # guaranteed to be one. Measured fine here; re-check if you change the
+        # homeostasis.
+        out.thresh = np.mean([m.thresh for m in models], axis=0)
+        return out
+
+
+# ---- what is deliberately NOT here -----------------------------------------
+# CURIOSITY / surprise-as-intrinsic-reward: tested at 0.1/0.3/1.0/3.0 across two
+#   environments (07, 08). No effect survived a control check.
+# Prioritised replay: 12 buys +0.03 retention for -0.19 plasticity.
+# A BANK of eligibility traces: 09 -- one long trace beats it. The bank's update
+#   direction averages its traces, and at long delays the fast ones hold nothing
+#   but interference.
