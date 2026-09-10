@@ -154,7 +154,7 @@ def confirm(directory):
                     task = make_task(g, CONFIRMATION_TASK_SEED)
                     agent = build_agent(a, s)
                     out = run_agent(agent, task, DECISIONS, seed=s, harvest=True)
-                    return {'status': 'ok', 'config': ARMS[a], 'arm': a, 'sigma': g, 'seed': s,
+                    return {'status': 'ok', 'config': json.loads(json.dumps(ARMS[a])), 'arm': a, 'sigma': g, 'seed': s,
                             'tail': tail_mean(out['rewards']), 'rewards': out['rewards'].tolist(),
                             'vol': out['vol'].tolist(), 'lr': out['lr'].tolist(), 'noise': out['noise'].tolist(),
                             'marks': [[int(t), k] for t, k in out['marks']],
