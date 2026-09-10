@@ -45,11 +45,13 @@ remeasured baseline in-study falls outside 10–90%, that task closes without
 a verdict rather than passing or failing arms on it — the USABLE rule
 survives without a calibration stage.
 
-## Intervention arms (agent flags, all default off)
+## Intervention arms (subclass flags, frozen base untouched)
 
-On brainsim.py, additive constants only; defaults keep every existing
-number bit-identical (the frozen 56-score reference must still pass
-unchanged, enforced by the existing workflow):
+V6 adds no code to brainsim.py: exploration lives in a `ExploreAgent`
+subclass (`v6_agent.py`), so the frozen agent — and every prior study bound
+to it — cannot change. With both flags off, `decide()` delegates to the
+frozen implementation (bit-identical by construction, asserted in parity)
+while still recording margin traces. All new knobs default off:
 
 - **baseline:** frozen defaults. The bar everything clears.
 - **exploreA / exploreB:** at decide time, with probability

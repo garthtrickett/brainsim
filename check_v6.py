@@ -11,6 +11,7 @@ from unittest.mock import patch
 import numpy as np
 
 from brainsim import BrainSim
+from v6_agent import ExploreAgent
 from check_v3_burst import compare, rejects
 from report_v6 import interval, paired_interval, publish_report, summarize
 from study_v6 import (AGENT_SEEDS, ARMS, DIRECTORY, ENDO, PROTOCOL, SOURCES, TASKS, TASK_SEED,
@@ -38,7 +39,7 @@ def kernel_checks():
             for name in names:
                 if name and Path(name+'.py').exists(): assert name+'.py' in SOURCES, name
     # Closeness math on hand vote vectors.
-    agent = BrainSim(n_motor=4, seed=0)
+    agent = ExploreAgent(n_motor=4, seed=0)
     cases = [([10, 9, 0, 0], 1.-1./19), ([10, 0, 0, 0], 0.), ([5, 5, 5, 5], 1.), ([0, 0, 0, 0], 1.)]
     for votes, expected in cases:
         agent.votes[:] = np.array(votes)
@@ -50,8 +51,8 @@ def kernel_checks():
     assert agent.decide(correct=1) in range(4)
     rejects(lambda: agent.decide())
     rejects(lambda: agent.decide(correct=9))
-    real_decide = BrainSim.decide
-    with patch.object(BrainSim, 'decide', autospec=True) as mocked:
+    real_decide = ExploreAgent.decide
+    with patch.object(ExploreAgent, 'decide', autospec=True) as mocked:
         def probed(self, correct=None):
             assert correct is None
             return real_decide(self)
@@ -65,6 +66,14 @@ def kernel_checks():
         agent = build_agent('baseline', seed, 4)
         np.testing.assert_array_equal(run_agent(agent, task, 200, seed=seed)['rewards'],
                                       tasks.run(build_agent('baseline', seed, 4), make_task('volatile', 100), 200, seed=seed))
+    # Subclass-off versus frozen base: identical trajectories, richer traces.
+    for seed in (100, 101):
+        task = make_task('volatile', 100)
+        sub = run_agent(build_agent('baseline', seed, 4), task, 200, seed=seed, harvest=True)
+        base = tasks.run(BrainSim(n_motor=4, seed=seed), make_task('volatile', 100), 200, seed=seed)
+        np.testing.assert_array_equal(sub['rewards'], base)
+        assert len(sub['margins']) == 200 and len(sub['deviations']) == 200
+        assert all(d is False for _, d in sub['deviations'])
     # Tail and lock scoring match frozen scales.
     assert score('volatile', list(range(8))) == 6.5
     assert score('lock', [0, 1, 0]) == 1.0 and score('volatile', list(range(8))) == 6.5

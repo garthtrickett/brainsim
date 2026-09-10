@@ -9,17 +9,17 @@ import numpy as np
 from study_io import Evidence
 from study_v3_burst import SOURCES as BURST_SOURCES
 from study_v3_slice1 import require_committed, write
-from brainsim import BrainSim
 from v3_slice1_decisions import digest
 import tasks
 from v5_tasks import NoisyVolatile
+from v6_agent import ExploreAgent
 
 DIRECTORY = Path('results/v6')
 SOURCES = sorted(set(BURST_SOURCES + ['DESIGN-v6-explore.md', 'v5_tasks.py', 'brainsim.py',
-    'tasks.py', 'study_v6.py', 'report_v6.py', 'check_v6.py']))
+    'tasks.py', 'v6_agent.py', 'study_v6.py', 'report_v6.py', 'check_v6.py']))
 PROTOCOL = {'id': 'v6-explore-20260910-v1',
             'registration_commit': 'c3901e62ed734b64fe73ea96b05d42097ce124fd',
-            'registration_sha256': 'ea3c0b8ffbb4493fe7e6b67c6f88919d1337678e447a410934afcfa13af52c9f'}
+            'registration_sha256': '330f4a2741a38a6c8bd59ff9a1242d7c652677a47db9c481eed4214dac252c9b'}
 TASKS = {'volatile': 2100, 'noisy': 2100, 'lock': 12000}
 ARMS = {'baseline': {}, 'exploreA': {'EXPLORE_K': 0.5}, 'exploreB': {'EXPLORE_K': 2.0},
         'exploreOracle': {'EXPLORE_ORACLE': 0.1}}
@@ -77,7 +77,7 @@ def score(task_name, rewards):
 
 
 def build_agent(arm, seed, n_motor):
-    agent = BrainSim(n_motor=n_motor, seed=seed)
+    agent = ExploreAgent(n_motor=n_motor, seed=seed)
     for key, value in ARMS[arm].items():
         setattr(agent, key, value)
     return agent
