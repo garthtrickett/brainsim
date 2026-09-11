@@ -243,6 +243,10 @@ the pool, a threshold supplied by pooled inhibition. The tag is then consumed.
   First slice complete: per-tick 1-of-N motor selection fails at chance
   without vote aggregates (0.27/0.13), closing the motor-sparsity line. See
   [V2-M0-RESULTS.md](V2-M0-RESULTS.md).
+- **`M0-DECISION.md`** — decision record closing the five-slice pre-fork
+  program (motor, rank-1 eligibility, replay window, consumption/tau,
+  pools/scale: 404 rows): premises audited, founding changes scored, fork
+  options with costs and a recommendation.
 - **`V3.md`** — the fluctuation thesis. Two timescales of variance separate
   noise from change; one estimator cannot, which is what Adam does. Orthogonal
   to v2 and testable in v1.
