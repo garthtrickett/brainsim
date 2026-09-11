@@ -1,0 +1,46 @@
+"""Resumable per-seed evidence, tied to the exact source used for the run."""
+import hashlib
+import json
+from pathlib import Path
+import time
+import numpy as np
+
+
+class Evidence:
+    def __init__(self, path, sources, protocol):
+        self.path = Path(path)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        source_hashes = {p: hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in sources}
+        snapshots = self.path.parent / 'source-snapshots'
+        snapshots.mkdir(exist_ok=True)
+        for source, digest in source_hashes.items():
+            (snapshots / (digest+'.txt')).write_bytes(Path(source).read_bytes())
+        self.data = {'protocol': protocol, 'sources': source_hashes, 'rows': {}}
+        if self.path.exists():
+            old = json.loads(self.path.read_text())
+            if old['sources'] != source_hashes or old['protocol'] != protocol:
+                raise ValueError(f'{path}: source/protocol changed; use a new evidence path')
+            self.data = old
+
+    def measure(self, key, fn):
+        if key in self.data['rows']:
+            return self.data['rows'][key]
+        start = time.monotonic()
+        row = fn()
+        row['seconds'] = round(time.monotonic() - start, 2)
+        self.data['rows'][key] = row
+        tmp = self.path.with_suffix('.tmp')
+        tmp.write_text(json.dumps(self.data, indent=2) + '\n')
+        tmp.replace(self.path)
+        print(key, json.dumps(row), flush=True)
+        return row
+
+
+def paired_summary(control, treatment):
+    """Seed-paired bootstrap interval; report the whole contrast, no best-of sweep."""
+    delta = np.asarray(treatment) - np.asarray(control)
+    rng = np.random.default_rng(20260908)
+    means = rng.choice(delta, size=(10000, len(delta)), replace=True).mean(axis=1)
+    return {'control': float(np.mean(control)), 'treatment': float(np.mean(treatment)),
+            'delta': float(delta.mean()), 'interval95': np.quantile(means, [.025, .975]).tolist(),
+            'wins': int((delta > 0).sum()), 'n': len(delta)}
