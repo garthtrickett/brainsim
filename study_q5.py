@@ -7,6 +7,9 @@ from pathlib import Path
 import numpy as np
 
 import reference
+import tasks
+from fastsim import FastBrainSim
+from q5_rank1 import FastRank1
 from study_io import Evidence
 from study_v3_burst import SOURCES as BURST_SOURCES
 from study_v3_slice1 import require_committed, write
@@ -36,8 +39,16 @@ def registration_check():
 
 def measure(task, arm, seed, manifest=None):
     mk, nact, dec, tail, runner = TASKS[task]
-    over = {} if arm == 'shipped' else {'RANK1_ELIG': True}
-    score = reference.brainsim_run(mk, nact, dec, tail, seed, runner, **over)
+    # Agent class IS the treatment: the rank-1 algebra lives in the subclass
+    # fork (frozen-source constraint, see registration). Runners, task
+    # factories, and scoring are the reference instrument verbatim.
+    cls = FastRank1 if arm == 'rank1' else FastBrainSim
+    agent = cls(n_motor=nact, seed=seed)
+    if arm == 'rank1':
+        agent.RANK1_ELIG = True
+    hist = tasks.run_within(agent, mk(), dec, seed=seed) if runner == "within" \
+        else tasks.run(agent, mk(), dec, seed=seed)
+    score = reference.score(hist, tail)
     row = {'status': 'ok', 'task': task, 'arm': arm, 'seed': seed,
            'score': float(score)}
     if manifest is not None:
@@ -74,7 +85,6 @@ def verified_manifest(directory):
 
 def confirm(directory):
     manifest = verified_manifest(directory)
-    reference.use_fast()
     evidence = Evidence(directory/'confirmation.json', SOURCES, PROTOCOL)
     for task in TASKS:
         for arm in ARMS:

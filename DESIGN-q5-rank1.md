@@ -33,8 +33,8 @@ Implemented in `q5_rank1.py` as `Rank1BrainSim(BrainSim)`; `brainsim.py` and
 exact `BrainSim.step()`/`reward()` text (AST-extracted; classic branches
 unchanged, plus one defensive `_credit_init()` call at `reward()` head that
 is a no-op when the flag is off) with the rank-1 algebra behind the
-subclass flag `RANK1_ELIG` (class default `False`, set per-instance via the
-`brainsim_run(..., **over)` seam). No shipped default changes; no other
+subclass flag `RANK1_ELIG` (class default `False`, set per-instance on the
+study's agent before running). No shipped default changes; no other
 constant moves (ELIG_D, TRACE_D, TRM_D, THETA, TAGGATE all frozen at shipped
 values — no tuning). `FastRank1(FastBrainSim, Rank1BrainSim)` composes
 buffered steps + the shared numba kernel with the rank-aware reward by MRO;
