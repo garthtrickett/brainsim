@@ -1,0 +1,3 @@
+# Existing experiment environment, pinned for the frozen reference gate.
+numpy==2.5.3
+numba==0.67.0
