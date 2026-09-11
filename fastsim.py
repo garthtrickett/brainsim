@@ -27,6 +27,25 @@ import numpy as np
 from numba import njit
 from brainsim import BrainSim
 
+_NO_ELIG = np.zeros((1, 1))   # dummy for the kernel's untouched elig arg under RANK1_ELIG
+_NO_ELIG_1D = np.zeros(1)     # dummy for the untouched trace args when the flag is off
+
+
+def _ensure_credit(agent):
+    """Lazily provision Q5 rank-1 credit state on first tick.
+
+    BrainSim itself is untouched (three frozen manifests pin its bytes), so
+    the flag rides as a plain instance attribute read via getattr (default
+    off) and the trace triple is allocated here. Conversion happens before
+    any tick math; afterwards elig stays None and the traces persist across
+    ticks until reward() consumes them. With the flag off this is a no-op.
+    """
+    if getattr(agent, 'RANK1_ELIG', False) and agent.elig is not None:
+        agent.elig = None
+        agent.etr_m = np.zeros(agent.n_motor)
+        agent.etr_h = np.zeros(agent.n_hidden)
+        agent.etrw = 0.0
+
 
 @njit(cache=True, fastmath=False)
 def _tick_block(X, U, G, transmission, transmission_gain,
@@ -37,7 +56,8 @@ def _tick_block(X, U, G, transmission, transmission_gain,
                 k, pools, LEAK, TRACE_D, ELIG_D, TRM_D, noise_eff,
                 WM, WM_DECAY, WM_LR, WM_BETA, WM_CAP, WM_GATE_CAP,
                 PERSIST, SELF_EXC, INHIB, TAGGATE, THETA,
-                ETA_TH, TARGET_RATE, SCALE_EVERY, tick0):
+                ETA_TH, TARGET_RATE, SCALE_EVERY, tick0,
+                rank1, etr_m, etr_h, etrw0):
     """T ticks of the loop. Mirrors BrainSim.step() line for line.
 
     X (T, n_in) observation per tick; U (T, n_in) uniforms; G (T, n_motor)
@@ -47,6 +67,7 @@ def _tick_block(X, U, G, transmission, transmission_gain,
     T, n_in = X.shape
     H = vh.shape[0]; M = vm.shape[0]
     ticks = tick0
+    etrw = etrw0
     for t in range(T):
         ticks += 1
         # --- sensory transduction --------------------------------------
@@ -154,22 +175,28 @@ def _tick_block(X, U, G, transmission, transmission_gain,
         trh_n += 1
 
         # --- eligibility: winner-take-all on CREDIT ---------------------
+        # Q5 rank-1: same gated motor spikes and hidden trace as the matrix
+        # rule; only the algebra differs (traces vs outer-product EMA).
         if TAGGATE:
             mx = trm[0]
             for m in range(1, M):
                 if trm[m] > mx:
                     mx = trm[m]
-            for m in range(M):
-                gm = 1.0 if (mx <= 0.0 or trm[m] >= THETA * mx) else 0.0
-                v = fm[m] * gm
+        for m in range(M):
+            v = fm[m]
+            if TAGGATE:
+                v = v * (1.0 if (mx <= 0.0 or trm[m] >= THETA * mx) else 0.0)
+            if rank1:
+                etr_m[m] = etr_m[m] * ELIG_D + (1.0 - ELIG_D) * v
+            else:
                 for h in range(H):
                     elig[m, h] = elig[m, h] * ELIG_D + (1.0 - ELIG_D) * v * trh[h]
+        if rank1:
+            for h in range(H):
+                etr_h[h] = etr_h[h] * ELIG_D + (1.0 - ELIG_D) * trh[h]
+            etrw = etrw * ELIG_D + (1.0 - ELIG_D)
         else:
-            for m in range(M):
-                v = fm[m]
-                for h in range(H):
-                    elig[m, h] = elig[m, h] * ELIG_D + (1.0 - ELIG_D) * v * trh[h]
-        elig_w = elig_w * ELIG_D + (1.0 - ELIG_D)
+            elig_w = elig_w * ELIG_D + (1.0 - ELIG_D)
 
         for m in range(M):
             votes[m] += fm[m]
@@ -192,7 +219,7 @@ def _tick_block(X, U, G, transmission, transmission_gain,
                     s = out_budget[m] / cur
                     for h in range(H):
                         W_out[m, h] *= s
-    return elig_w, trh_n, wm_n, ticks
+    return elig_w, trh_n, wm_n, ticks, etrw
 
 
 class FastBrainSim(BrainSim):
@@ -246,11 +273,21 @@ class FastBrainSim(BrainSim):
         transmission = np.empty((0, 0, 0), dtype=np.bool_)
         if self.TRANSMISSION_FAILURE:
             transmission = self.transmission_rng.random((T, self.n_motor, self.n_hidden)) >= self.TRANSMISSION_FAILURE
-        self.elig_w, self.trh_n, self.wm_n, self.ticks = _tick_block(
+        _ensure_credit(self)
+        # Under RANK1_ELIG self.elig is None; the kernel never indexes elig
+        # on that path, so pass a dummy for the untouched argument (and vice
+        # versa for the trace args when the flag is off -- plain agents have
+        # no etr_* attributes at all).
+        rank1 = bool(getattr(self, 'RANK1_ELIG', False))
+        elig_arg = self.elig if self.elig is not None else _NO_ELIG
+        etr_m_arg = self.etr_m if rank1 else _NO_ELIG_1D
+        etr_h_arg = self.etr_h if rank1 else _NO_ELIG_1D
+        etrw_arg = float(self.etrw) if rank1 else 0.0
+        self.elig_w, self.trh_n, self.wm_n, self.ticks, self.etrw = _tick_block(
             X, U, G, transmission, float(self.TRANSMISSION_GAIN),
             self.vh, self.vm, self.trh, self.fh, self.trm, self.votes,
             self.thresh, self.rate,
-            self.elig, float(self.elig_w), self.trh_sum, int(self.trh_n),
+            elig_arg, float(self.elig_w), self.trh_sum, int(self.trh_n),
             self.wm, self.wm_sum, int(self.wm_n), self._prev_fh, self._wm_eff,
             self.W_in, self.W_out, self.W_wm, self._out_budget,
             int(self.k), int(self.POOLS), self.LEAK, self.TRACE_D, self.ELIG_D, self.TRM_D,
@@ -259,4 +296,5 @@ class FastBrainSim(BrainSim):
             self.WM_GATE == "capacity",
             bool(self.PERSIST), self.SELF_EXC, self.INHIB,
             bool(self.TAGGATE), self.THETA,
-            self.ETA_TH, self.TARGET_RATE, int(self.SCALE_EVERY), int(self.ticks))
+            self.ETA_TH, self.TARGET_RATE, int(self.SCALE_EVERY), int(self.ticks),
+            rank1, etr_m_arg, etr_h_arg, etrw_arg)
