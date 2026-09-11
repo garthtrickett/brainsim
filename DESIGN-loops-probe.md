@@ -27,8 +27,10 @@ Frozen seeds 0–7, same-seed paired vs frozen. 48 rows (2 arms × 3 tasks
 ## Falsifier
 
 - ADOPT-loops-{LR,full} iff the arm beats frozen with paired 95% lower
-  > 0 on volatile-4 OR lock-10, AND nway-8 stays within ±0.03 of frozen.
-  Several clearers → highest paired delta (Q2/Q3 tiebreak precedent).
+  > 0 on volatile-4 OR lock-10, AND its own nway-8 rows stay within
+  ±0.03 of frozen (a clearer that breaks the dense task vetoes itself,
+  not the other arm). Several clearers → highest paired delta (Q2/Q3
+  tiebreak precedent).
 - Else carry-global (loops ride nowhere; the fork gets simpler).
 
 Fidelity gates (Q5 pattern): LoopsBrainSim(global) == BrainSim
