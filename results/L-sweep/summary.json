@@ -1,0 +1,95 @@
+{
+  "absolute": {
+    "10": {
+      "interval95": [
+        123.875,
+        223.75
+      ],
+      "mean": 167.25
+    },
+    "20": {
+      "interval95": [
+        331.5,
+        511.75312499999995
+      ],
+      "mean": 415.125
+    },
+    "40": {
+      "interval95": [
+        252.49375,
+        604.875
+      ],
+      "mean": 437.875
+    },
+    "5": {
+      "interval95": [
+        27.121875000000003,
+        55.375
+      ],
+      "mean": 40.375
+    },
+    "80": {
+      "interval95": [
+        226.496875,
+        574.378125
+      ],
+      "mean": 410.125
+    }
+  },
+  "candidate": null,
+  "closed": true,
+  "collateral": {},
+  "counts": {
+    "collateral": 0,
+    "screen": 40
+  },
+  "manifest_digest": "b59f2cffb1b3fee1f55276dd548ff0f4005c121c1dca563c13b42b87fd2bab78",
+  "protocol": {
+    "id": "L-sweep-20260911-v1",
+    "registration_commit": "4b81dce0f75408b0ac6ac9f1728204739fdbd8df",
+    "registration_sha256": "744eac78657582e14d0af7275112fcb8d4403a9bc87fed54a600d0eb58c2f580"
+  },
+  "screen": {
+    "10": {
+      "control": 415.125,
+      "delta": -247.875,
+      "interval95": [
+        -306.25,
+        -191.99687500000005
+      ],
+      "pass": false,
+      "treatment": 167.25
+    },
+    "40": {
+      "control": 415.125,
+      "delta": 22.75,
+      "interval95": [
+        -124.375,
+        141.75
+      ],
+      "pass": false,
+      "treatment": 437.875
+    },
+    "5": {
+      "control": 415.125,
+      "delta": -374.75,
+      "interval95": [
+        -461.75,
+        -297.625
+      ],
+      "pass": false,
+      "treatment": 40.375
+    },
+    "80": {
+      "control": 415.125,
+      "delta": -5.0,
+      "interval95": [
+        -186.50937499999998,
+        148.875
+      ],
+      "pass": false,
+      "treatment": 410.125
+    }
+  },
+  "status": "confirmed-20"
+}
