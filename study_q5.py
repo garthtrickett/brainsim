@@ -24,8 +24,8 @@ SEEDS = tuple(range(8))
 TASKS = {name: (mk, nact, dec, tail, runner)
          for (name, mk, nact, dec, tail, runner) in reference.SUITE}
 PROTOCOL = {'id': 'q5-rank1-20260911-v2',
-            'registration_commit': '67ae15bce7173cec7dacd774f8cae24a16ccff25',
-            'registration_sha256': '19274936fd8a53552d61667d14b731611a2fdc19907d0d9f7b9794b8c5d7df64'}
+            'registration_commit': '7d5ce72a70880306b11d4f2c205e22d02db9f122',
+            'registration_sha256': '8738791d19168fa3215be357e049b65eb726d9f849dfa48501c6d8347ac602b3'}
 
 
 def source_hashes():
