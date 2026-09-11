@@ -1,0 +1,28 @@
+name: Q3 pools validation
+on:
+  push:
+    branches: ['codex/**']
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: q3-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  q3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - run: python check_q3.py --evidence results/q3 --reproduce
+      - run: python report_q3.py --check

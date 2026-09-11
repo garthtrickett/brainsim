@@ -1,0 +1,183 @@
+{
+  "protocol": {
+    "id": "v3-reference-20260909-v1",
+    "registration_commit": "8c72ef5e46e14fd22d04d84486176535f82b77c0",
+    "registration_sha256": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341"
+  },
+  "sources": {
+    "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
+    "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
+    "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
+    "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
+    "v3_reference.py": "0b019a5066b214583e4897d73a16ec2a24a13b361aca4f876f089acd837144a2",
+    "v3_reference_policy.py": "2f3da6886e78035da72addc8fd468eea3fb9d0c10b7c1b76421beac139f83684",
+    "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
+    "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
+    "v3_persistent.py": "14857640d40cb86546c5441f1a43275b5d674a9d2fb8e0cb0671d68a2248c0f9",
+    "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
+    "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
+    "v3_slice1_streams.py": "6d5a264013357468f5882e929236831e94d3ae0e19b5b4d4ba35e1e9b087932d",
+    "v3_slice1_learning.py": "000e4be3ddf729f5e403074634b1861061b496c01488b2de8f3f4aada6384648",
+    "v3_slice1_decisions.py": "8c768720340933586b1b3220c1591b8e25c50aaf622c0e8962b10d128b24482b",
+    "v3_gate.py": "9875703dad1ef620dd3b8d9323a5502d9612490ba9830b7d3581b39fed2571d1"
+  },
+  "seeds": {
+    "development": [
+      60000,
+      60001,
+      60002,
+      60003,
+      60004,
+      60005,
+      60006,
+      60007
+    ],
+    "calibration": [
+      61000,
+      61001,
+      61002,
+      61003,
+      61004,
+      61005,
+      61006,
+      61007,
+      61008,
+      61009,
+      61010,
+      61011,
+      61012,
+      61013,
+      61014,
+      61015
+    ],
+    "diagnostics": [
+      63000,
+      63001,
+      63002,
+      63003,
+      63004,
+      63005,
+      63006,
+      63007,
+      63008,
+      63009,
+      63010,
+      63011,
+      63012,
+      63013,
+      63014,
+      63015,
+      63016,
+      63017,
+      63018,
+      63019,
+      63020,
+      63021,
+      63022,
+      63023,
+      63024,
+      63025,
+      63026,
+      63027,
+      63028,
+      63029,
+      63030,
+      63031
+    ],
+    "performance": [
+      64000,
+      64001,
+      64002,
+      64003,
+      64004,
+      64005,
+      64006,
+      64007,
+      64008,
+      64009,
+      64010,
+      64011,
+      64012,
+      64013,
+      64014,
+      64015,
+      64016,
+      64017,
+      64018,
+      64019,
+      64020,
+      64021,
+      64022,
+      64023,
+      64024,
+      64025,
+      64026,
+      64027,
+      64028,
+      64029,
+      64030,
+      64031
+    ]
+  },
+  "configs": {
+    "coupled": {
+      "lr": 0.004,
+      "gain": 64.0,
+      "beta2": 0.999
+    },
+    "watch_adam": {
+      "lr": 0.004,
+      "gain": 0.0,
+      "beta2": 0.999
+    },
+    "separate": {
+      "lr": 0.004,
+      "gain": 64.0,
+      "beta2": 0.999
+    },
+    "adam": {
+      "lr": 0.032,
+      "beta2": 0.9999
+    },
+    "sgd": {
+      "lr": 0.035743040182210514
+    },
+    "single": {
+      "lr": 0.016,
+      "gain": 1.0,
+      "beta2": 0.999
+    },
+    "constant": {
+      "lr": 0.004,
+      "gain": 64.0,
+      "beta2": 0.999
+    }
+  },
+  "calibration_digest": "38b654d283f150ffa1330b88a4e9b5a341bee9282794894b9b253672bc0afc56",
+  "expected_counts": {
+    "calibration": 48,
+    "diagnostics": 96,
+    "performance": 224
+  },
+  "status": "eligible",
+  "thresholds": {
+    "coupled": {
+      "fixed": 0.4690234346011377,
+      "closed": 0.8131026617052748
+    },
+    "watch_adam": {
+      "fixed": 0.4690234346011377,
+      "closed": 0.4565732757883941
+    },
+    "separate": {
+      "fixed": 0.4690234346011377,
+      "closed": 0.4690234346011377
+    }
+  },
+  "constants": [
+    0.02941139839941212,
+    0.031171384354026943,
+    0.0733256789784904,
+    0.05149542183266267
+  ]
+}
