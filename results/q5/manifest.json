@@ -5,7 +5,7 @@
     "registration_sha256": "19274936fd8a53552d61667d14b731611a2fdc19907d0d9f7b9794b8c5d7df64"
   },
   "sources": {
-    "DESIGN-q5-rank1.md": "19274936fd8a53552d61667d14b731611a2fdc19907d0d9f7b9794b8c5d7df64",
+    "DESIGN-q5-rank1.md": "8738791d19168fa3215be357e049b65eb726d9f849dfa48501c6d8347ac602b3",
     "DESIGN-v3-burst.md": "ef249ae9dcf9afe8822ee2c0f188f2e780596450b7fcc6881028191b3e8a4d5c",
     "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
     "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
@@ -25,7 +25,7 @@
     "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
     "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
     "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
-    "study_q5.py": "4396799112139bf6f5a4c84f093628cd9d4ce45576091251663566f0806e9003",
+    "study_q5.py": "41f4263cdae95f32812f416fd47cf2a5cf73ffd52a219b393605bae378709306",
     "study_v3_burst.py": "ab8be80d2a2b63f27653d07810afaf72ad805b18570378e4571e16f90808bdd5",
     "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
     "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
