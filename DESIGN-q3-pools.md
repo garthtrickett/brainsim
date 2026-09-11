@@ -33,7 +33,8 @@ no same-seed obligation; controls are same-seed P=1 arms within each
 
 - POOL-WIN: some P>1 at H=80 beats P=1 on combos-16 with paired 95%
   lower > 0, AND no regression anywhere at H=80: every (P, combos) cell
-  paired lower > −0.03 vs its P=1 control. → M0 parity WITH pools at
+  paired lower > −0.03 vs its P=1 control. Several clearers → highest
+  paired delta wins (Q2 tiebreak precedent). → M0 parity WITH pools at
   same scale.
 - NEEDS-SCALE: no POOL-WIN, AND (H=160,P=4) beats (H=80,P=1) on
   combos-16 with paired lower > 0. → M0 parity with pools DISABLED;
