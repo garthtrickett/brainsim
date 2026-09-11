@@ -1,0 +1,190 @@
+{
+  "absolute": {
+    "full/100": {
+      "interval95": [
+        248.72812500000003,
+        527.878125
+      ],
+      "mean": 389.875
+    },
+    "full/200": {
+      "interval95": [
+        331.5,
+        511.75312499999995
+      ],
+      "mean": 415.125
+    },
+    "full/400": {
+      "interval95": [
+        334.25,
+        508.0
+      ],
+      "mean": 416.5
+    },
+    "none/100": {
+      "interval95": [
+        359.25,
+        595.625
+      ],
+      "mean": 474.125
+    },
+    "none/200": {
+      "interval95": [
+        452.36875,
+        655.25
+      ],
+      "mean": 544.75
+    },
+    "none/400": {
+      "interval95": [
+        328.490625,
+        636.875
+      ],
+      "mean": 495.5
+    },
+    "proportional/100": {
+      "interval95": [
+        368.25,
+        552.503125
+      ],
+      "mean": 459.25
+    },
+    "proportional/200": {
+      "interval95": [
+        378.625,
+        573.875
+      ],
+      "mean": 470.625
+    },
+    "proportional/400": {
+      "interval95": [
+        304.625,
+        600.875
+      ],
+      "mean": 463.75
+    }
+  },
+  "candidate": [
+    "none",
+    200
+  ],
+  "closed": true,
+  "counts": {
+    "guard": 16,
+    "screen": 72
+  },
+  "guard": {
+    "nway-8": {
+      "band": 0.03,
+      "control": 0.97825,
+      "delta": -0.09649999999999997,
+      "interval95": [
+        -0.10674999999999998,
+        -0.08724999999999997
+      ],
+      "pass": false,
+      "treatment": 0.88175
+    },
+    "volatile-4": {
+      "band": 0.03,
+      "control": 0.3715,
+      "delta": -0.0175,
+      "interval95": [
+        -0.098375,
+        0.06112812499999995
+      ],
+      "pass": true,
+      "treatment": 0.354
+    }
+  },
+  "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+  "protocol": {
+    "id": "q2-tau-20260911-v1",
+    "registration_commit": "54c706ee2a1e9750c732d14bcdb6f2dea73deee9",
+    "registration_sha256": "42c5f093dd0e2c687031e6108cac63e83371db56678a0677de0a3bc7897d1689"
+  },
+  "screen": {
+    "full/100": {
+      "control": 415.125,
+      "delta": -25.25,
+      "interval95": [
+        -107.375,
+        36.503124999999955
+      ],
+      "treatment": 389.875
+    },
+    "full/200": {
+      "control": 415.125,
+      "delta": 0.0,
+      "interval95": [
+        0.0,
+        0.0
+      ],
+      "treatment": 415.125
+    },
+    "full/400": {
+      "control": 415.125,
+      "delta": 1.375,
+      "interval95": [
+        -13.125,
+        14.375
+      ],
+      "treatment": 416.5
+    },
+    "none/100": {
+      "control": 415.125,
+      "delta": 59.0,
+      "interval95": [
+        3.25,
+        105.875
+      ],
+      "treatment": 474.125
+    },
+    "none/200": {
+      "control": 415.125,
+      "delta": 129.625,
+      "interval95": [
+        91.875,
+        158.0
+      ],
+      "treatment": 544.75
+    },
+    "none/400": {
+      "control": 415.125,
+      "delta": 80.375,
+      "interval95": [
+        -34.5,
+        162.37812499999995
+      ],
+      "treatment": 495.5
+    },
+    "proportional/100": {
+      "control": 415.125,
+      "delta": 44.125,
+      "interval95": [
+        21.75,
+        68.875
+      ],
+      "treatment": 459.25
+    },
+    "proportional/200": {
+      "control": 415.125,
+      "delta": 55.5,
+      "interval95": [
+        25.0,
+        82.75312499999995
+      ],
+      "treatment": 470.625
+    },
+    "proportional/400": {
+      "control": 415.125,
+      "delta": 48.625,
+      "interval95": [
+        -54.125,
+        115.125
+      ],
+      "treatment": 463.75
+    }
+  },
+  "status": "vetoed-none-200"
+}

@@ -1,0 +1,765 @@
+{
+  "protocol": {
+    "id": "q2-tau-20260911-v1",
+    "registration_commit": "54c706ee2a1e9750c732d14bcdb6f2dea73deee9",
+    "registration_sha256": "42c5f093dd0e2c687031e6108cac63e83371db56678a0677de0a3bc7897d1689"
+  },
+  "sources": {
+    "DESIGN-q2-tau.md": "42c5f093dd0e2c687031e6108cac63e83371db56678a0677de0a3bc7897d1689",
+    "DESIGN-v3-burst.md": "ef249ae9dcf9afe8822ee2c0f188f2e780596450b7fcc6881028191b3e8a4d5c",
+    "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
+    "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
+    "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
+    "baselines.py": "f8418216ebd287708ca9ed19a2a6617d1aa69e683b3099749277332312c839ad",
+    "brainsim.py": "c9017e36e589168764f91417b39830d7b366c98bf119590a7f244862d53fb313",
+    "check_q2.py": "1c9f0833c7bc02aed49c7ff94317d9ee081e96c2901b25cd1b16ea0e1328d1d0",
+    "check_v3_burst.py": "177659e8f2adadf81d310a788d8c2ee65a70d4fa2a09a2dc883b2d8e306eaae3",
+    "fastsim.py": "f24383d4a03e755ab81e61eb1b4dbdd749c4679c37b6c2e4014a3eaebae4b865",
+    "q2_rule.py": "c55d7f6264949dd8cfec98cbe933579692158eabf675234a4887c8ff224b05b2",
+    "reference.json": "0e2bd78f8e386d1a566ebd7e7a029bb7ea0140da271d21144e4fbb54be8409ba",
+    "reference.py": "662736c6792ad3edf9791fc5ec756c9d55920227e3ddaa80fb5b0a8230e59b33",
+    "report_q2.py": "b917ec8aee8c3d58189a8befa5286cb92b60223e27b23ba208e57ece4a74f561",
+    "report_v3_burst.py": "fc54e016287bd6f1c368a02885f0f92f435b09879659da8dd30e0be393c0b50a",
+    "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
+    "report_v3_slice1.py": "b0eea587ada00c7a3dffd39a8050001a8cee4254bb822f92369c46f0f6b8ea20",
+    "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
+    "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
+    "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
+    "study_q2.py": "c92d2a47e550a6af4673cd2bf23463cf8985e4628692961638cdd39b937112cf",
+    "study_v3_burst.py": "ab8be80d2a2b63f27653d07810afaf72ad805b18570378e4571e16f90808bdd5",
+    "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
+    "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
+    "tasks.py": "d3943af39a3e4467b1e79ac84e1e990b95fd01aa14adb6548a210ea153f72108",
+    "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
+    "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
+    "v3_gate.py": "9875703dad1ef620dd3b8d9323a5502d9612490ba9830b7d3581b39fed2571d1",
+    "v3_persistent.py": "14857640d40cb86546c5441f1a43275b5d674a9d2fb8e0cb0671d68a2248c0f9",
+    "v3_reference.py": "0b019a5066b214583e4897d73a16ec2a24a13b361aca4f876f089acd837144a2",
+    "v3_reference_policy.py": "2f3da6886e78035da72addc8fd468eea3fb9d0c10b7c1b76421beac139f83684",
+    "v3_slice1_decisions.py": "8c768720340933586b1b3220c1591b8e25c50aaf622c0e8962b10d128b24482b",
+    "v3_slice1_learning.py": "000e4be3ddf729f5e403074634b1861061b496c01488b2de8f3f4aada6384648",
+    "v3_slice1_streams.py": "6d5a264013357468f5882e929236831e94d3ae0e19b5b4d4ba35e1e9b087932d"
+  },
+  "rows": {
+    "lock-10/full/100/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 100,
+      "seed": 0,
+      "score": 322.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 14.8
+    },
+    "lock-10/full/100/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 100,
+      "seed": 1,
+      "score": 356.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 12.48
+    },
+    "lock-10/full/100/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 100,
+      "seed": 2,
+      "score": 401.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.88
+    },
+    "lock-10/full/100/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 100,
+      "seed": 3,
+      "score": 1.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.85
+    },
+    "lock-10/full/100/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 100,
+      "seed": 4,
+      "score": 518.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 13.72
+    },
+    "lock-10/full/100/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 100,
+      "seed": 5,
+      "score": 383.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 12.52
+    },
+    "lock-10/full/100/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 100,
+      "seed": 6,
+      "score": 373.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 13.54
+    },
+    "lock-10/full/100/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 100,
+      "seed": 7,
+      "score": 765.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 13.93
+    },
+    "lock-10/full/200/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 200,
+      "seed": 0,
+      "score": 243.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 19.05
+    },
+    "lock-10/full/200/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 200,
+      "seed": 1,
+      "score": 386.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 14.76
+    },
+    "lock-10/full/200/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 200,
+      "seed": 2,
+      "score": 440.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 17.59
+    },
+    "lock-10/full/200/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 200,
+      "seed": 3,
+      "score": 290.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 24.52
+    },
+    "lock-10/full/200/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 200,
+      "seed": 4,
+      "score": 517.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 75.68
+    },
+    "lock-10/full/200/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 200,
+      "seed": 5,
+      "score": 395.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 51.92
+    },
+    "lock-10/full/200/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 200,
+      "seed": 6,
+      "score": 363.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.64
+    },
+    "lock-10/full/200/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 200,
+      "seed": 7,
+      "score": 687.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 10.05
+    },
+    "lock-10/full/400/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 400,
+      "seed": 0,
+      "score": 258.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.34
+    },
+    "lock-10/full/400/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 400,
+      "seed": 1,
+      "score": 386.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.12
+    },
+    "lock-10/full/400/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 400,
+      "seed": 2,
+      "score": 469.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.79
+    },
+    "lock-10/full/400/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 400,
+      "seed": 3,
+      "score": 282.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.56
+    },
+    "lock-10/full/400/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 400,
+      "seed": 4,
+      "score": 535.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 11.0
+    },
+    "lock-10/full/400/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 400,
+      "seed": 5,
+      "score": 363.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.25
+    },
+    "lock-10/full/400/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 400,
+      "seed": 6,
+      "score": 377.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 7.8
+    },
+    "lock-10/full/400/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "full",
+      "tau": 400,
+      "seed": 7,
+      "score": 662.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.72
+    },
+    "lock-10/none/100/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 100,
+      "seed": 0,
+      "score": 366.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 7.94
+    },
+    "lock-10/none/100/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 100,
+      "seed": 1,
+      "score": 378.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.26
+    },
+    "lock-10/none/100/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 100,
+      "seed": 2,
+      "score": 467.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.62
+    },
+    "lock-10/none/100/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 100,
+      "seed": 3,
+      "score": 187.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.79
+    },
+    "lock-10/none/100/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 100,
+      "seed": 4,
+      "score": 627.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 10.38
+    },
+    "lock-10/none/100/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 100,
+      "seed": 5,
+      "score": 514.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.69
+    },
+    "lock-10/none/100/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 100,
+      "seed": 6,
+      "score": 456.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 10.01
+    },
+    "lock-10/none/100/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 100,
+      "seed": 7,
+      "score": 798.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 10.65
+    },
+    "lock-10/none/200/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 200,
+      "seed": 0,
+      "score": 393.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.94
+    },
+    "lock-10/none/200/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 200,
+      "seed": 1,
+      "score": 405.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.79
+    },
+    "lock-10/none/200/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 200,
+      "seed": 2,
+      "score": 616.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.56
+    },
+    "lock-10/none/200/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 200,
+      "seed": 3,
+      "score": 445.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.38
+    },
+    "lock-10/none/200/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 200,
+      "seed": 4,
+      "score": 665.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.22
+    },
+    "lock-10/none/200/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 200,
+      "seed": 5,
+      "score": 484.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.6
+    },
+    "lock-10/none/200/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 200,
+      "seed": 6,
+      "score": 499.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 10.37
+    },
+    "lock-10/none/200/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 200,
+      "seed": 7,
+      "score": 851.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.53
+    },
+    "lock-10/none/400/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 400,
+      "seed": 0,
+      "score": 456.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.23
+    },
+    "lock-10/none/400/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 400,
+      "seed": 1,
+      "score": 405.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 7.69
+    },
+    "lock-10/none/400/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 400,
+      "seed": 2,
+      "score": 641.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.78
+    },
+    "lock-10/none/400/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 400,
+      "seed": 3,
+      "score": 1.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 7.84
+    },
+    "lock-10/none/400/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 400,
+      "seed": 4,
+      "score": 648.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 13.78
+    },
+    "lock-10/none/400/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 400,
+      "seed": 5,
+      "score": 527.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 10.28
+    },
+    "lock-10/none/400/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 400,
+      "seed": 6,
+      "score": 471.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.6
+    },
+    "lock-10/none/400/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "none",
+      "tau": 400,
+      "seed": 7,
+      "score": 815.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 11.11
+    },
+    "lock-10/proportional/100/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 100,
+      "seed": 0,
+      "score": 260.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.98
+    },
+    "lock-10/proportional/100/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 100,
+      "seed": 1,
+      "score": 397.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 7.5
+    },
+    "lock-10/proportional/100/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 100,
+      "seed": 2,
+      "score": 551.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.93
+    },
+    "lock-10/proportional/100/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 100,
+      "seed": 3,
+      "score": 313.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.94
+    },
+    "lock-10/proportional/100/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 100,
+      "seed": 4,
+      "score": 581.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 11.68
+    },
+    "lock-10/proportional/100/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 100,
+      "seed": 5,
+      "score": 456.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.93
+    },
+    "lock-10/proportional/100/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 100,
+      "seed": 6,
+      "score": 426.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.04
+    },
+    "lock-10/proportional/100/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 100,
+      "seed": 7,
+      "score": 690.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.44
+    },
+    "lock-10/proportional/200/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 200,
+      "seed": 0,
+      "score": 337.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.16
+    },
+    "lock-10/proportional/200/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 200,
+      "seed": 1,
+      "score": 374.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.56
+    },
+    "lock-10/proportional/200/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 200,
+      "seed": 2,
+      "score": 532.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.87
+    },
+    "lock-10/proportional/200/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 200,
+      "seed": 3,
+      "score": 278.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 7.4
+    },
+    "lock-10/proportional/200/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 200,
+      "seed": 4,
+      "score": 591.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.65
+    },
+    "lock-10/proportional/200/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 200,
+      "seed": 5,
+      "score": 442.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.88
+    },
+    "lock-10/proportional/200/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 200,
+      "seed": 6,
+      "score": 462.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.28
+    },
+    "lock-10/proportional/200/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 200,
+      "seed": 7,
+      "score": 749.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.26
+    },
+    "lock-10/proportional/400/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 400,
+      "seed": 0,
+      "score": 368.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.31
+    },
+    "lock-10/proportional/400/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 400,
+      "seed": 1,
+      "score": 422.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 8.72
+    },
+    "lock-10/proportional/400/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 400,
+      "seed": 2,
+      "score": 598.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.4
+    },
+    "lock-10/proportional/400/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 400,
+      "seed": 3,
+      "score": 1.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.43
+    },
+    "lock-10/proportional/400/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 400,
+      "seed": 4,
+      "score": 624.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.23
+    },
+    "lock-10/proportional/400/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 400,
+      "seed": 5,
+      "score": 491.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.31
+    },
+    "lock-10/proportional/400/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 400,
+      "seed": 6,
+      "score": 433.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 7.53
+    },
+    "lock-10/proportional/400/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "rule": "proportional",
+      "tau": 400,
+      "seed": 7,
+      "score": 773.0,
+      "manifest_digest": "dbc5bd2517c33b9b6b8b6bb15c33340e36fdf95fb5991c38cbf3e44e7d655146",
+      "seconds": 9.0
+    }
+  }
+}
