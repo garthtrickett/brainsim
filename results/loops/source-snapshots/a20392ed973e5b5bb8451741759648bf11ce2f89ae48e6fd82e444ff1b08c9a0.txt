@@ -1,0 +1,312 @@
+"""numba port of the tick loop. Step 7b.
+
+WHY THIS FILE EXISTS AND WHAT COULD GO WRONG
+--------------------------------------------
+brainsim spends ~140 us per tick, of which ~0.0006 us is arithmetic. The rest is
+numpy call overhead across ~20 operations on 80-element arrays -- we are ~200000x
+off peak. That makes a 20-minute regression suite, which is why nothing
+re-checks a shipped component and why five of them turned harmful unnoticed.
+
+A port is this project's most dangerous operation. `port-keeps-the-reference-
+number`: twice already a reimplementation returned a plausible wrong number
+(a rebuilt training loop; `trh/30` in place of a running mean), and both were
+caught only by a reference value measured before the port. So there are TWO
+separate validations here, for two separate risks:
+
+  1. ALGORITHM. check_v1.py compares complete reward trajectories exactly and
+     internal floating-point state within roundoff. This is stronger than the
+     original check_port.py, which compared only reward trajectories. Arithmetic
+     is not claimed bit-exact: numpy and explicit loops can sum differently.
+
+  2. RNG STREAM. Sensory and motor draws are interleaved per tick in numpy,
+     then passed to the kernel. This preserves the original stream. Experimental
+     transmission masks use a separate stream. check_reference.py verifies every
+     frozen per-seed score; a different trajectory is never excused as new RNG.
+"""
+import numpy as np
+from numba import njit
+from brainsim import BrainSim
+
+_NO_ELIG = np.zeros((1, 1))   # dummy for the kernel's untouched elig arg under RANK1_ELIG
+_NO_ELIG_1D = np.zeros(1)     # dummy for the untouched trace args when the flag is off
+
+
+def _ensure_credit(agent):
+    """Lazily provision Q5 rank-1 credit state on first tick.
+
+    BrainSim itself is untouched (three frozen manifests pin its bytes), so
+    the flag rides as a plain instance attribute read via getattr (default
+    off) and the trace triple is allocated here. Conversion happens before
+    any tick math; afterwards elig stays None and the traces persist across
+    ticks until reward() consumes them. With the flag off this is a no-op.
+    """
+    if getattr(agent, 'RANK1_ELIG', False) and agent.elig is not None:
+        agent.elig = None
+        agent.etr_m = np.zeros(agent.n_motor)
+        agent.etr_h = np.zeros(agent.n_hidden)
+        agent.etrw = 0.0
+
+
+@njit(cache=True, fastmath=False)
+def _tick_block(X, U, G, transmission, transmission_gain,
+                vh, vm, trh, fh, trm, votes, thresh, rate,
+                elig, elig_w, trh_sum, trh_n,
+                wm, wm_sum, wm_n, prev_fh, wm_eff,
+                W_in, W_out, W_wm, out_budget,
+                k, pools, LEAK, TRACE_D, ELIG_D, TRM_D, noise_eff,
+                WM, WM_DECAY, WM_LR, WM_BETA, WM_CAP, WM_GATE_CAP,
+                PERSIST, SELF_EXC, INHIB, TAGGATE, THETA,
+                ETA_TH, TARGET_RATE, SCALE_EVERY, tick0,
+                rank1, etr_m, etr_h, etrw0,
+                noise_vec, use_noise_vec):
+    """T ticks of the loop. Mirrors BrainSim.step() line for line.
+
+    X (T, n_in) observation per tick; U (T, n_in) uniforms; G (T, n_motor)
+    standard normals. Scalar accumulators are returned because numba cannot
+    write back into python floats.
+    """
+    T, n_in = X.shape
+    H = vh.shape[0]; M = vm.shape[0]
+    ticks = tick0
+    etrw = etrw0
+    for t in range(T):
+        ticks += 1
+        # --- sensory transduction --------------------------------------
+        si = np.empty(n_in)
+        for i in range(n_in):
+            si[i] = 1.0 if U[t, i] < 0.6 * X[t, i] else 0.0
+
+        # --- motor drive: LAST tick's hidden spikes (one-tick axonal delay)
+        drive = np.empty(M)
+        for m in range(M):
+            acc = 0.0
+            for h in range(H):
+                weight = W_out[m, h]
+                if transmission.shape[0]: weight *= transmission[t, m, h]
+                acc += weight * fh[h]
+            # Q-loops: per-action exploration noise. Default path keeps the
+            # scalar arithmetic identical (same op, same order when off).
+            _nv = noise_vec[m] if use_noise_vec else noise_eff
+            drive[m] = transmission_gain * acc + _nv * G[t, m]
+
+        if WM:
+            # feed the WM pathway only the component of wm that the CURRENT
+            # input does not already explain (see brainsim.step)
+            n2 = 0.0
+            for h in range(H):
+                n2 += trh[h] * trh[h]
+            if n2 > 1e-9:
+                dot = 0.0
+                for h in range(H):
+                    dot += wm[h] * trh[h]
+                c = dot / n2
+                for h in range(H):
+                    wm_eff[h] = wm[h] - c * trh[h]
+            else:
+                for h in range(H):
+                    wm_eff[h] = wm[h]
+            for m in range(M):
+                acc = 0.0
+                for h in range(H):
+                    acc += W_wm[m, h] * wm_eff[h]
+                drive[m] += WM_BETA * acc
+
+        if PERSIST:
+            mn = 0.0
+            for m in range(M):
+                mn += trm[m]
+            mn /= M
+            for m in range(M):
+                drive[m] += SELF_EXC * trm[m] - INHIB * mn
+
+        fm = np.zeros(M)
+        for m in range(M):
+            vm[m] = vm[m] * LEAK + drive[m]
+            if vm[m] > 1.0:
+                fm[m] = 1.0
+                vm[m] = 0.0
+            trm[m] = trm[m] * TRM_D + fm[m]
+
+        # --- hidden: leaky integrate ------------------------------------
+        for h in range(H):
+            acc = 0.0
+            for i in range(n_in):
+                acc += W_in[h, i] * si[i]
+            vh[h] = vh[h] * LEAK + acc
+
+        # --- k-WTA: the k-th largest vh is the threshold ----------------
+        # selection sort of the top k; H=80, k=6, cheaper than a full sort and
+        # matches np.partition(vh, -k)[-k] exactly (the k-th largest value).
+        used = np.zeros(H, np.uint8)
+        for pool in range(pools):
+            lo = pool * H // pools
+            hi = (pool + 1) * H // pools
+            thr = 0.0
+            for j in range(k // pools):
+                best = -1
+                bv = 0.0
+                for h in range(lo, hi):
+                    if used[h] == 0 and (best < 0 or vh[h] > bv):
+                        best = h
+                        bv = vh[h]
+                used[best] = 1
+                thr = bv
+            for h in range(lo, hi):
+                fh[h] = 1.0 if (vh[h] >= thr and vh[h] > thresh[h]) else 0.0
+        for h in range(H):
+            if fh[h] > 0.0:
+                vh[h] = 0.0
+            trh[h] = trh[h] * TRACE_D + fh[h]
+
+        if WM:
+            if WM_GATE_CAP:
+                nrm = 0.0
+                for h in range(H):
+                    nrm += wm[h] * wm[h]
+                g = 1.0 - np.sqrt(nrm) / WM_CAP
+                if g < 0.0:
+                    g = 0.0
+            else:
+                g = 1.0
+            for h in range(H):
+                wm[h] = wm[h] * WM_DECAY + WM_LR * g * fh[h]
+                prev_fh[h] = fh[h]
+                wm_sum[h] += wm_eff[h]
+            wm_n += 1
+
+        for h in range(H):
+            trh_sum[h] += trh[h]
+        trh_n += 1
+
+        # --- eligibility: winner-take-all on CREDIT ---------------------
+        # Q5 rank-1: same gated motor spikes and hidden trace as the matrix
+        # rule; only the algebra differs (traces vs outer-product EMA).
+        if TAGGATE:
+            mx = trm[0]
+            for m in range(1, M):
+                if trm[m] > mx:
+                    mx = trm[m]
+        for m in range(M):
+            v = fm[m]
+            if TAGGATE:
+                v = v * (1.0 if (mx <= 0.0 or trm[m] >= THETA * mx) else 0.0)
+            if rank1:
+                etr_m[m] = etr_m[m] * ELIG_D + (1.0 - ELIG_D) * v
+            else:
+                for h in range(H):
+                    elig[m, h] = elig[m, h] * ELIG_D + (1.0 - ELIG_D) * v * trh[h]
+        if rank1:
+            for h in range(H):
+                etr_h[h] = etr_h[h] * ELIG_D + (1.0 - ELIG_D) * trh[h]
+            etrw = etrw * ELIG_D + (1.0 - ELIG_D)
+        else:
+            elig_w = elig_w * ELIG_D + (1.0 - ELIG_D)
+
+        for m in range(M):
+            votes[m] += fm[m]
+
+        # --- homeostasis (ETA_TH is 0.0 by default; 15 measured it harmful)
+        for h in range(H):
+            rate[h] += 0.001 * (fh[h] - rate[h])
+            thresh[h] += ETA_TH * (rate[h] - TARGET_RATE)
+            if thresh[h] < 0.05:
+                thresh[h] = 0.05
+            elif thresh[h] > 20.0:
+                thresh[h] = 20.0
+
+        if ticks % SCALE_EVERY == 0:
+            for m in range(M):
+                cur = 0.0
+                for h in range(H):
+                    cur += abs(W_out[m, h])
+                if cur > 1e-9:
+                    s = out_budget[m] / cur
+                    for h in range(H):
+                        W_out[m, h] *= s
+    return elig_w, trh_n, wm_n, ticks, etrw
+
+
+class FastBrainSim(BrainSim):
+    """Same class, same defaults, same reward()/replay()/sleep() -- only the
+    tick loop is replaced. Everything that decides anything stays in numpy, so
+    a divergence can only come from the block below."""
+
+    def __init__(self, *a, **kw):
+        super().__init__(*a, **kw)
+        self._buf = []
+
+    # Buffer ticks and flush at decide(). Both runners in tasks.py do
+    # N x step(obs) then decide(), so this hooks the port in without changing
+    # either runner or any task -- control flow stays identical to the original,
+    # which means a divergence can only come from the kernel.
+    def step(self, x):
+        self._buf.append(np.asarray(x, dtype=np.float64))
+        return None                      # nothing in either runner reads this
+
+    def _flush(self):
+        if self._buf:
+            buf, self._buf = self._buf, []
+            self.observe(np.stack(buf))
+
+    def decide(self):
+        self._flush(); return super().decide()
+
+    def reward(self, *a, **kw):
+        self._flush(); return super().reward(*a, **kw)
+
+    def observe(self, X):
+        self._validate_pools()
+        if self.WM and self.WM_GATE not in ("capacity", "none"):
+            raise ValueError("FastBrainSim supports WM_GATE='capacity' or 'none' only")
+        X = np.ascontiguousarray(np.atleast_2d(X), dtype=np.float64)
+        T = X.shape[0]
+        # BIT-EXACTNESS (PLAN.md step 7 flagged this as the thing that breaks a
+        # port). The original draws per tick, in order: random(n_in) then
+        # normal(0, noise_eff, n_motor). Drawing two big blocks instead reorders
+        # the stream and silently produces a DIFFERENT-but-plausible number,
+        # which is exactly the `port-keeps-the-reference-number` failure. So the
+        # draws stay interleaved. Cost is 2 numpy calls per tick instead of ~20.
+        # normal(0,s,n) == standard_normal(n)*s in value AND stream position,
+        # verified, so the kernel's `noise_eff * G` is equivalent.
+        U = np.empty((T, self.n_in)); G = np.empty((T, self.n_motor))
+        for t in range(T):
+            U[t] = self.rng.random(self.n_in)
+            G[t] = self.rng.standard_normal(self.n_motor)
+        if not 0 <= self.TRANSMISSION_FAILURE <= 1 or self.TRANSMISSION_GAIN < 0:
+            raise ValueError("invalid transmission failure probability or gain")
+        transmission = np.empty((0, 0, 0), dtype=np.bool_)
+        if self.TRANSMISSION_FAILURE:
+            transmission = self.transmission_rng.random((T, self.n_motor, self.n_hidden)) >= self.TRANSMISSION_FAILURE
+        _ensure_credit(self)
+        # Under RANK1_ELIG self.elig is None; the kernel never indexes elig
+        # on that path, so pass a dummy for the untouched argument (and vice
+        # versa for the trace args when the flag is off -- plain agents have
+        # no etr_* attributes at all).
+        rank1 = bool(getattr(self, 'RANK1_ELIG', False))
+        elig_arg = self.elig if self.elig is not None else _NO_ELIG
+        etr_m_arg = self.etr_m if rank1 else _NO_ELIG_1D
+        etr_h_arg = self.etr_h if rank1 else _NO_ELIG_1D
+        etrw_arg = float(self.etrw) if rank1 else 0.0
+        # Q-loops: per-action noise rides an array; plain agents (and every
+        # default path) keep the scalar, so the kernel arithmetic there is
+        # untouched.
+        use_noise_vec = isinstance(self.noise_eff, np.ndarray)
+        noise_arg = float(self.noise_eff) if not use_noise_vec else 0.0
+        noise_vec_arg = np.ascontiguousarray(self.noise_eff, dtype=np.float64) \
+            if use_noise_vec else _NO_ELIG_1D
+        self.elig_w, self.trh_n, self.wm_n, self.ticks, self.etrw = _tick_block(
+            X, U, G, transmission, float(self.TRANSMISSION_GAIN),
+            self.vh, self.vm, self.trh, self.fh, self.trm, self.votes,
+            self.thresh, self.rate,
+            elig_arg, float(self.elig_w), self.trh_sum, int(self.trh_n),
+            self.wm, self.wm_sum, int(self.wm_n), self._prev_fh, self._wm_eff,
+            self.W_in, self.W_out, self.W_wm, self._out_budget,
+            int(self.k), int(self.POOLS), self.LEAK, self.TRACE_D, self.ELIG_D, self.TRM_D,
+            noise_arg,
+            bool(self.WM), self.WM_DECAY, self.WM_LR, self.WM_BETA, self.WM_CAP,
+            self.WM_GATE == "capacity",
+            bool(self.PERSIST), self.SELF_EXC, self.INHIB,
+            bool(self.TAGGATE), self.THETA,
+            self.ETA_TH, self.TARGET_RATE, int(self.SCALE_EVERY), int(self.ticks),
+            rank1, etr_m_arg, etr_h_arg, etrw_arg,
+            noise_vec_arg, use_noise_vec)

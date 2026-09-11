@@ -1,0 +1,477 @@
+{
+  "protocol": {
+    "id": "loops-20260911-v1",
+    "registration_commit": "04a1ceac93d67f98deb6e991d9ffad9e86f9d71f",
+    "registration_sha256": "38b08dbc7728ae4d3021aed3a3ce8c1fba534683117c29dc90274c6065d154a0"
+  },
+  "sources": {
+    "DESIGN-loops-probe.md": "38b08dbc7728ae4d3021aed3a3ce8c1fba534683117c29dc90274c6065d154a0",
+    "DESIGN-v3-burst.md": "ef249ae9dcf9afe8822ee2c0f188f2e780596450b7fcc6881028191b3e8a4d5c",
+    "DESIGN-v3-persistent.md": "6c64064ce2aa347379b55bf21218ffbecd4ffb3a23d7c7fd946802d9e7962daa",
+    "DESIGN-v3-reference.md": "0d85fa18f4c636e4e93cb7f6d9cc5ef763fac8a7c2e0ccc0ee03ede28cef8341",
+    "DESIGN-v3-slice1.md": "ca1d33b4f979349881296e7530c1102d58741750ef9d129a7c9183745bc4050f",
+    "baselines.py": "f8418216ebd287708ca9ed19a2a6617d1aa69e683b3099749277332312c839ad",
+    "brainsim.py": "c9017e36e589168764f91417b39830d7b366c98bf119590a7f244862d53fb313",
+    "check_loops.py": "eaa7446c2a61d77eb6df72f6da8e23c86c452785a34b09b37f09f2fb296585ea",
+    "check_v3_burst.py": "177659e8f2adadf81d310a788d8c2ee65a70d4fa2a09a2dc883b2d8e306eaae3",
+    "fastsim.py": "a20392ed973e5b5bb8451741759648bf11ce2f89ae48e6fd82e444ff1b08c9a0",
+    "loops_rule.py": "5451df585833821320328ab8415a9cd081af371a235dbf81941f51fca16cb348",
+    "reference.json": "0e2bd78f8e386d1a566ebd7e7a029bb7ea0140da271d21144e4fbb54be8409ba",
+    "reference.py": "662736c6792ad3edf9791fc5ec756c9d55920227e3ddaa80fb5b0a8230e59b33",
+    "report_loops.py": "559587abebdad7541f0597fbab9e9bc345557e7782ffca13c45f8ddbe3aa5883",
+    "report_v3_burst.py": "fc54e016287bd6f1c368a02885f0f92f435b09879659da8dd30e0be393c0b50a",
+    "report_v3_reference.py": "4d8401637dd629e456f5f5651467b97b34e7a05e7c78158be0ddbdebba6dabb5",
+    "report_v3_slice1.py": "b0eea587ada00c7a3dffd39a8050001a8cee4254bb822f92369c46f0f6b8ea20",
+    "requirements.txt": "c2a86536af1212a80a79e5679bb955aba57535830810a00bdb340663314e84b2",
+    "results/v3-reference/manifest.json": "a5911f713c257d2d0fa030b1d873028ccf43b7bab2d61300650b94dbfea95e5d",
+    "study_io.py": "65581a4752b1b5e0a613eb99697b138fd4a73c1292412331ad744cbf094466d7",
+    "study_loops.py": "13e0ee8f7e809d621e63e390a3317a0dc62577d3683e399ea1a97116af0b669b",
+    "study_v3_burst.py": "ab8be80d2a2b63f27653d07810afaf72ad805b18570378e4571e16f90808bdd5",
+    "study_v3_reference.py": "dd3c5b87836e0049cdf1bc5bc762dd8eb316c577076bb13657d676104bdb9c89",
+    "study_v3_slice1.py": "4e963b57495b84a26ef33a9647d4fafd67675c6e236dc983b662c071256dc9b7",
+    "tasks.py": "d3943af39a3e4467b1e79ac84e1e990b95fd01aa14adb6548a210ea153f72108",
+    "v3_burst.py": "14dcb169332c8b0674c53b7ee0d38bee4df707cbe1cea14f70e13ae1c1262c6c",
+    "v3_burst_policy.py": "83bbb826aec0e9466d0c859a1006f767cbea2916d8cec65074df5ca52b679ad2",
+    "v3_gate.py": "9875703dad1ef620dd3b8d9323a5502d9612490ba9830b7d3581b39fed2571d1",
+    "v3_persistent.py": "14857640d40cb86546c5441f1a43275b5d674a9d2fb8e0cb0671d68a2248c0f9",
+    "v3_reference.py": "0b019a5066b214583e4897d73a16ec2a24a13b361aca4f876f089acd837144a2",
+    "v3_reference_policy.py": "2f3da6886e78035da72addc8fd468eea3fb9d0c10b7c1b76421beac139f83684",
+    "v3_slice1_decisions.py": "8c768720340933586b1b3220c1591b8e25c50aaf622c0e8962b10d128b24482b",
+    "v3_slice1_learning.py": "000e4be3ddf729f5e403074634b1861061b496c01488b2de8f3f4aada6384648",
+    "v3_slice1_streams.py": "6d5a264013357468f5882e929236831e94d3ae0e19b5b4d4ba35e1e9b087932d"
+  },
+  "rows": {
+    "volatile-4/loops-LR/0": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-LR",
+      "seed": 0,
+      "score": 0.428,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.44
+    },
+    "volatile-4/loops-LR/1": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-LR",
+      "seed": 1,
+      "score": 0.197,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.6
+    },
+    "volatile-4/loops-LR/2": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-LR",
+      "seed": 2,
+      "score": 0.232,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.02
+    },
+    "volatile-4/loops-LR/3": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-LR",
+      "seed": 3,
+      "score": 0.18,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.49
+    },
+    "volatile-4/loops-LR/4": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-LR",
+      "seed": 4,
+      "score": 0.447,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.85
+    },
+    "volatile-4/loops-LR/5": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-LR",
+      "seed": 5,
+      "score": 0.568,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.63
+    },
+    "volatile-4/loops-LR/6": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-LR",
+      "seed": 6,
+      "score": 0.251,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.06
+    },
+    "volatile-4/loops-LR/7": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-LR",
+      "seed": 7,
+      "score": 0.231,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 3.22
+    },
+    "volatile-4/loops-full/0": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-full",
+      "seed": 0,
+      "score": 0.253,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 5.2
+    },
+    "volatile-4/loops-full/1": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-full",
+      "seed": 1,
+      "score": 0.229,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 4.6
+    },
+    "volatile-4/loops-full/2": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-full",
+      "seed": 2,
+      "score": 0.433,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 4.47
+    },
+    "volatile-4/loops-full/3": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-full",
+      "seed": 3,
+      "score": 0.16,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 3.98
+    },
+    "volatile-4/loops-full/4": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-full",
+      "seed": 4,
+      "score": 0.417,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.22
+    },
+    "volatile-4/loops-full/5": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-full",
+      "seed": 5,
+      "score": 0.261,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 3.78
+    },
+    "volatile-4/loops-full/6": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-full",
+      "seed": 6,
+      "score": 0.313,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.39
+    },
+    "volatile-4/loops-full/7": {
+      "status": "ok",
+      "task": "volatile-4",
+      "arm": "loops-full",
+      "seed": 7,
+      "score": 0.403,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 10.14
+    },
+    "lock-10/loops-LR/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-LR",
+      "seed": 0,
+      "score": 270.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 17.84
+    },
+    "lock-10/loops-LR/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-LR",
+      "seed": 1,
+      "score": 358.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 16.37
+    },
+    "lock-10/loops-LR/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-LR",
+      "seed": 2,
+      "score": 336.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 12.54
+    },
+    "lock-10/loops-LR/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-LR",
+      "seed": 3,
+      "score": 247.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 13.73
+    },
+    "lock-10/loops-LR/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-LR",
+      "seed": 4,
+      "score": 547.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 11.04
+    },
+    "lock-10/loops-LR/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-LR",
+      "seed": 5,
+      "score": 415.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 13.61
+    },
+    "lock-10/loops-LR/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-LR",
+      "seed": 6,
+      "score": 375.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 12.98
+    },
+    "lock-10/loops-LR/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-LR",
+      "seed": 7,
+      "score": 729.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 21.94
+    },
+    "lock-10/loops-full/0": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-full",
+      "seed": 0,
+      "score": 285.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 18.94
+    },
+    "lock-10/loops-full/1": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-full",
+      "seed": 1,
+      "score": 420.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 16.33
+    },
+    "lock-10/loops-full/2": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-full",
+      "seed": 2,
+      "score": 448.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 22.22
+    },
+    "lock-10/loops-full/3": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-full",
+      "seed": 3,
+      "score": 312.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 29.33
+    },
+    "lock-10/loops-full/4": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-full",
+      "seed": 4,
+      "score": 547.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 36.03
+    },
+    "lock-10/loops-full/5": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-full",
+      "seed": 5,
+      "score": 410.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 19.17
+    },
+    "lock-10/loops-full/6": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-full",
+      "seed": 6,
+      "score": 402.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 17.16
+    },
+    "lock-10/loops-full/7": {
+      "status": "ok",
+      "task": "lock-10",
+      "arm": "loops-full",
+      "seed": 7,
+      "score": 742.0,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 9.73
+    },
+    "nway-8/loops-LR/0": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-LR",
+      "seed": 0,
+      "score": 0.981,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.35
+    },
+    "nway-8/loops-LR/1": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-LR",
+      "seed": 1,
+      "score": 0.983,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.86
+    },
+    "nway-8/loops-LR/2": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-LR",
+      "seed": 2,
+      "score": 0.992,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.26
+    },
+    "nway-8/loops-LR/3": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-LR",
+      "seed": 3,
+      "score": 0.993,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.35
+    },
+    "nway-8/loops-LR/4": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-LR",
+      "seed": 4,
+      "score": 0.984,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 3.09
+    },
+    "nway-8/loops-LR/5": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-LR",
+      "seed": 5,
+      "score": 0.986,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 3.14
+    },
+    "nway-8/loops-LR/6": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-LR",
+      "seed": 6,
+      "score": 0.834,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.14
+    },
+    "nway-8/loops-LR/7": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-LR",
+      "seed": 7,
+      "score": 0.977,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.4
+    },
+    "nway-8/loops-full/0": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-full",
+      "seed": 0,
+      "score": 0.859,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.45
+    },
+    "nway-8/loops-full/1": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-full",
+      "seed": 1,
+      "score": 0.957,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.52
+    },
+    "nway-8/loops-full/2": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-full",
+      "seed": 2,
+      "score": 0.981,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.49
+    },
+    "nway-8/loops-full/3": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-full",
+      "seed": 3,
+      "score": 0.973,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 3.6
+    },
+    "nway-8/loops-full/4": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-full",
+      "seed": 4,
+      "score": 0.98,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 5.85
+    },
+    "nway-8/loops-full/5": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-full",
+      "seed": 5,
+      "score": 0.986,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 3.25
+    },
+    "nway-8/loops-full/6": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-full",
+      "seed": 6,
+      "score": 0.962,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 5.64
+    },
+    "nway-8/loops-full/7": {
+      "status": "ok",
+      "task": "nway-8",
+      "arm": "loops-full",
+      "seed": 7,
+      "score": 0.991,
+      "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+      "seconds": 2.64
+    }
+  }
+}

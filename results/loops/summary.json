@@ -1,0 +1,132 @@
+{
+  "absolute": {
+    "lock-10": {
+      "loops-LR": {
+        "interval95": [
+          317.0,
+          524.0
+        ],
+        "mean": 409.625
+      },
+      "loops-full": {
+        "interval95": [
+          361.5,
+          547.75
+        ],
+        "mean": 445.75
+      }
+    },
+    "nway-8": {
+      "loops-LR": {
+        "interval95": [
+          0.9272499999999999,
+          0.98775
+        ],
+        "mean": 0.9662499999999999
+      },
+      "loops-full": {
+        "interval95": [
+          0.9298718749999999,
+          0.981628125
+        ],
+        "mean": 0.9611249999999999
+      }
+    },
+    "volatile-4": {
+      "loops-LR": {
+        "interval95": [
+          0.230496875,
+          0.41462499999999997
+        ],
+        "mean": 0.31675
+      },
+      "loops-full": {
+        "interval95": [
+          0.24400000000000002,
+          0.37324999999999997
+        ],
+        "mean": 0.308625
+      }
+    }
+  },
+  "candidate": [
+    30.625,
+    "loops-full",
+    "lock-10"
+  ],
+  "cells": {
+    "lock-10/loops-LR": {
+      "control": 415.125,
+      "delta": -5.5,
+      "interval95": [
+        -39.75,
+        23.875
+      ],
+      "pass": false,
+      "treatment": 409.625
+    },
+    "lock-10/loops-full": {
+      "control": 415.125,
+      "delta": 30.625,
+      "interval95": [
+        20.875,
+        40.875
+      ],
+      "pass": true,
+      "treatment": 445.75
+    },
+    "nway-8/loops-LR": {
+      "band": 0.03,
+      "control": 0.97825,
+      "delta": -0.011999999999999997,
+      "interval95": [
+        -0.051875000000000004,
+        0.012750000000000011
+      ],
+      "pass": true,
+      "treatment": 0.9662499999999999
+    },
+    "nway-8/loops-full": {
+      "band": 0.03,
+      "control": 0.97825,
+      "delta": -0.017125,
+      "interval95": [
+        -0.050753125,
+        0.005625000000000005
+      ],
+      "pass": true,
+      "treatment": 0.9611249999999999
+    },
+    "volatile-4/loops-LR": {
+      "control": 0.3715,
+      "delta": -0.05475000000000001,
+      "interval95": [
+        -0.18925,
+        0.10037499999999998
+      ],
+      "pass": false,
+      "treatment": 0.31675
+    },
+    "volatile-4/loops-full": {
+      "control": 0.3715,
+      "delta": -0.062875,
+      "interval95": [
+        -0.186,
+        0.05475000000000001
+      ],
+      "pass": false,
+      "treatment": 0.308625
+    }
+  },
+  "closed": true,
+  "counts": {
+    "confirmation": 48
+  },
+  "manifest_digest": "b97d7ea30e95541eb4d583f07176dce5fa3d4ab7499b7796b9483600e52551c0",
+  "protocol": {
+    "id": "loops-20260911-v1",
+    "registration_commit": "04a1ceac93d67f98deb6e991d9ffad9e86f9d71f",
+    "registration_sha256": "38b08dbc7728ae4d3021aed3a3ce8c1fba534683117c29dc90274c6065d154a0"
+  },
+  "status": "adopt-loops-loops-full"
+}
