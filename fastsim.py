@@ -57,7 +57,8 @@ def _tick_block(X, U, G, transmission, transmission_gain,
                 WM, WM_DECAY, WM_LR, WM_BETA, WM_CAP, WM_GATE_CAP,
                 PERSIST, SELF_EXC, INHIB, TAGGATE, THETA,
                 ETA_TH, TARGET_RATE, SCALE_EVERY, tick0,
-                rank1, etr_m, etr_h, etrw0):
+                rank1, etr_m, etr_h, etrw0,
+                noise_vec, use_noise_vec):
     """T ticks of the loop. Mirrors BrainSim.step() line for line.
 
     X (T, n_in) observation per tick; U (T, n_in) uniforms; G (T, n_motor)
@@ -83,7 +84,10 @@ def _tick_block(X, U, G, transmission, transmission_gain,
                 weight = W_out[m, h]
                 if transmission.shape[0]: weight *= transmission[t, m, h]
                 acc += weight * fh[h]
-            drive[m] = transmission_gain * acc + noise_eff * G[t, m]
+            # Q-loops: per-action exploration noise. Default path keeps the
+            # scalar arithmetic identical (same op, same order when off).
+            _nv = noise_vec[m] if use_noise_vec else noise_eff
+            drive[m] = transmission_gain * acc + _nv * G[t, m]
 
         if WM:
             # feed the WM pathway only the component of wm that the CURRENT
@@ -283,6 +287,13 @@ class FastBrainSim(BrainSim):
         etr_m_arg = self.etr_m if rank1 else _NO_ELIG_1D
         etr_h_arg = self.etr_h if rank1 else _NO_ELIG_1D
         etrw_arg = float(self.etrw) if rank1 else 0.0
+        # Q-loops: per-action noise rides an array; plain agents (and every
+        # default path) keep the scalar, so the kernel arithmetic there is
+        # untouched.
+        use_noise_vec = isinstance(self.noise_eff, np.ndarray)
+        noise_arg = float(self.noise_eff) if not use_noise_vec else 0.0
+        noise_vec_arg = np.ascontiguousarray(self.noise_eff, dtype=np.float64) \
+            if use_noise_vec else _NO_ELIG_1D
         self.elig_w, self.trh_n, self.wm_n, self.ticks, self.etrw = _tick_block(
             X, U, G, transmission, float(self.TRANSMISSION_GAIN),
             self.vh, self.vm, self.trh, self.fh, self.trm, self.votes,
@@ -291,10 +302,11 @@ class FastBrainSim(BrainSim):
             self.wm, self.wm_sum, int(self.wm_n), self._prev_fh, self._wm_eff,
             self.W_in, self.W_out, self.W_wm, self._out_budget,
             int(self.k), int(self.POOLS), self.LEAK, self.TRACE_D, self.ELIG_D, self.TRM_D,
-            float(self.noise_eff),
+            noise_arg,
             bool(self.WM), self.WM_DECAY, self.WM_LR, self.WM_BETA, self.WM_CAP,
             self.WM_GATE == "capacity",
             bool(self.PERSIST), self.SELF_EXC, self.INHIB,
             bool(self.TAGGATE), self.THETA,
             self.ETA_TH, self.TARGET_RATE, int(self.SCALE_EVERY), int(self.ticks),
-            rank1, etr_m_arg, etr_h_arg, etrw_arg)
+            rank1, etr_m_arg, etr_h_arg, etrw_arg,
+            noise_vec_arg, use_noise_vec)
