@@ -1,0 +1,29 @@
+name: Loops probe validation
+on:
+  push:
+    branches: ['codex/**']
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: loops-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  loops:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - run: python check_reference.py --out results/local-reference.json
+      - run: python check_loops.py --evidence results/loops --reproduce
+      - run: python report_loops.py --check
